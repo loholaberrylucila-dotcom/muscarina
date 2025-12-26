@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Catálogo — Muscarina</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #111;
+    }
+
+    header {
+      margin-bottom: 3rem;
+    }
+
+    header a {
+      text-decoration: none;
+      color: #111;
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+
+    h1 {
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      margin-top: 1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+
+    .obra {
+      text-decoration: none;
+      color: #111;
+    }
+
+    .obra img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .obra h2 {
+      font-size: 0.95rem;
+      font-weight: 400;
+      margin: 0;
+    }
+
+    .obra p {
+      font-size: 0.8rem;
+      opacity: 0.6;
+      margin: 0.2rem 0 0;
+    }
+
+    .obra:hover {
+      opacity: 0.7;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="index.html">← volver</a>
+    <h1>Catálogo</h1>
+  </header>
+
+  <main class="grid">
+
+    <!-- OBRA 1 -->
+    <a href="obras/obra-01.html" class="obra">
+      <img src="img/obra-01.jpg" alt="Nombre de la obra">
+      <h2>Nombre de la obra</h2>
+      <p>2024</p>
+    </a>
+
+    <!-- OBRA 2 -->
+    <a href="obras/obra-02.html" class="obra">
+      <img src="img/obra-02.jpg" alt="Nombre de la obra">
+      <h2>Nombre de la obra</h2>
+      <p>2025</p>
+    </a>
+
+    <!-- OBRA 3 -->
+    <a href="obras/obra-03.html" class="obra">
+      <img src="img/obra-03.jpg" alt="Nombre de la obra">
+      <h2>Nombre de la obra</h2>
+      <p>2025</p>
+    </a>
+
+  </main>
+
+</body>
+</html>
