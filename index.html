@@ -2,102 +2,74 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>MUSCARINA</title>
+  <title>Muscarina — Lucila</title>
+
+  <!-- Responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Tipografía (opcional) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
-      font-family: "Helvetica Neue", Arial, sans-serif;
-      background: #f2f2f2;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
       color: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .home {
       text-align: center;
     }
-    header {
-      padding: 60px 20px 30px;
-    }
+
     h1 {
-      font-size: 48px;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
+      font-size: 2.5rem;
+      font-weight: 400;
+      margin-bottom: 2rem;
+      letter-spacing: 0.05em;
     }
-    .sub {
-      font-size: 14px;
-      opacity: 0.7;
+
+    nav {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 30px;
-      padding: 40px;
-      max-width: 1000px;
-      margin: auto;
-    }
-    .item {
-      background: white;
-      padding: 20px;
-      border-radius: 14px;
-    }
-    .item img {
-      width: 100%;
-      border-radius: 10px;
-    }
-    .item h3 {
-      margin: 15px 0 5px;
-      font-weight: normal;
-    }
-    .price {
-      font-size: 14px;
-      opacity: 0.7;
-    }
-    .buy {
-      display: inline-block;
-      margin-top: 12px;
-      padding: 10px 18px;
-      border: 1px solid #111;
-      color: #111;
+
+    nav a {
       text-decoration: none;
-      font-size: 13px;
-      border-radius: 20px;
+      color: #111;
+      font-size: 1.1rem;
+      transition: opacity 0.3s ease;
     }
-    .buy:hover {
-      background: #111;
-      color: white;
+
+    nav a:hover {
+      opacity: 0.5;
     }
-    footer {
-      padding: 30px;
-      font-size: 12px;
-      opacity: 0.6;
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<header>
-  <h1>MUSCARINA</h1>
-  <div class="sub">arte · objetos · ediciones</div>
-</header>
+  <main class="home">
+    <h1>MUSCARINA</h1>
 
-<section class="grid">
-
-  <div class="item">
-    <img src="https://via.placeholder.com/400x400">
-    <h3>Obra 01</h3>
-    <div class="price">$15.000</div>
-    <a class="buy" href="https://wa.me/549XXXXXXXXXX">Comprar</a>
-  </div>
-
-  <div class="item">
-    <img src="https://via.placeholder.com/400x400">
-    <h3>Obra 02</h3>
-    <div class="price">$18.000</div>
-    <a class="buy" href="https://wa.me/5492235649809">Comprar</a>
-  </div>
-
-</section>
-
-<footer>
-  © MUSCARINA
-</footer>
+    <nav>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="bio.html">Sobre mí</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </main>
 
 </body>
 </html>
