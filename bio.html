@@ -2,82 +2,122 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Bio — Muscarina</title>
-
+  <title>Bio | Muscarina</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
-
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      padding: 2rem;
-      font-family: 'Inter', sans-serif;
-      background-color: #ffffff;
-      color: #111;
-      line-height: 1.6;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
+      padding: 0;
     }
 
-    header {
-      margin-bottom: 3rem;
+    body {
+      background-color: #0f0f0f;
+      color: #f2f2f2;
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
     }
 
-    header a {
+    nav {
+      width: 100%;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      border-bottom: 1px solid #333;
+    }
+
+    nav a {
+      color: #f2f2f2;
       text-decoration: none;
-      color: #111;
-      font-size: 0.9rem;
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: opacity 0.3s;
+    }
+
+    nav a:hover {
       opacity: 0.6;
     }
 
-    h1 {
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      margin-top: 1rem;
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px 20px;
     }
 
-    section {
-      margin-bottom: 2rem;
+    h1 {
+      font-size: 32px;
+      letter-spacing: 4px;
+      font-weight: 300;
+      margin-bottom: 40px;
     }
 
     p {
-      font-size: 1rem;
-      margin-bottom: 1.2rem;
+      font-size: 15px;
+      line-height: 1.7;
+      opacity: 0.85;
+      margin-bottom: 24px;
+    }
+
+    .firma {
+      margin-top: 60px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      opacity: 0.6;
+      text-transform: uppercase;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 11px;
+      opacity: 0.4;
     }
   </style>
 </head>
 
 <body>
 
-  <header>
-    <a href="index.html">← volver</a>
-    <h1>Sobre mí</h1>
-  </header>
+  <!-- MENÚ -->
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="catalogo.html">Catálogo</a>
+    <a href="bio.html">Bio</a>
+  </nav>
 
+  <!-- CONTENIDO -->
   <main>
+    <h1>Bio</h1>
 
-    <section>
-      <p>
-        Acá va tu texto.  
-        Podés escribir en primera persona, algo corto o algo más conceptual.
-      </p>
+    <p>
+      Muscarina es un proyecto artístico y de diseño que explora la relación
+      entre materia, percepción y objeto. La práctica se construye desde la
+      experimentación formal, el interés por los procesos y la carga simbólica
+      de los materiales.
+    </p>
 
-      <p>
-        Este archivo está pensado para que edites solo el contenido,
-        sin tocar el diseño si no querés.
-      </p>
-    </section>
+    <p>
+      El trabajo se desarrolla entre lo funcional y lo contemplativo, abordando
+      piezas únicas, objetos utilitarios y producciones de pequeña escala.
+      Cada obra es entendida como un fragmento de un sistema mayor, en constante
+      transformación.
+    </p>
 
-    <section>
-      <p>
-        Podés usar párrafos largos, texto curatorial, manifiesto,
-        o incluso dividirlo por momentos, ideas o etapas.
-      </p>
-    </section>
+    <p>
+      El proyecto se encuentra en proceso continuo de investigación y crecimiento,
+      integrando nociones de arte, diseño y producción independiente.
+    </p>
 
+    <div class="firma">
+      Muscarina
+    </div>
   </main>
+
+  <footer>
+    © Muscarina
+  </footer>
 
 </body>
 </html>
