@@ -10,44 +10,6 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      * Estrellas pixel */
-.stars {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.star {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: #f2f2f2;
-  box-shadow:
-    6px 0 #f2f2f2,
-    -6px 0 #f2f2f2,
-    0 6px #f2f2f2,
-    0 -6px #f2f2f2;
-  animation: twinkle 1.5s infinite ease-in-out;
-  opacity: 0;
-}
-
-/* Titilar */
-@keyframes twinkle {
-  0%, 100% { opacity: 0; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1); }
-}
-
-/* Desaparecen después */
-.stars {
-  animation: fadeOut 4s ease forwards;
-}
-
-@keyframes fadeOut {
-  0% { opacity: 1; }
-  70% { opacity: 1; }
-  100% { opacity: 0; }
-}
     }
 
     body {
