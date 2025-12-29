@@ -13,43 +13,38 @@
       padding: 0;
     }
 
-    body {
-      background: #0f0f0f;
-      color: #f2f2f2;
-      font-family: Arial, Helvetica, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      overflow-x: hidden;
-    }
+   body {
+  background: linear-gradient(
+    120deg,
+    #0a0a0a,
+    #151515,
+    #0f0f0f,
+    #1a1a1a
+  );
+  background-size: 400% 400%;
+  animation: waveBackground 12s ease-in-out infinite;
 
-    /* FONDO ANIMADO */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: -50%;
-      background:
-        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06), transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.04), transparent 40%),
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03), transparent 50%);
-      animation: waves 18s ease-in-out infinite alternate;
-      filter: blur(80px);
-      z-index: -1;
-    }
+  color: #f2f2f2;
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
 
-    @keyframes waves {
-      0% {
-        transform: translate(0, 0) scale(1);
-      }
-      50% {
-        transform: translate(-5%, 3%) scale(1.05);
-      }
-      100% {
-        transform: translate(5%, -3%) scale(1.1);
-      }
-    }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes waveBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 
     /* MENÚ */
     nav {
