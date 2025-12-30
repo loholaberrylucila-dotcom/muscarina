@@ -6,73 +6,78 @@
   <title>Muscarina</title>
 
   <style>
-    <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* ===== BASE ===== */
+   /* ===============================
+   FONDO AURA DIFUSA EXTREMA
+================================ */
 body {
-  background-color: #0f0f0f;
-  color: #f2f2f2;
-  font-family: Arial, Helvetica, sans-serif;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  background: #0f0f0f;
   position: relative;
   overflow-x: hidden;
 }
 
-/* ===== AURA / LUZ DIFUSA ===== */
 body::before {
   content: "";
   position: fixed;
-  inset: -30%;
+  inset: -40%;
   background:
-    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.12), transparent 45%),
-    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.09), transparent 50%),
-    radial-gradient(circle at 50% 80%, rgba(255,255,255,0.07), transparent 55%);
-  filter: blur(45px);
-  animation: floatAura 12s ease-in-out infinite alternate;
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.12), transparent 70%),
+    radial-gradient(circle at 80% 40%, rgba(255,255,255,0.10), transparent 75%),
+    radial-gradient(circle at 50% 80%, rgba(255,255,255,0.08), transparent 80%);
+  filter: blur(120px);
+  animation: auraMove 18s ease-in-out infinite alternate;
+  z-index: -3;
+  pointer-events: none;
+}
+
+/* ===============================
+   GRANO ANALÓGICO EXTREMO
+================================ */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    repeating-radial-gradient(
+      circle,
+      rgba(255,255,255,0.06) 0,
+      rgba(255,255,255,0.06) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+  animation: grainMove 0.6s steps(6) infinite;
   z-index: -2;
   pointer-events: none;
 }
 
-/* ===== GRANO ANALÓGICO POTENTE ===== */
-body::after {
-  content: "";
-  position: fixed;
-  inset: -50%;
-  background-image:
-    repeating-radial-gradient(circle, rgba(255,255,255,0.18) 0 1px, transparent 1px 2px);
-  background-size: 3px 3px;
-  opacity: 0.12;
-  mix-blend-mode: overlay;
-  animation: grainMove 0.6s steps(6) infinite;
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* ===== ANIMACIONES ===== */
-@keyframes floatAura {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(-5%, 4%); }
-  100% { transform: translate(5%, -4%); }
+/* ===============================
+   ANIMACIONES
+================================ */
+@keyframes auraMove {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-8%, 6%) scale(1.08);
+  }
+  100% {
+    transform: translate(8%, -6%) scale(1.15);
+  }
 }
 
 @keyframes grainMove {
-  0% { transform: translate(0, 0); }
-  25% { transform: translate(-2%, 1%); }
-  50% { transform: translate(1%, -2%); }
-  75% { transform: translate(-1%, -1%); }
-  100% { transform: translate(0, 0); }
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-5%, 5%);
+  }
 }
 
-/* ===== CONTENIDO ===== */
+/* ===============================
+   CONTENIDO POR ENCIMA
+================================ */
 nav,
 main,
 footer {
@@ -80,68 +85,6 @@ footer {
   z-index: 10;
 }
 
-nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  background: rgba(15,15,15,0.85);
-  backdrop-filter: blur(6px);
-}
-
-nav a {
-  color: #f2f2f2;
-  text-decoration: none;
-  font-size: 14px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-main {
-  text-align: center;
-  padding: 40px 20px;
-  max-width: 800px;
-}
-
-h1 {
-  font-size: 48px;
-  letter-spacing: 6px;
-  font-weight: 300;
-  margin-bottom: 20px;
-}
-
-p {
-  font-size: 15px;
-  line-height: 1.6;
-  opacity: 0.8;
-  margin-bottom: 40px;
-}
-
-.cta {
-  display: inline-block;
-  padding: 12px 30px;
-  border: 1px solid #f2f2f2;
-  color: #f2f2f2;
-  text-decoration: none;
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.cta:hover {
-  background: #f2f2f2;
-  color: #0f0f0f;
-}
-
-footer {
-  position: fixed;
-  bottom: 20px;
-  font-size: 11px;
-  opacity: 0.5;
-}
 </style>
 
 </head>
