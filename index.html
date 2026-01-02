@@ -6,6 +6,15 @@
   <title>Muscarina</title>
 
   <style>
+    /* ====== FUENTE PERSONALIZADA ====== */
+    @font-face {
+      font-family: 'MyrtillePixel';
+      src: url('myrtillepixel.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -14,26 +23,24 @@
 
     body {
       background-color: #111111;
-  color: #000018;
-  font-family: Arial, Helvetica, sans-serif;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow-x: hidden;
-}
+      color: #000018;
+      font-family: 'MyrtillePixel', Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+    }
 
     /* CONTENIDO SIEMPRE ARRIBA DEL VANTA */
-    nav,
-    main,
-    footer {
+    nav, main, footer {
       position: relative;
       z-index: 10;
     }
 
-   nav {
+    nav {
       position: fixed;
       top: 30px;
       display: flex;
@@ -50,12 +57,9 @@
       transition: all 0.3s ease;
     }
 
-nav a:hover {
-  background: #f2f2f2;
-  color: #0f0f0f;
-}
-
     nav a:hover {
+      background: #f2f2f2;
+      color: #0f0f0f;
       opacity: 0.6;
     }
 
@@ -80,21 +84,20 @@ nav a:hover {
     }
 
     .cta {
-  display: inline-block;
-  padding: 12px 30px;
-  border: 1px solid #000018;
-  color: #000018;
-  text-decoration: none;
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  transition: background 0.3s, color 0.3s;
-}
+      display: inline-block;
+      padding: 12px 30px;
+      border: 1px solid #000018;
+      color: #000018;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: background 0.3s, color 0.3s;
+    }
 
-.cta:hover {
-  background: #000018;
-  color: #ffffff;
-}
+    .cta:hover {
+      background: #000018;
+      color: #ffffff;
     }
 
     footer {
@@ -152,4 +155,3 @@ nav a:hover {
 
 </body>
 </html>
-
