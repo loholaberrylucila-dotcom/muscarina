@@ -54,20 +54,16 @@
     }
 
     #intro h1 {
-  font-size: clamp(3rem, 12vw, 10rem);
-  letter-spacing: clamp(0.15em, 1.5vw, 0.35em);
-  line-height: 1;
-  max-width: 90vw;
-  text-align: center;
-  color: #000018;
-  animation:
-    scaleUp 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) forwards,
-    introFadeIn 0.5s ease forwards;
-}
-
-    @keyframes scaleUp {
-      from { transform: scale(0.5); }
-      to   { transform: scale(1); }
+      font-size: clamp(3rem, 12vw, 10rem);
+      letter-spacing: clamp(0.15em, 1.5vw, 0.35em);
+      line-height: 1;
+      max-width: 90vw;
+      text-align: center;
+      color: #000018;
+      opacity: 0;
+      animation:
+        introFadeIn 0.4s ease forwards,
+        scale-up-center 0.9s cubic-bezier(.895,.03,.685,.22) forwards;
     }
 
     @keyframes introFadeIn {
@@ -79,6 +75,29 @@
       to {
         opacity: 0;
         visibility: hidden;
+      }
+    }
+
+    /* ===== ANIMISTA SCALE-UP-CENTER ===== */
+    @-webkit-keyframes scale-up-center {
+      0% {
+        -webkit-transform: scale(0.5);
+                transform: scale(0.5);
+      }
+      100% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+      }
+    }
+
+    @keyframes scale-up-center {
+      0% {
+        -webkit-transform: scale(0.5);
+                transform: scale(0.5);
+      }
+      100% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
       }
     }
 
