@@ -54,12 +54,16 @@
     }
 
     #intro h1 {
-      font-size: clamp(4rem, 15vw, 12rem);
-      letter-spacing: 0.3em;
-      color: #000018;
-      animation:
-        scaleUp 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) forwards,
-        introFadeIn 0.5s ease forwards;
+  font-size: clamp(3rem, 12vw, 10rem);
+  letter-spacing: clamp(0.15em, 1.5vw, 0.35em);
+  line-height: 1;
+  max-width: 90vw;
+  text-align: center;
+  color: #000018;
+  animation:
+    scaleUp 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) forwards,
+    introFadeIn 0.5s ease forwards;
+}
     }
 
     @keyframes scaleUp {
