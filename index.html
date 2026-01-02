@@ -17,11 +17,11 @@
       color: #000018;
       font-family: Arial, Helvetica, sans-serif;
       min-height: 100vh;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     /* =====================
-       INTRO OVERLAY
+       INTRO OVERLAY (p5aholic-style)
     ====================== */
     #intro {
       position: fixed;
@@ -31,8 +31,8 @@
       justify-content: center;
       z-index: 9999;
       pointer-events: none;
-      animation: intro-out 1s ease forwards;
-      animation-delay: 1.8s;
+      animation: introFadeOut 1s ease forwards;
+      animation-delay: 2.2s;
     }
 
     #intro h1 {
@@ -40,10 +40,19 @@
       letter-spacing: 0.4em;
       font-weight: 300;
       color: #000018;
-      animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+      opacity: 0;
+      animation:
+        scale-up-center 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) forwards,
+        introFadeIn 0.6s ease forwards;
     }
 
-    @keyframes intro-out {
+    @keyframes introFadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes introFadeOut {
       to {
         opacity: 0;
         visibility: hidden;
@@ -136,19 +145,8 @@
     }
 
     /* =====================
-       ANIMISTA
+       ANIMISTA – SCALE UP
     ====================== */
-    @-webkit-keyframes scale-up-center {
-      0% {
-        -webkit-transform: scale(0.5);
-        transform: scale(0.5);
-      }
-      100% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-      }
-    }
-
     @keyframes scale-up-center {
       0% {
         transform: scale(0.5);
@@ -211,3 +209,4 @@
 
 </body>
 </html>
+
