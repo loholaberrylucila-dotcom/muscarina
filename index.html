@@ -10,59 +10,66 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-    /* INTRO ANIMADA */
-#intro {
-  position: fixed;
-  inset: 0;
-  background: #111111;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  animation: introOut 1.2s ease forwards;
-  animation-delay: 2.5s;
-}
+    }
 
-#intro h1 {
-  font-size: clamp(3rem, 10vw, 9rem);
-  letter-spacing: 0.4em;
-  font-weight: 300;
-  color: transparent;
-  -webkit-text-stroke: 2px #000018;
-  opacity: 0;
-  animation: introText 2s ease forwards;
-}
+    /* =====================
+       INTRO ANIMADA
+    ====================== */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: #111111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: introOut 1.2s ease forwards;
+      animation-delay: 2.5s;
+    }
 
-@keyframes introText {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+    #intro h1 {
+      font-size: clamp(3rem, 10vw, 9rem);
+      letter-spacing: 0.4em;
+      font-weight: 300;
+      color: transparent;
+      -webkit-text-stroke: 2px #000018;
+      opacity: 0;
+      animation: introText 2s ease forwards;
+    }
 
-@keyframes introOut {
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
+    @keyframes introText {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
+    @keyframes introOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    /* =====================
+       ESTILOS GENERALES
+    ====================== */
     body {
       background-color: #111111;
-  color: #000018;
-  font-family: Arial, Helvetica, sans-serif;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow-x: hidden;
-}
+      color: #000018;
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+    }
 
     /* CONTENIDO SIEMPRE ARRIBA DEL VANTA */
     nav,
@@ -72,7 +79,7 @@
       z-index: 10;
     }
 
-   nav {
+    nav {
       position: fixed;
       top: 30px;
       display: flex;
@@ -89,12 +96,9 @@
       transition: all 0.3s ease;
     }
 
-nav a:hover {
-  background: #f2f2f2;
-  color: #0f0f0f;
-}
-
     nav a:hover {
+      background: #f2f2f2;
+      color: #0f0f0f;
       opacity: 0.6;
     }
 
@@ -104,7 +108,7 @@ nav a:hover {
       max-width: 800px;
     }
 
-    h1 {
+    main h1 {
       font-size: 48px;
       letter-spacing: 6px;
       font-weight: 300;
@@ -119,21 +123,20 @@ nav a:hover {
     }
 
     .cta {
-  display: inline-block;
-  padding: 12px 30px;
-  border: 1px solid #000018;
-  color: #000018;
-  text-decoration: none;
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  transition: background 0.3s, color 0.3s;
-}
+      display: inline-block;
+      padding: 12px 30px;
+      border: 1px solid #000018;
+      color: #000018;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: background 0.3s, color 0.3s;
+    }
 
-.cta:hover {
-  background: #000018;
-  color: #ffffff;
-}
+    .cta:hover {
+      background: #000018;
+      color: #ffffff;
     }
 
     footer {
@@ -146,9 +149,11 @@ nav a:hover {
 </head>
 
 <body>
-<div id="intro">
-  <h1>MUSCARINA</h1>
-</div>
+
+  <!-- INTRO -->
+  <div id="intro">
+    <h1>MUSCARINA</h1>
+  </div>
 
   <nav>
     <a href="index.html">Inicio</a>
@@ -177,10 +182,10 @@ nav a:hover {
     VANTA.FOG({
       el: "body",
       backgroundAlpha: 1.0,
-      baseColor: 0xd0ff94,     // verde lima
-      highlightColor: 0x83e7ff, // celeste
-      midtoneColor: 0xe8a0ff,   // violeta
-      lowlightColor: 0x006ee9,  // azul profundo
+      baseColor: 0xd0ff94,
+      highlightColor: 0x83e7ff,
+      midtoneColor: 0xe8a0ff,
+      lowlightColor: 0x006ee9,
       blurFactor: 0.9,
       speed: 2.8,
       zoom: 1.4,
@@ -189,7 +194,7 @@ nav a:hover {
       mouseControls: true,
       touchControls: true,
       gyroControls: false
-    })
+    });
   </script>
 
 </body>
