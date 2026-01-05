@@ -39,17 +39,25 @@
     }
 
     /* ===== INTRO ===== */
-    #intro {
-      position: fixed;
-      inset: 0;
-      background: #e8a0ff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      animation: introFadeOut 1s ease forwards;
-      animation-delay: 2.4s;
-    }
+   #intro {
+  position: fixed;
+  inset: 0;
+  background: #e8a0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+
+  -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+  mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+  -webkit-mask-size: 7100% 100%;
+  mask-size: 7100% 100%;
+
+  animation:
+    introHold 2.4s linear forwards,
+    introMaskOut 0.9s steps(70) forwards;
+  animation-delay: 0s, 2.4s;
+}
 
     #intro h1 {
       font-size: clamp(3rem, 12vw, 10rem);
@@ -66,9 +74,6 @@
       to { opacity: 1; }
     }
 
-    @keyframes introFadeOut {
-      to { opacity: 0; visibility: hidden; }
-    }
 
     @keyframes scale-up-center {
       from { transform: scale(0.5); }
@@ -174,6 +179,24 @@
       from { mask-position: 100% 0; -webkit-mask-position: 100% 0; }
       to { mask-position: 0 0; -webkit-mask-position: 0 0; }
     }
+    @keyframes introHold {
+  from { opacity: 1; }
+  to { opacity: 1; }
+}
+
+@keyframes introMaskOut {
+  from {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+  to {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+    
   </style>
 </head>
 
