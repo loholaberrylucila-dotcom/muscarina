@@ -27,6 +27,10 @@
       color: #000018;
       font-family: 'myrtillepixel', monospace;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       position: relative;
       overflow: hidden;
       text-transform: lowercase;
@@ -35,25 +39,25 @@
     }
 
     /* ===== INTRO ===== */
-    #intro {
-      position: fixed;
-      inset: 0;
-      background: #e8a0ff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
+   #intro {
+  position: fixed;
+  inset: 0;
+  background: #e8a0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
 
-      -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      -webkit-mask-size: 7100% 100%;
-      mask-size: 7100% 100%;
+  -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+  mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+  -webkit-mask-size: 7100% 100%;
+  mask-size: 7100% 100%;
 
-      animation:
-        introHold 2.4s linear forwards,
-        introMaskOut 0.9s steps(70) forwards;
-      animation-delay: 0s, 2.4s;
-    }
+  animation:
+    introHold 2.4s linear forwards,
+    introMaskOut 0.9s steps(70) forwards;
+  animation-delay: 0s, 2.4s;
+}
 
     #intro h1 {
       font-size: clamp(3rem, 12vw, 10rem);
@@ -70,6 +74,7 @@
       to { opacity: 1; }
     }
 
+
     @keyframes scale-up-center {
       from { transform: scale(0.5); }
       to { transform: scale(1); }
@@ -85,9 +90,7 @@
     nav {
       position: fixed;
       top: 30px;
-      width: 100%;
       display: flex;
-      justify-content: center;
       gap: 28px;
     }
 
@@ -114,27 +117,24 @@
       animation: ani 0.7s steps(70) forwards;
     }
 
-    /* ===== MAIN FLEX ===== */
+    /* ===== MAIN ===== */
     main {
-      display: flex;
-      width: 100%;
-      padding: 120px 60px 60px;
+      text-align: center;
+      padding: 40px 20px;
+      max-width: 800px;
     }
 
-    .espacio {
-      flex: 1;
+    main h1 {
+      font-size: 52px;
+      letter-spacing: 6px;
+      margin-bottom: 20px;
     }
 
-    .bloque-texto {
-      flex: 1;
-      max-width: 360px;
+    p {
       font-size: 14px;
       line-height: 1.6;
       opacity: 0.9;
-    }
-
-    .bloque-texto p {
-      margin-bottom: 30px;
+      margin-bottom: 40px;
     }
 
     /* ===== CTA ===== */
@@ -165,8 +165,6 @@
     footer {
       position: fixed;
       bottom: 20px;
-      width: 100%;
-      text-align: center;
       font-size: 10px;
       opacity: 0.6;
     }
@@ -181,36 +179,24 @@
       from { mask-position: 100% 0; -webkit-mask-position: 100% 0; }
       to { mask-position: 0 0; -webkit-mask-position: 0 0; }
     }
-
     @keyframes introHold {
-      from { opacity: 1; }
-      to { opacity: 1; }
-    }
+  from { opacity: 1; }
+  to { opacity: 1; }
+}
 
-    @keyframes introMaskOut {
-      to {
-        -webkit-mask-position: 100% 0;
-        mask-position: 100% 0;
-        opacity: 0;
-        visibility: hidden;
-      }
-    }
-
-    /* ===== MOBILE ===== */
-    @media (max-width: 768px) {
-      main {
-        flex-direction: column;
-        padding: 100px 30px;
-      }
-
-      .espacio {
-        display: none;
-      }
-
-      .bloque-texto {
-        max-width: 100%;
-      }
-    }
+@keyframes introMaskOut {
+  from {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+  to {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+    
   </style>
 </head>
 
@@ -218,7 +204,7 @@
 
   <!-- INTRO -->
   <div id="intro">
-    <h1>lucila loholaberry</h1>
+    <h1>muscarina</h1>
   </div>
 
   <!-- NAV -->
@@ -230,19 +216,13 @@
 
   <!-- MAIN -->
   <main>
-    <div class="espacio"></div>
+    <h1>muscarina</h1>
+    <p>
+      tienda virtual de arte y objetos de diseño<br>
+      exploracion estetica, materia y percepcion
+    </p>
 
-    <div class="bloque-texto">
-      <p>
-        Nací en 1998 en Mar del Plata, Argentina.<br>
-        Soy diseñadora industrial de producto.<br>
-        Mi práctica se centra en dar voz a lo invisible,
-        investigando la relación entre lo virtual y lo material
-        buscando materializar más allá de lo visible.
-      </p>
-
-      <a class="cta" href="catalogo.html">ver catálogo</a>
-    </div>
+    <a class="cta" href="catalogo.html">ver catalogo</a>
   </main>
 
   <!-- FOOTER -->
