@@ -6,7 +6,7 @@
   <title>muscarina</title>
 
   <style>
-    /* ===== FUENTE ===== */
+    /* ===== FUENTE LOCAL ===== */
     @font-face {
       font-family: 'myrtillepixel';
       src: url('fonts/myrtillepixel.woff2') format('woff2'),
@@ -17,9 +17,9 @@
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     body {
@@ -38,9 +38,7 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* =====================
-       INTRO PANTALLA COMPLETA
-    ====================== */
+    /* ===== INTRO ===== */
     #intro {
       position: fixed;
       inset: 0;
@@ -56,9 +54,6 @@
     #intro h1 {
       font-size: clamp(3rem, 12vw, 10rem);
       letter-spacing: clamp(0.15em, 1.5vw, 0.35em);
-      line-height: 1;
-      max-width: 90vw;
-      text-align: center;
       color: #000018;
       opacity: 0;
       animation:
@@ -68,47 +63,25 @@
 
     @keyframes introFadeIn {
       from { opacity: 0; }
-      to   { opacity: 1; }
+      to { opacity: 1; }
     }
 
     @keyframes introFadeOut {
-      to {
-        opacity: 0;
-        visibility: hidden;
-      }
-    }
-
-    /* ===== ANIMISTA SCALE-UP-CENTER ===== */
-    @-webkit-keyframes scale-up-center {
-      0% {
-        -webkit-transform: scale(0.5);
-                transform: scale(0.5);
-      }
-      100% {
-        -webkit-transform: scale(1);
-                transform: scale(1);
-      }
+      to { opacity: 0; visibility: hidden; }
     }
 
     @keyframes scale-up-center {
-      0% {
-        -webkit-transform: scale(0.5);
-                transform: scale(0.5);
-      }
-      100% {
-        -webkit-transform: scale(1);
-                transform: scale(1);
-      }
+      from { transform: scale(0.5); }
+      to { transform: scale(1); }
     }
 
-    /* ===== CONTENIDO POR ENCIMA DEL VANTA ===== */
-    nav,
-    main,
-    footer {
+    /* ===== CONTENIDO SOBRE VANTA ===== */
+    nav, main, footer {
       position: relative;
       z-index: 10;
     }
 
+    /* ===== NAV ===== */
     nav {
       position: fixed;
       top: 30px;
@@ -117,19 +90,29 @@
     }
 
     nav a {
-      color: #000018;
-      text-decoration: none;
+      padding: 10px 18px;
       font-size: 14px;
       letter-spacing: 2px;
-      padding: 10px 18px;
+      color: #000018;
+      text-decoration: none;
       border: 1px solid rgba(0,0,24,0.4);
-      transition: all 0.3s ease;
+      background: transparent;
+      cursor: pointer;
+      font-family: 'myrtillepixel', monospace;
+
+      -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+      mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+      -webkit-mask-size: 7100% 100%;
+      mask-size: 7100% 100%;
+
+      animation: ani2 0.7s steps(70) forwards;
     }
 
     nav a:hover {
-      background: rgba(0,0,24,0.08);
+      animation: ani 0.7s steps(70) forwards;
     }
 
+    /* ===== MAIN ===== */
     main {
       text-align: center;
       padding: 40px 20px;
@@ -149,26 +132,47 @@
       margin-bottom: 40px;
     }
 
+    /* ===== CTA ===== */
     .cta {
       display: inline-block;
       padding: 12px 30px;
-      border: 1px solid rgba(0,0,24,0.6);
-      color: #000018;
-      text-decoration: none;
       font-size: 12px;
       letter-spacing: 2px;
-      transition: background 0.3s;
+      color: #000018;
+      border: 1px solid rgba(0,0,24,0.6);
+      text-decoration: none;
+      cursor: pointer;
+      font-family: 'myrtillepixel', monospace;
+
+      -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+      mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+      -webkit-mask-size: 7100% 100%;
+      mask-size: 7100% 100%;
+
+      animation: ani2 0.7s steps(70) forwards;
     }
 
     .cta:hover {
-      background: rgba(0,0,24,0.1);
+      animation: ani 0.7s steps(70) forwards;
     }
 
+    /* ===== FOOTER ===== */
     footer {
       position: fixed;
       bottom: 20px;
       font-size: 10px;
       opacity: 0.6;
+    }
+
+    /* ===== ANIMACIONES MASK ===== */
+    @keyframes ani {
+      from { mask-position: 0 0; -webkit-mask-position: 0 0; }
+      to { mask-position: 100% 0; -webkit-mask-position: 100% 0; }
+    }
+
+    @keyframes ani2 {
+      from { mask-position: 100% 0; -webkit-mask-position: 100% 0; }
+      to { mask-position: 0 0; -webkit-mask-position: 0 0; }
     }
   </style>
 </head>
@@ -180,12 +184,14 @@
     <h1>muscarina</h1>
   </div>
 
+  <!-- NAV -->
   <nav>
     <a href="index.html">inicio</a>
     <a href="catalogo.html">catalogo</a>
     <a href="bio.html">bio</a>
   </nav>
 
+  <!-- MAIN -->
   <main>
     <h1>muscarina</h1>
     <p>
@@ -196,11 +202,12 @@
     <a class="cta" href="catalogo.html">ver catalogo</a>
   </main>
 
+  <!-- FOOTER -->
   <footer>
     © muscarina
   </footer>
 
-  <!-- VANTA FOG -->
+  <!-- VANTA -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="https://unpkg.com/vanta@latest/dist/vanta.fog.min.js"></script>
   <script>
@@ -224,3 +231,4 @@
 
 </body>
 </html>
+
