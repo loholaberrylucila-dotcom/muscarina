@@ -46,24 +46,31 @@
 
     /* ===== INTRO ===== */
     #intro {
-      position: fixed;
-      inset: 0;
-      background: #e8a0ff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
+  position: fixed;
+  inset: 0;
+  background: #e8a0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
 
-      -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      -webkit-mask-size: 17000% 100%;
-      mask-size: 17000% 100%;
+  /* MÁSCARA ULTRA DETALLADA */
+  -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+  mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
 
-      animation:
-        introHold 2.4s linear forwards,
-        introMaskOut 0.9s steps(70) forwards;
-      animation-delay: 0s, 2.4s;
-    }
+  /* grano EXTREMADAMENTE chico */
+  -webkit-mask-size: 18000% 100%;
+  mask-size: 18000% 100%;
+
+  /* fuerza el patrón tipo grano */
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+
+  animation:
+    introHold 2.4s linear forwards,
+    introMaskOut 0.9s steps(70) forwards;
+  animation-delay: 0s, 2.4s;
+}
 
     #intro h1 {
       font-family: 'JostBook', sans-serif;
