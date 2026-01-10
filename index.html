@@ -44,45 +44,54 @@
       overflow: hidden;
     }
 
- /* ===== INTRO ===== */
-#intro {
-  position: fixed;
-  inset: 0;
-  background: #e8a0ff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
+    /* ===== INTRO ===== */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: #e8a0ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
 
-  animation:
-    introHold 2.4s linear forwards,
-    fadeOutIntro 1.8s ease forwards;
-  animation-delay: 0s, 2.4s;
-}
+      animation:
+        introHold 2.4s linear forwards,
+        fadeOutIntro 2s ease forwards;
+      animation-delay: 0s, 2.4s;
+    }
 
-#intro h1 {
-  font-family: 'JostBook', sans-serif;
-  font-size: clamp(3rem, 12vw, 10rem);
-  letter-spacing: clamp(0.15em, 1.5vw, 0.35em);
-  opacity: 0;
-  animation:
-    introFadeIn 0.4s ease forwards,
-    scale-up-center 0.9s cubic-bezier(.895,.03,.685,.22) forwards;
-}
+    #intro h1 {
+      font-family: 'JostBook', sans-serif;
+      font-size: clamp(3rem, 12vw, 10rem);
+      letter-spacing: clamp(0.15em, 1.5vw, 0.35em);
+      opacity: 0;
+      animation:
+        introFadeIn 0.4s ease forwards,
+        scale-up-center 0.9s cubic-bezier(.895,.03,.685,.22) forwards;
+    }
 
-@keyframes introHold {
-  from { opacity: 1; }
-  to { opacity: 1; }
-}
+    @keyframes introFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-@keyframes fadeOutIntro {
-  to {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-}
+    @keyframes scale-up-center {
+      from { transform: scale(0.5); }
+      to { transform: scale(1); }
+    }
 
+    @keyframes introHold {
+      from { opacity: 1; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeOutIntro {
+      to {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+    }
 
     nav, main, footer {
       position: relative;
@@ -175,7 +184,7 @@
       font-family: 'JostThin', sans-serif;
     }
 
-    /* ===== MASK ANIMATIONS ===== */
+    /* ===== MASK ANIMATIONS (BOTONES) ===== */
     @keyframes ani {
       from { mask-position: 0 0; -webkit-mask-position: 0 0; }
       to { mask-position: 100% 0; -webkit-mask-position: 100% 0; }
@@ -184,24 +193,6 @@
     @keyframes ani2 {
       from { mask-position: 100% 0; -webkit-mask-position: 100% 0; }
       to { mask-position: 0 0; -webkit-mask-position: 0 0; }
-    }
-
-    @keyframes introHold {
-      from { opacity: 1; }
-      to { opacity: 1; }
-    }
-
-    @keyframes introMaskOut {
-      from {
-        -webkit-mask-position: 0 0;
-        mask-position: 0 0;
-      }
-      to {
-        -webkit-mask-position: 100% 0;
-        mask-position: 100% 0;
-        opacity: 0;
-        visibility: hidden;
-      }
     }
   </style>
 </head>
@@ -222,12 +213,12 @@
     <h1>LUCILA LOHOLABERRY</h1>
 
     <p>
-     MAR DEL PLATA - ARGENTINA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■<br>
-     DISEÑADORA INDUSTRIAL DE PRODUCTO ■ ■ ■ ■ <br>
-     MI OBRA SE BASA EN DAR VOZ A LO INVISIBLE ■ ■<br>
-     INVESTIGANDO LA RELACIÓN ENTRE LO VIRTUAL<br> 
-     Y LA MATERIA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■
-   </p>
+      MAR DEL PLATA - ARGENTINA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■<br>
+      DISEÑADORA INDUSTRIAL DE PRODUCTO ■ ■ ■ ■ <br>
+      MI OBRA SE BASA EN DAR VOZ A LO INVISIBLE ■ ■<br>
+      INVESTIGANDO LA RELACIÓN ENTRE LO VIRTUAL<br> 
+      Y LA MATERIA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■
+    </p>
 
     <p>
       TIENDA VIRTUAL DE ARTE Y OBJETOS DE DISEÑO<br>
