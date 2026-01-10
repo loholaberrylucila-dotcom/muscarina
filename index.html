@@ -6,12 +6,21 @@
   <title>muscarina</title>
 
   <style>
-    /* ===== FUENTE LOCAL ===== */
+    /* ===== FUENTES LOCALES ===== */
     @font-face {
-      font-family: 'myrtillepixel';
-      src: url('fonts/myrtillepixel.woff2') format('woff2'),
-           url('fonts/myrtillepixel.woff') format('woff');
+      font-family: 'JostBook';
+      src: url('fonts/Jost-Book.woff2') format('woff2'),
+           url('fonts/Jost-Book.woff') format('woff');
       font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'JostThin';
+      src: url('fonts/Jost-Thin.woff2') format('woff2'),
+           url('fonts/Jost-Thin.woff') format('woff');
+      font-weight: 300;
       font-style: normal;
       font-display: swap;
     }
@@ -25,7 +34,7 @@
     body {
       background-color: #111111;
       color: #000018;
-      font-family: 'myrtillepixel', monospace;
+      font-family: 'JostBook', sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -34,35 +43,33 @@
       position: relative;
       overflow: hidden;
       text-transform: lowercase;
-      -webkit-font-smoothing: none;
-      -moz-osx-font-smoothing: grayscale;
     }
 
     /* ===== INTRO ===== */
-   #intro {
-  position: fixed;
-  inset: 0;
-  background: #e8a0ff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: #e8a0ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
 
-  -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-  mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-  -webkit-mask-size: 7100% 100%;
-  mask-size: 7100% 100%;
+      -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+      mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+      -webkit-mask-size: 7100% 100%;
+      mask-size: 7100% 100%;
 
-  animation:
-    introHold 2.4s linear forwards,
-    introMaskOut 0.9s steps(70) forwards;
-  animation-delay: 0s, 2.4s;
-}
+      animation:
+        introHold 2.4s linear forwards,
+        introMaskOut 0.9s steps(70) forwards;
+      animation-delay: 0s, 2.4s;
+    }
 
     #intro h1 {
+      font-family: 'JostBook', sans-serif;
       font-size: clamp(3rem, 12vw, 10rem);
       letter-spacing: clamp(0.15em, 1.5vw, 0.35em);
-      color: #000018;
       opacity: 0;
       animation:
         introFadeIn 0.4s ease forwards,
@@ -74,13 +81,11 @@
       to { opacity: 1; }
     }
 
-
     @keyframes scale-up-center {
       from { transform: scale(0.5); }
       to { transform: scale(1); }
     }
 
-    /* ===== CONTENIDO SOBRE VANTA ===== */
     nav, main, footer {
       position: relative;
       z-index: 10;
@@ -96,14 +101,14 @@
 
     nav a {
       padding: 10px 18px;
-      font-size: 14px;
+      font-size: 13px;
       letter-spacing: 2px;
       color: #000018;
       text-decoration: none;
       border: 1px solid rgba(0,0,24,0.4);
       background: transparent;
       cursor: pointer;
-      font-family: 'myrtillepixel', monospace;
+      font-family: 'JostBook', sans-serif;
 
       -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
       mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -125,16 +130,18 @@
     }
 
     main h1 {
+      font-family: 'JostBook', sans-serif;
       font-size: 52px;
       letter-spacing: 6px;
       margin-bottom: 20px;
     }
 
     p {
+      font-family: 'JostThin', sans-serif;
       font-size: 14px;
       line-height: 1.6;
       opacity: 0.9;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
     }
 
     /* ===== CTA ===== */
@@ -147,7 +154,7 @@
       border: 1px solid rgba(0,0,24,0.6);
       text-decoration: none;
       cursor: pointer;
-      font-family: 'myrtillepixel', monospace;
+      font-family: 'JostBook', sans-serif;
 
       -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
       mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -167,9 +174,10 @@
       bottom: 20px;
       font-size: 10px;
       opacity: 0.6;
+      font-family: 'JostThin', sans-serif;
     }
 
-    /* ===== ANIMACIONES MASK ===== */
+    /* ===== MASK ANIMATIONS ===== */
     @keyframes ani {
       from { mask-position: 0 0; -webkit-mask-position: 0 0; }
       to { mask-position: 100% 0; -webkit-mask-position: 100% 0; }
@@ -179,52 +187,50 @@
       from { mask-position: 100% 0; -webkit-mask-position: 100% 0; }
       to { mask-position: 0 0; -webkit-mask-position: 0 0; }
     }
-    @keyframes introHold {
-  from { opacity: 1; }
-  to { opacity: 1; }
-}
 
-@keyframes introMaskOut {
-  from {
-    -webkit-mask-position: 0 0;
-    mask-position: 0 0;
-  }
-  to {
-    -webkit-mask-position: 100% 0;
-    mask-position: 100% 0;
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-    
+    @keyframes introHold {
+      from { opacity: 1; }
+      to { opacity: 1; }
+    }
+
+    @keyframes introMaskOut {
+      from {
+        -webkit-mask-position: 0 0;
+        mask-position: 0 0;
+      }
+      to {
+        -webkit-mask-position: 100% 0;
+        mask-position: 100% 0;
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- INTRO -->
   <div id="intro">
     <h1>muscarina</h1>
   </div>
 
-  <!-- NAV -->
   <nav>
     <a href="index.html">Inicio</a>
     <a href="tienda.html">Tienda</a>
     <a href="bio.html">Portfolio</a>
   </nav>
 
-  <!-- MAIN -->
   <main>
     <h1>muscarina</h1>
-     <p>
-      Nací en 1998 en Mar del Plata, Argentina.<br>  
-      diseñadora industrial de producto.<br>  
-      mi obra se basa en dar voz a lo<br>  
-      invisible, investigando la relación<br>  
-      entre lo virtual y la materia<br> 
+
+    <p>
+      Nací en 1998 en Mar del Plata, Argentina.<br>
+      diseñadora industrial de producto.<br>
+      mi obra se basa en dar voz a lo<br>
+      invisible, investigando la relación<br>
+      entre lo virtual y la materia
     </p>
-   
+
     <p>
       tienda virtual de arte y objetos de diseño<br>
       exploracion estetica, materia y percepcion
@@ -233,7 +239,6 @@
     <a class="cta" href="catalogo.html">ver catalogo</a>
   </main>
 
-  <!-- FOOTER -->
   <footer>
     © muscarina
   </footer>
@@ -262,3 +267,5 @@
 
 </body>
 </html>
+
+
