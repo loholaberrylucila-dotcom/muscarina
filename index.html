@@ -136,14 +136,10 @@
       max-width: 800px;
     }
 
-   /* ===== TITLE INSIDE TEXT FRAME ===== */
-.text-frame h1 {
-  font-family: 'JostBook', sans-serif;
-  font-size: clamp(1.4rem, 3.2vw, 2.2rem);
-  letter-spacing: 0.45em;
-  margin-bottom: 48px; /* ← separación clara del párrafo */
-}
-  }
+ main h1 { 
+   font-family: 'JostBook', sans-serif;
+   font-size: 32px; letter-spacing: 6px;
+   margin-bottom: 40px;
 
     p {
       font-family: 'JostThin', sans-serif;
@@ -226,7 +222,15 @@
 
 .text-frame:hover {
   animation: ani 0.7s steps(70) forwards;
+/* ===== TEXT FRAME TITLE ===== */
+.text-frame h1 {
+  font-family: 'JostBook', sans-serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  letter-spacing: 0.35em;
+  margin-bottom: 48px; /* ← separación clara del párrafo */
+  margin-top: 0;
 }
+  
   </style>
 </head>
 
