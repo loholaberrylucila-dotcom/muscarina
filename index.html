@@ -194,6 +194,19 @@
       from { mask-position: 100% 0; -webkit-mask-position: 100% 0; }
       to { mask-position: 0 0; -webkit-mask-position: 0 0; }
     }
+    /* ===== TEXT FRAME ===== */
+.text-frame {
+  border: 1px solid rgba(0,0,24,0.4);
+  padding: 32px 38px;
+  display: block;
+  margin: 0 auto 30px auto;
+  text-align: center;
+}
+
+.text-frame p:last-child {
+  margin-bottom: 0;
+}
+
   </style>
 </head>
 
@@ -209,23 +222,26 @@
     <a href="bio.html">PORTFOLIO</a>
   </nav>
 
-  <main>
-    <h1>LUCILA LOHOLABERRY</h1>
+ <div class="text-frame" id="text-frame">
+  <h1 id="main-title">LUCILA LOHOLABERRY</h1>
 
-    <p>
-      MAR DEL PLATA - ARGENTINA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■<br>
-      DISEÑADORA INDUSTRIAL DE PRODUCTO ■ ■ ■ ■ <br>
-      MI OBRA SE BASA EN DAR VOZ A LO INVISIBLE ■ ■<br>
-      INVESTIGANDO LA RELACIÓN ENTRE LO VIRTUAL<br> 
-      Y LA MATERIA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■
-    </p>
+  <p>
+    MAR DEL PLATA - ARGENTINA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■<br>
+    DISEÑADORA INDUSTRIAL DE PRODUCTO ■ ■ ■ ■ <br>
+    MI OBRA SE BASA EN DAR VOZ A LO INVISIBLE ■ ■<br>
+    INVESTIGANDO LA RELACIÓN ENTRE LO VIRTUAL<br> 
+    Y LA MATERIA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■
+  </p>
 
-    <p>
-      TIENDA VIRTUAL DE ARTE Y OBJETOS DE DISEÑO<br>
-      EXPLORACION ESTETICA MATERIA Y PERCEPCION
-    </p>
+  <p>
+    TIENDA VIRTUAL DE ARTE Y OBJETOS DE DISEÑO<br>
+    EXPLORACION ESTETICA MATERIA Y PERCEPCION
+  </p>
+</div>
 
-    <a class="cta" href="catalogo.html">ver catalogo</a>
+<a class="cta" href="tienda.html">VER TIENDA</a>
+
+    <a class="cta" href="tienda.html">VER TIENDA</a>
   </main>
 
   <footer>
@@ -253,6 +269,25 @@
       gyroControls: false
     });
   </script>
+  <!-- MATCH FRAME WIDTH TO NAV -->
+<script>
+  function matchFrameToNav() {
+    const nav = document.getElementById("main-nav");
+    const frame = document.getElementById("text-frame");
+
+    if (!nav || !frame) return;
+
+    if (window.innerWidth > 768) {
+      frame.style.width = nav.offsetWidth + "px";
+    } else {
+      frame.style.width = "auto";
+    }
+  }
+
+  window.addEventListener("load", matchFrameToNav);
+  window.addEventListener("resize", matchFrameToNav);
+</script>
+
 
 </body>
 </html>
