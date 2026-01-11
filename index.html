@@ -53,21 +53,22 @@
       align-items: center;
       justify-content: center;
       z-index: 9999;
+
       animation:
         introHold 2.4s linear forwards,
         fadeOutIntro 2s ease forwards;
       animation-delay: 0s, 2.4s;
     }
 
-    #intro h1 {
-      font-family: 'JostBook', sans-serif;
-      font-size: clamp(1.6rem, 4.5vw, 3.8rem);
-      letter-spacing: clamp(0.18em, 0.9vw, 0.32em);
-      opacity: 0;
-      animation:
-        introFadeIn 0.4s ease forwards,
-        scale-up-center 0.9s cubic-bezier(.895,.03,.685,.22) forwards;
-    }
+   #intro h1 {
+  font-family: 'JostBook', sans-serif;
+  font-size: clamp(1.6rem, 4.5vw, 3.8rem);
+  letter-spacing: clamp(0.18em, 0.9vw, 0.32em);
+  opacity: 0;
+  animation:
+    introFadeIn 0.4s ease forwards,
+    scale-up-center 0.9s cubic-bezier(.895,.03,.685,.22) forwards;
+}
 
     @keyframes introFadeIn {
       from { opacity: 0; }
@@ -135,14 +136,11 @@
       max-width: 800px;
     }
 
-    #main-title {
+    main h1 {
       font-family: 'JostBook', sans-serif;
-      font-size: 42px;
-      letter-spacing: 5px;
-      margin-bottom: 20px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
+      font-size: 32px;
+      letter-spacing: 6px;
+      margin-bottom: 24px;
     }
 
     p {
@@ -186,7 +184,7 @@
       font-family: 'JostThin', sans-serif;
     }
 
-    /* ===== MASK ANIMATIONS ===== */
+    /* ===== MASK ANIMATIONS (BOTONES) ===== */
     @keyframes ani {
       from { mask-position: 0 0; -webkit-mask-position: 0 0; }
       to { mask-position: 100% 0; -webkit-mask-position: 100% 0; }
@@ -205,14 +203,14 @@
     <h1>LUCILA LOHOLABERRY</h1>
   </div>
 
-  <nav id="main-nav">
+  <nav>
     <a href="index.html">INICIO</a>
     <a href="tienda.html">TIENDA</a>
     <a href="bio.html">PORTFOLIO</a>
   </nav>
 
   <main>
-    <h1 id="main-title">LUCILA LOHOLABERRY</h1>
+    <h1>LUCILA LOHOLABERRY</h1>
 
     <p>
       MAR DEL PLATA - ARGENTINA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■<br>
@@ -256,24 +254,6 @@
     });
   </script>
 
-  <!-- MATCH TITLE WIDTH TO NAV -->
-  <script>
-    function matchTitleToNav() {
-      if (window.innerWidth > 768) {
-        const nav = document.getElementById("main-nav");
-        const title = document.getElementById("main-title");
-
-        if (nav && title) {
-          title.style.width = nav.offsetWidth + "px";
-        }
-      } else {
-        document.getElementById("main-title").style.width = "auto";
-      }
-    }
-
-    window.addEventListener("load", matchTitleToNav);
-    window.addEventListener("resize", matchTitleToNav);
-  </script>
-
 </body>
 </html>
+
