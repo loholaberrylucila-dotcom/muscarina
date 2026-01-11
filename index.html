@@ -140,7 +140,7 @@
       font-family: 'JostBook', sans-serif;
       font-size: 32px;
       letter-spacing: 6px;
-      margin-bottom: 24px;
+      margin-bottom: 40px;
     }
 
     p {
@@ -206,7 +206,25 @@
 .text-frame p:last-child {
   margin-bottom: 0;
 }
+    /* ===== TEXT FRAME MASK HOVER ===== */
+.text-frame {
+  border: 1px solid rgba(0,0,24,0.4);
+  padding: 32px 38px;
+  display: block;
+  margin: 0 auto 30px auto;
+  text-align: center;
 
+  -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+  mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+  -webkit-mask-size: 7100% 100%;
+  mask-size: 7100% 100%;
+
+  animation: ani2 0.7s steps(70) forwards;
+}
+
+.text-frame:hover {
+  animation: ani 0.7s steps(70) forwards;
+}
   </style>
 </head>
 
@@ -240,8 +258,7 @@
 </div>
 
 <a class="cta" href="tienda.html">VER TIENDA</a>
-
-    <a class="cta" href="tienda.html">VER TIENDA</a>
+  
   </main>
 
   <footer>
