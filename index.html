@@ -6,210 +6,96 @@
   <title>LUCILA LOHOLABERRY</title>
 
   <style>
-    /* ===== FUENTES LOCALES ===== */
-    @font-face {
-      font-family: 'JostBook';
-      src: url('fonts/Jost-Book.woff2') format('woff2'),
-           url('fonts/Jost-Book.woff') format('woff');
-      font-weight: normal;
-      font-style: normal;
-      font-display: swap;
-    }
+ /* ===== FUENTES LOCALES ===== */
+@font-face {
+  font-family: 'JostBook';
+  src: url('fonts/Jost-Book.woff2') format('woff2'),
+       url('fonts/Jost-Book.woff') format('woff');
+  font-display: swap;
+}
 
-    @font-face {
-      font-family: 'JostThin';
-      src: url('fonts/Jost-Thin.woff2') format('woff2'),
-           url('fonts/Jost-Thin.woff') format('woff');
-      font-weight: 300;
-      font-style: normal;
-      font-display: swap;
-    }
+@font-face {
+  font-family: 'JostThin';
+  src: url('fonts/Jost-Thin.woff2') format('woff2'),
+       url('fonts/Jost-Thin.woff') format('woff');
+  font-weight: 300;
+  font-display: swap;
+}
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    body {
-      background-color: #111111;
-      color: #000018;
-      font-family: 'JostBook', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* ===== INTRO ===== */
-    #intro {
-      position: fixed;
-      inset: 0;
-      background: #e8a0ff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-
-      animation:
-        introHold 2.4s linear forwards,
-        fadeOutIntro 2s ease forwards;
-      animation-delay: 0s, 2.4s;
-    }
-
-   #intro h1 {
+body {
+  background-color: #111111;
+  color: #000018;
   font-family: 'JostBook', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* ===== INTRO ===== */
+#intro {
+  position: fixed;
+  inset: 0;
+  background: #e8a0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: introHold 2.4s linear forwards, fadeOutIntro 2s ease forwards;
+  animation-delay: 0s, 2.4s;
+}
+
+#intro h1 {
   font-size: clamp(1.6rem, 4.5vw, 3.8rem);
   letter-spacing: clamp(0.18em, 0.9vw, 0.32em);
   opacity: 0;
-  animation:
-    introFadeIn 0.4s ease forwards,
-    scale-up-center 0.9s cubic-bezier(.895,.03,.685,.22) forwards;
+  animation: introFadeIn 0.4s ease forwards, scale-up-center 0.9s cubic-bezier(.895,.03,.685,.22) forwards;
 }
 
-    @keyframes introFadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+@keyframes introFadeIn { to { opacity: 1; } }
+@keyframes scale-up-center { from { transform: scale(0.5); } to { transform: scale(1); } }
+@keyframes introHold {}
+@keyframes fadeOutIntro { to { opacity: 0; visibility: hidden; pointer-events: none; } }
 
-    @keyframes scale-up-center {
-      from { transform: scale(0.5); }
-      to { transform: scale(1); }
-    }
+/* ===== NAV ===== */
+nav {
+  position: fixed;
+  top: 30px;
+  display: flex;
+  gap: 28px;
+}
 
-    @keyframes introHold {
-      from { opacity: 1; }
-      to { opacity: 1; }
-    }
+nav a {
+  padding: 10px 18px;
+  font-size: 13px;
+  letter-spacing: 2px;
+  border: 1px solid rgba(0,0,24,0.4);
+  color: #000018;
+  text-decoration: none;
 
-    @keyframes fadeOutIntro {
-      to {
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-      }
-    }
+  -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+  mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+  -webkit-mask-size: 7100% 100%;
+  mask-size: 7100% 100%;
 
-    nav, main, footer {
-      position: relative;
-      z-index: 10;
-    }
+  animation: ani2 0.7s steps(70) forwards;
+}
 
-    /* ===== NAV ===== */
-    nav {
-      position: fixed;
-      top: 30px;
-      display: flex;
-      gap: 28px;
-    }
+nav a:hover { animation: ani 0.7s steps(70) forwards; }
 
-    nav a {
-      padding: 10px 18px;
-      font-size: 13px;
-      letter-spacing: 2px;
-      color: #000018;
-      text-decoration: none;
-      border: 1px solid rgba(0,0,24,0.4);
-      background: transparent;
-      cursor: pointer;
-      font-family: 'JostBook', sans-serif;
-
-      -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      -webkit-mask-size: 7100% 100%;
-      mask-size: 7100% 100%;
-
-      animation: ani2 0.7s steps(70) forwards;
-    }
-
-    nav a:hover {
-      animation: ani 0.7s steps(70) forwards;
-    }
-
-    /* ===== MAIN ===== */
-    main {
-      text-align: center;
-      padding: 40px 20px;
-      max-width: 800px;
-    }
-
- main h1 { 
-   font-family: 'JostBook', sans-serif;
-   font-size: 32px; letter-spacing: 6px;
-   margin-bottom: 40px;
-
-    p {
-      font-family: 'JostThin', sans-serif;
-      font-size: 14px;
-      line-height: 1.6;
-      opacity: 0.9;
-      margin-bottom: 30px;
-    }
-
-    /* ===== CTA ===== */
-    .cta {
-      display: inline-block;
-      padding: 12px 30px;
-      font-size: 12px;
-      letter-spacing: 2px;
-      color: #000018;
-      border: 1px solid rgba(0,0,24,0.6);
-      text-decoration: none;
-      cursor: pointer;
-      font-family: 'JostBook', sans-serif;
-
-      -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      -webkit-mask-size: 7100% 100%;
-      mask-size: 7100% 100%;
-
-      animation: ani2 0.7s steps(70) forwards;
-    }
-
-    .cta:hover {
-      animation: ani 0.7s steps(70) forwards;
-    }
-
-    /* ===== FOOTER ===== */
-    footer {
-      position: fixed;
-      bottom: 20px;
-      font-size: 10px;
-      opacity: 0.6;
-      font-family: 'JostThin', sans-serif;
-    }
-
-    /* ===== MASK ANIMATIONS (BOTONES) ===== */
-    @keyframes ani {
-      from { mask-position: 0 0; -webkit-mask-position: 0 0; }
-      to { mask-position: 100% 0; -webkit-mask-position: 100% 0; }
-    }
-
-    @keyframes ani2 {
-      from { mask-position: 100% 0; -webkit-mask-position: 100% 0; }
-      to { mask-position: 0 0; -webkit-mask-position: 0 0; }
-    }
-    /* ===== TEXT FRAME ===== */
+/* ===== TEXT FRAME ===== */
 .text-frame {
   border: 1px solid rgba(0,0,24,0.4);
   padding: 32px 38px;
-  display: block;
-  margin: 0 auto 30px auto;
-  text-align: center;
-}
-
-.text-frame p:last-child {
-  margin-bottom: 0;
-}
-    /* ===== TEXT FRAME MASK HOVER ===== */
-.text-frame {
-  border: 1px solid rgba(0,0,24,0.4);
-  padding: 32px 38px;
-  display: block;
-  margin: 0 auto 30px auto;
+  margin: 0 auto 30px;
   text-align: center;
 
   -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -222,16 +108,49 @@
 
 .text-frame:hover {
   animation: ani 0.7s steps(70) forwards;
+}
+
 /* ===== TEXT FRAME TITLE ===== */
 .text-frame h1 {
-  font-family: 'JostBook', sans-serif;
   font-size: clamp(1.4rem, 3vw, 2rem);
   letter-spacing: 0.35em;
-  margin-bottom: 48px; /* ← separación clara del párrafo */
-  margin-top: 0;
+  margin-bottom: 48px;
 }
-  
-  </style>
+
+.text-frame p {
+  font-family: 'JostThin', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.text-frame p:last-child {
+  margin-bottom: 0;
+}
+
+/* ===== CTA ===== */
+.cta {
+  padding: 12px 30px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  border: 1px solid rgba(0,0,24,0.6);
+  text-decoration: none;
+  color: #000018;
+
+  -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+  mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+  -webkit-mask-size: 7100% 100%;
+  mask-size: 7100% 100%;
+
+  animation: ani2 0.7s steps(70) forwards;
+}
+
+.cta:hover { animation: ani 0.7s steps(70) forwards; }
+
+/* ===== MASK ===== */
+@keyframes ani { from { mask-position: 0 0; } to { mask-position: 100% 0; } }
+@keyframes ani2 { from { mask-position: 100% 0; } to { mask-position: 0 0; } }
+</style>
 </head>
 
 <body>
