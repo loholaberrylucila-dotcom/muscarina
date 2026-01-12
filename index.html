@@ -261,10 +261,10 @@ body {
 
   function animate() {
     // micro cambios aleatorios (vuelo de mosca)
-    vx += (Math.random() - 0.5) * 0.12;
-    vy += (Math.random() - 0.5) * 0.12;
+    vx += (Math.random() - 0.5) * 0.6;
+    vy += (Math.random() - 0.5) * 0.6;
 
-    const maxSpeed = 0.9;
+    const maxSpeed = 2.2;
     vx = Math.max(Math.min(vx, maxSpeed), -maxSpeed);
     vy = Math.max(Math.min(vy, maxSpeed), -maxSpeed);
 
