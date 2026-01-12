@@ -150,6 +150,15 @@ nav a:hover { animation: ani 0.7s steps(70) forwards; }
 /* ===== MASK ===== */
 @keyframes ani { from { mask-position: 0 0; } to { mask-position: 100% 0; } }
 @keyframes ani2 { from { mask-position: 100% 0; } to { mask-position: 0 0; } }
+/* ===== FLOATING GROUP ===== */
+#floating-group {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  pointer-events: auto;
+}
 </style>
 </head>
 
@@ -165,24 +174,29 @@ nav a:hover { animation: ani 0.7s steps(70) forwards; }
     <a href="bio.html">PORTFOLIO</a>
   </nav>
 
- <div class="text-frame" id="text-frame">
-  <h1 id="main-title">LUCILA LOHOLABERRY</h1>
+<div id="floating-group">
 
-  <p>
-    MAR DEL PLATA - ARGENTINA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■<br>
-    DISEÑADORA INDUSTRIAL DE PRODUCTO ■ ■ ■ ■ <br>
-    MI OBRA SE BASA EN DAR VOZ A LO INVISIBLE ■ ■<br>
-    INVESTIGANDO LA RELACIÓN ENTRE LO VIRTUAL<br> 
-    Y LA MATERIA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■
-  </p>
+  <div class="text-frame" id="text-frame">
+    <h1 id="main-title">LUCILA LOHOLABERRY</h1>
 
-  <p>
-    TIENDA VIRTUAL DE ARTE Y OBJETOS DE DISEÑO<br>
-    EXPLORACION ESTETICA MATERIA Y PERCEPCION
-  </p>
+    <p>
+      MAR DEL PLATA - ARGENTINA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■<br>
+      DISEÑADORA INDUSTRIAL DE PRODUCTO ■ ■ ■ ■ <br>
+      MI OBRA SE BASA EN DAR VOZ A LO INVISIBLE ■ ■<br>
+      INVESTIGANDO LA RELACIÓN ENTRE LO VIRTUAL<br> 
+      Y LA MATERIA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■
+    </p>
+
+    <p>
+      TIENDA VIRTUAL DE ARTE Y OBJETOS DE DISEÑO<br>
+      EXPLORACION ESTETICA MATERIA Y PERCEPCION
+    </p>
+  </div>
+
+  <a class="cta" href="tienda.html">VER TIENDA</a>
+
 </div>
 
-<a class="cta" href="tienda.html">VER TIENDA</a>
   
   </main>
 
@@ -229,7 +243,29 @@ nav a:hover { animation: ani 0.7s steps(70) forwards; }
   window.addEventListener("load", matchFrameToNav);
   window.addEventListener("resize", matchFrameToNav);
 </script>
+<script>
+  const group = document.getElementById("floating-group");
 
+  let x = Math.random() * (window.innerWidth - group.offsetWidth);
+  let y = Math.random() * (window.innerHeight - group.offsetHeight);
+
+  let vx = (Math.random() - 0.5) * 0.25;
+  let vy = (Math.random() - 0.5) * 0.25;
+
+  function animate() {
+    x += vx;
+    y += vy;
+
+    // rebote suave en bordes
+    if (x <= 0 || x >= window.innerWidth - group.offsetWidth) vx *= -1;
+    if (y <= 0 || y >= window.innerHeight - group.offsetHeight) vy *= -1;
+
+    group.style.transform = `translate(${x}px, ${y}px)`;
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
 
 </body>
 </html>
