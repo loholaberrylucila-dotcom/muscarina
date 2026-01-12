@@ -153,11 +153,18 @@ nav a:hover { animation: ani 0.7s steps(70) forwards; }
 /* ===== FLOATING GROUP ===== */
 #floating-group {
   position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 22px;
   pointer-events: auto;
+  will-change: transform;
+}
+body {
+  position: relative;
+
 }
 </style>
 </head>
@@ -168,11 +175,11 @@ nav a:hover { animation: ani 0.7s steps(70) forwards; }
     <h1>LUCILA LOHOLABERRY</h1>
   </div>
 
-  <nav>
-    <a href="index.html">INICIO</a>
-    <a href="tienda.html">TIENDA</a>
-    <a href="bio.html">PORTFOLIO</a>
-  </nav>
+<nav id="main-nav">
+  <a href="index.html">INICIO</a>
+  <a href="tienda.html">TIENDA</a>
+  <a href="bio.html">PORTFOLIO</a>
+</nav>
 
 <div id="floating-group">
 
@@ -196,9 +203,6 @@ nav a:hover { animation: ani 0.7s steps(70) forwards; }
   <a class="cta" href="tienda.html">VER TIENDA</a>
 
 </div>
-
-  
-  </main>
 
   <footer>
     © muscarina
@@ -246,26 +250,29 @@ nav a:hover { animation: ani 0.7s steps(70) forwards; }
 <script>
   const group = document.getElementById("floating-group");
 
-  let x = Math.random() * (window.innerWidth - group.offsetWidth);
-  let y = Math.random() * (window.innerHeight - group.offsetHeight);
+  let x = window.innerWidth / 2 - group.offsetWidth / 2;
+  let y = window.innerHeight / 2 - group.offsetHeight / 2;
 
-  let vx = (Math.random() - 0.5) * 0.25;
-  let vy = (Math.random() - 0.5) * 0.25;
+  let vx = (Math.random() > 0.5 ? 1 : -1) * 0.18;
+  let vy = (Math.random() > 0.5 ? 1 : -1) * 0.14;
 
   function animate() {
     x += vx;
     y += vy;
 
-    // rebote suave en bordes
-    if (x <= 0 || x >= window.innerWidth - group.offsetWidth) vx *= -1;
-    if (y <= 0 || y >= window.innerHeight - group.offsetHeight) vy *= -1;
+    const maxX = window.innerWidth - group.offsetWidth;
+    const maxY = window.innerHeight - group.offsetHeight;
+
+    if (x <= 20 || x >= maxX - 20) vx *= -1;
+    if (y <= 80 || y >= maxY - 40) vy *= -1;
 
     group.style.transform = `translate(${x}px, ${y}px)`;
     requestAnimationFrame(animate);
   }
 
-  animate();
+  requestAnimationFrame(animate);
 </script>
+
 
 </body>
 </html>
