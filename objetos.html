@@ -3,143 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Muscarina — Objetos</title>
+  <title>Muscarina — Objeto Interactivo</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background-color: #0f0f0f;
+      background: #0f0f0f;
       color: #f2f2f2;
-      font-family: Arial, Helvetica, sans-serif;
-      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      height: 100vh;
     }
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      background: rgba(15,15,15,0.9);
-      backdrop-filter: blur(6px);
+    #viewer {
+      width: 100vw;
+      height: 100vh;
     }
-    nav a {
-      color: #f2f2f2;
-      text-decoration: none;
-      font-size: 14px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-    main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 160px 20px 100px;
-    }
-    h1 {
-      text-align: center;
-      font-size: 26px;
-      letter-spacing: 4px;
-      margin-bottom: 60px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 40px;
-    }
-    .obra {
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 20px;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-    .obra:hover {
-      opacity: 0.8;
-    }
-    .imagen {
-      width: 100%;
-      height: 220px;
-      background-color: #1a1a1a;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      opacity: 0.3;
-    }
-    .obra h2 {
-      font-size: 14px;
-      margin-bottom: 6px;
-    }
-    .obra p {
-      font-size: 12px;
-      opacity: 0.6;
-    }
-    /* Modal 3D */
-    #modal-3d {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.9);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-    #modal-3d.show {
-      display: flex;
-    }
-    #close-modal {
+    #loading {
       position: absolute;
-      top: 20px;
-      right: 20px;
-      color: white;
-      font-size: 40px;
-      cursor: pointer;
-      z-index: 10;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+      color: #aaa;
+      pointer-events: none;
     }
-    #viewer-3d {
-      width: 90%;
-      height: 85vh;
-      max-width: 1200px;
-      max-height: 800px;
+    #instructions {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.6);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      z-index: 10;
     }
   </style>
 </head>
 <body>
-  <nav>
-    <a href="index.html">Inicio</a>
-    <a href="tienda.html">Tienda</a>
-    <a href="bio.html">Portfolio</a>
-  </nav>
-  <main>
-    <h1>OBJETOS</h1>
-    <section class="grid">
-      <div class="obra">
-        <div class="imagen">imagen</div>
-        <h2>Cuadro I</h2>
-        <p>Técnica · año</p>
-      </div>
-      <div class="obra">
-        <div class="imagen">imagen</div>
-        <h2>Cuadro II</h2>
-        <p>Técnica · año</p>
-      </div>
-      <div class="obra">
-        <div class="imagen">imagen</div>
-        <h2>Cuadro III</h2>
-        <p>Técnica · año</p>
-      </div>
-    </section>
-  </main>
-
-  <!-- Modal para el 3D -->
-  <div id="modal-3d">
-    <span id="close-modal">&times;</span>
-    <div id="viewer-3d"></div>
-  </div>
+  <div id="viewer"></div>
+  <div id="loading">Cargando modelo...</div>
+  <div id="instructions">Rota con clic + arrastre • Zoom con rueda • Pan con clic derecho + arrastre</div>
 
   <script type="importmap">
     {
@@ -156,80 +59,64 @@
     import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
     import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-    const obras = document.querySelectorAll('.obra');
-    const modal = document.getElementById('modal-3d');
-    const closeBtn = document.getElementById('close-modal');
-    const container = document.getElementById('viewer-3d');
+    const container = document.getElementById('viewer');
+    const loading = document.getElementById('loading');
 
-    let scene, camera, renderer, controls;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+    camera.position.set(0, 0, 8); // Ajusta si el modelo es muy grande/pequeño
 
-    function init3D() {
-      scene = new THREE.Scene();
-      camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 10000);
-      camera.position.set(0, 0, 8); // Un poco más atrás para ver mejor el modelo
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1;
+    container.appendChild(renderer.domElement);
 
-      renderer = new THREE.WebGLRenderer({ antialias: true });
-      renderer.setSize(container.clientWidth, container.clientHeight);
-      renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1;
-      container.appendChild(renderer.domElement);
+    // Ambiente para sheen y luces realistas
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    const envTexture = new RoomEnvironment();
+    scene.environment = pmremGenerator.fromScene(envTexture).texture;
+    scene.background = new THREE.Color(0x111111);
 
-      const pmremGenerator = new THREE.PMREMGenerator(renderer);
-      const envTexture = new RoomEnvironment();
-      scene.environment = pmremGenerator.fromScene(envTexture).texture;
-      scene.background = new THREE.Color(0x111111); // Fondo más oscuro para combinar
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
 
-      controls = new OrbitControls(camera, renderer.domElement);
-      controls.enableDamping = true;
-      controls.dampingFactor = 0.05;
-
-      function animate() {
-        requestAnimationFrame(animate);
-        controls.update();
-        renderer.render(scene, camera);
+    // Cargar el modelo
+    const loader = new GLTFLoader();
+    loader.load(
+      './mirror.glb',
+      (gltf) => {
+        const model = gltf.scene;
+        scene.add(model);
+        model.scale.set(1, 1, 1);      // Cambia a 0.5 o 2 si se ve muy grande/pequeño
+        model.position.set(0, 0, 0);
+        loading.style.display = 'none';
+        console.log('Modelo cargado OK!');
+      },
+      (xhr) => {
+        loading.textContent = `Cargando... ${Math.round(xhr.loaded / xhr.total * 100)}%`;
+      },
+      (error) => {
+        loading.textContent = 'Error al cargar el modelo';
+        console.error('Error:', error);
       }
-      animate();
+    );
 
-      window.addEventListener('resize', () => {
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
-      });
+    // Animación loop
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
     }
+    animate();
 
-    function loadModel() {
-      const loader = new GLTFLoader();
-      loader.load(
-        './mirror.glb',  // Ruta correcta: archivo en la raíz del repo
-        (gltf) => {
-          const model = gltf.scene;
-          scene.add(model);
-          model.scale.set(1, 1, 1);     // Ajusta aquí si es muy grande/pequeño (prueba 0.5 o 2)
-          model.position.set(0, 0, 0);
-          console.log('Modelo cargado exitosamente!');
-        },
-        (xhr) => {
-          console.log((xhr.loaded / xhr.total * 100) + '% cargado');
-        },
-        (error) => {
-          console.error('Error al cargar mirror.glb:', error);
-        }
-      );
-    }
-
-    obras.forEach(obra => {
-      obra.addEventListener('click', () => {
-        if (!renderer) init3D();
-        scene.clear();           // Limpia modelo anterior si hay
-        loadModel();
-        modal.classList.add('show');
-      });
-    });
-
-    closeBtn.addEventListener('click', () => modal.classList.remove('show'));
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) modal.classList.remove('show');
+    // Resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
     });
   </script>
 </body>
