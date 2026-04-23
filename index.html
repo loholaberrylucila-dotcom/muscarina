@@ -5,152 +5,145 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LUCILA LOHOLABERRY</title>
 
+  <!-- GOOGLE FONTS INTER (reemplaza a Jost) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
   <style>
- /* ===== FUENTES LOCALES ===== */
-@font-face {
-  font-family: 'JostBook';
-  src: url('fonts/Jost-Book.woff2') format('woff2'),
-       url('fonts/Jost-Book.woff') format('woff');
-  font-display: swap;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-@font-face {
-  font-family: 'JostThin';
-  src: url('fonts/Jost-Thin.woff2') format('woff2'),
-       url('fonts/Jost-Thin.woff') format('woff');
-  font-weight: 300;
-  font-display: swap;
-}
+    body {
+      background-color: #111111;
+      color: #000018;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    /* ===== INTRO ===== */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: #e8a0ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: introHold 2.4s linear forwards, fadeOutIntro 2s ease forwards;
+      animation-delay: 0s, 2.4s;
+    }
 
-body {
-  background-color: #111111;
-  color: #000018;
-  font-family: 'JostBook', sans-serif;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
+    #intro h1 {
+      font-size: clamp(1.6rem, 4.5vw, 3.8rem);
+      letter-spacing: clamp(0.18em, 0.9vw, 0.32em);
+      font-weight: 400;
+      opacity: 0;
+      animation: introFadeIn 0.4s ease forwards, scale-up-center 0.9s cubic-bezier(.895,.03,.685,.22) forwards;
+    }
 
-/* ===== INTRO ===== */
-#intro {
-  position: fixed;
-  inset: 0;
-  background: #e8a0ff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  animation: introHold 2.4s linear forwards, fadeOutIntro 2s ease forwards;
-  animation-delay: 0s, 2.4s;
-}
+    @keyframes introFadeIn { to { opacity: 1; } }
+    @keyframes scale-up-center { from { transform: scale(0.5); } to { transform: scale(1); } }
+    @keyframes introHold {}
+    @keyframes fadeOutIntro { to { opacity: 0; visibility: hidden; pointer-events: none; } }
 
-#intro h1 {
-  font-size: clamp(1.6rem, 4.5vw, 3.8rem);
-  letter-spacing: clamp(0.18em, 0.9vw, 0.32em);
-  opacity: 0;
-  animation: introFadeIn 0.4s ease forwards, scale-up-center 0.9s cubic-bezier(.895,.03,.685,.22) forwards;
-}
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 30px;
+      display: flex;
+      gap: 28px;
+    }
 
-@keyframes introFadeIn { to { opacity: 1; } }
-@keyframes scale-up-center { from { transform: scale(0.5); } to { transform: scale(1); } }
-@keyframes introHold {}
-@keyframes fadeOutIntro { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+    nav a {
+      padding: 10px 18px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      font-weight: 400;
+      border: 1px solid rgba(0,0,24,0.4);
+      color: #000018;
+      text-decoration: none;
 
-/* ===== NAV ===== */
-nav {
-  position: fixed;
-  top: 30px;
-  display: flex;
-  gap: 28px;
-}
+      -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+      mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+      -webkit-mask-size: 7100% 100%;
+      mask-size: 7100% 100%;
 
-nav a {
-  padding: 10px 18px;
-  font-size: 13px;
-  letter-spacing: 2px;
-  border: 1px solid rgba(0,0,24,0.4);
-  color: #000018;
-  text-decoration: none;
+      animation: ani2 0.7s steps(70) forwards;
+    }
 
-  -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-  mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-  -webkit-mask-size: 7100% 100%;
-  mask-size: 7100% 100%;
+    nav a:hover { animation: ani 0.7s steps(70) forwards; }
 
-  animation: ani2 0.7s steps(70) forwards;
-}
+    /* ===== TEXT FRAME ===== */
+    .text-frame {
+      border: 1px solid rgba(0,0,24,0.4);
+      padding: 32px 38px;
+      margin: 0 auto 30px;
+      text-align: center;
 
-nav a:hover { animation: ani 0.7s steps(70) forwards; }
+      -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+      mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+      -webkit-mask-size: 7100% 100%;
+      mask-size: 7100% 100%;
 
-/* ===== TEXT FRAME ===== */
-.text-frame {
-  border: 1px solid rgba(0,0,24,0.4);
-  padding: 32px 38px;
-  margin: 0 auto 30px;
-  text-align: center;
+      animation: ani2 0.7s steps(70) forwards;
+    }
 
-  -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-  mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-  -webkit-mask-size: 7100% 100%;
-  mask-size: 7100% 100%;
+    .text-frame:hover {
+      animation: ani 0.7s steps(70) forwards;
+    }
 
-  animation: ani2 0.7s steps(70) forwards;
-}
+    /* ===== TEXT FRAME TITLE ===== */
+    .text-frame h1 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      letter-spacing: 0em;
+      font-weight: 500;
+      margin-bottom: 48px;
+    }
 
-.text-frame:hover {
-  animation: ani 0.7s steps(70) forwards;
-}
+    .text-frame p {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
 
-/* ===== TEXT FRAME TITLE ===== */
-.text-frame h1 {
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  letter-spacing: 0em;
-  margin-bottom: 48px;
-}
+    .text-frame p:last-child {
+      margin-bottom: 0;
+    }
 
-.text-frame p {
-  font-family: 'JostThin', sans-serif;
-  font-size: 14px;
-  line-height: 1.6;
-  margin-bottom: 30px;
-}
+    /* ===== CTA ===== */
+    .cta {
+      padding: 12px 30px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      font-weight: 400;
+      border: 1px solid rgba(0,0,24,0.6);
+      text-decoration: none;
+      color: #000018;
 
-.text-frame p:last-child {
-  margin-bottom: 0;
-}
+      -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+      mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+      -webkit-mask-size: 7100% 100%;
+      mask-size: 7100% 100%;
 
-/* ===== CTA ===== */
-.cta {
-  padding: 12px 30px;
-  font-size: 12px;
-  letter-spacing: 2px;
-  border: 1px solid rgba(0,0,24,0.6);
-  text-decoration: none;
-  color: #000018;
+      animation: ani2 0.7s steps(70) forwards;
+    }
 
-  -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-  mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-  -webkit-mask-size: 7100% 100%;
-  mask-size: 7100% 100%;
+    .cta:hover { animation: ani 0.7s steps(70) forwards; }
 
-  animation: ani2 0.7s steps(70) forwards;
-}
-
-.cta:hover { animation: ani 0.7s steps(70) forwards; }
-
-/* ===== MASK ===== */
-@keyframes ani { from { mask-position: 0 0; } to { mask-position: 100% 0; } }
-@keyframes ani2 { from { mask-position: 100% 0; } to { mask-position: 0 0; } }
-</style>
+    /* ===== MASK ===== */
+    @keyframes ani { from { mask-position: 0 0; } to { mask-position: 100% 0; } }
+    @keyframes ani2 { from { mask-position: 100% 0; } to { mask-position: 0 0; } }
+  </style>
 </head>
 
 <body>
@@ -165,26 +158,24 @@ nav a:hover { animation: ani 0.7s steps(70) forwards; }
     <a href="bio.html">PORTFOLIO</a>
   </nav>
 
- <div class="text-frame" id="text-frame">
-  <h1 id="main-title">LUCILA LOHOLABERRY</h1>
+  <div class="text-frame" id="text-frame">
+    <h1 id="main-title">LUCILA LOHOLABERRY</h1>
 
-  <p>
-    MAR DEL PLATA - ARGENTINA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■<br>
-    DISEÑADORA INDUSTRIAL DE PRODUCTO ■ ■ ■ ■ ■<br>
-    MI OBRA SE BASA EN DAR VOZ A LO INVISIBLE ■ ■ ■<br>
-    INVESTIGANDO LA RELACIÓN ENTRE LO VIRTUAL ■<br> 
-    Y LA MATERIA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ 
-  </p>
+    <p>
+      MAR DEL PLATA - ARGENTINA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■<br>
+      DISEÑADORA INDUSTRIAL DE PRODUCTO ■ ■ ■ ■ ■<br>
+      MI OBRA SE BASA EN DAR VOZ A LO INVISIBLE ■ ■ ■<br>
+      INVESTIGANDO LA RELACIÓN ENTRE LO VIRTUAL ■<br> 
+      Y LA MATERIA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ 
+    </p>
 
-  <p>
-    TIENDA VIRTUAL DE ARTE Y OBJETOS DE DISEÑO<br>
-    EXPLORACION ESTETICA MATERIA Y PERCEPCION
-  </p>
-</div>
+    <p>
+      TIENDA VIRTUAL DE ARTE Y OBJETOS DE DISEÑO<br>
+      EXPLORACION ESTETICA MATERIA Y PERCEPCION
+    </p>
+  </div>
 
-<a class="cta" href="tienda.html">VER TIENDA</a>
-  
-  </main>
+  <a class="cta" href="tienda.html">VER TIENDA</a>
 
   <footer>
     © muscarina
@@ -211,25 +202,24 @@ nav a:hover { animation: ani 0.7s steps(70) forwards; }
       gyroControls: false
     });
   </script>
-  <!-- MATCH FRAME WIDTH TO NAV -->
-<script>
-  function matchFrameToNav() {
-    const nav = document.getElementById("main-nav");
-    const frame = document.getElementById("text-frame");
+  
+  <script>
+    function matchFrameToNav() {
+      const nav = document.getElementById("main-nav");
+      const frame = document.getElementById("text-frame");
 
-    if (!nav || !frame) return;
+      if (!nav || !frame) return;
 
-    if (window.innerWidth > 768) {
-      frame.style.width = nav.offsetWidth + "px";
-    } else {
-      frame.style.width = "auto";
+      if (window.innerWidth > 768) {
+        frame.style.width = nav.offsetWidth + "px";
+      } else {
+        frame.style.width = "auto";
+      }
     }
-  }
 
-  window.addEventListener("load", matchFrameToNav);
-  window.addEventListener("resize", matchFrameToNav);
-</script>
-
+    window.addEventListener("load", matchFrameToNav);
+    window.addEventListener("resize", matchFrameToNav);
+  </script>
 
 </body>
 </html>
