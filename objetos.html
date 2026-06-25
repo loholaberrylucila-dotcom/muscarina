@@ -125,7 +125,6 @@
       margin-top: 5px;
     }
 
-    /* Mensaje de error más visible */
     .error-msg {
       color: #ff6666;
       font-size: 12px;
@@ -138,9 +137,9 @@
 <body>
 
   <nav>
-    <a href="index.html">Inicio</a>
-    <a href="tienda.html">Tienda</a>
-    <a href="bio.html">Portfolio</a>
+    <a href="index.html">INICIO</a>
+    <a href="tienda.html">TIENDA</a>
+    <a href="bio.html">PORTFOLIO</a>
   </nav>
 
   <main>
@@ -178,6 +177,7 @@
     </section>
   </main>
 
+  <!-- THREE.JS y dependencias -->
   <script type="importmap">
     {
       "imports": {
@@ -191,6 +191,7 @@
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
     import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
     import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
     // === CONFIGURACIÓN COMPARTIDA ===
@@ -202,6 +203,16 @@
     const pmremGenerator = new THREE.PMREMGenerator(rendererGlobal);
     const envTexture = new RoomEnvironment();
     const environment = pmremGenerator.fromScene(envTexture).texture;
+
+    // === CREAR UN LOADER CON DRACO PARA TODOS LOS MODELOS ===
+    function crearLoaderConDraco() {
+      const loader = new GLTFLoader();
+      const dracoLoader = new DRACOLoader();
+      // Usar el CDN de Google para el decodificador Draco
+      dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
+      loader.setDRACOLoader(dracoLoader);
+      return loader;
+    }
 
     // === FUNCIÓN PARA VISOR ESTÁNDAR ===
     function crearVisor3D(containerId, modeloPath, scale = 1, positionY = 0) {
@@ -245,7 +256,8 @@
       backLight.position.set(-1, 1, -2);
       scene.add(backLight);
 
-      const loader = new GLTFLoader();
+      // Cargar modelo con DRACO
+      const loader = crearLoaderConDraco();
       loader.load(
         modeloPath,
         (gltf) => {
@@ -345,8 +357,8 @@
 
       let bulbLight = null;
 
-      // Cargar modelo
-      const loader = new GLTFLoader();
+      // Cargar modelo con DRACO
+      const loader = crearLoaderConDraco();
       loader.load(
         modeloPath,
         (gltf) => {
@@ -370,7 +382,6 @@
               child.receiveShadow = true;
               
               const name = child.name.toLowerCase();
-              // Buscar por palabras clave
               if (name.includes('bombilla') || 
                   name.includes('bulb') || 
                   name.includes('esfera') ||
@@ -381,7 +392,6 @@
                 
                 bulbFound = true;
                 
-                // Material emisivo
                 child.material = new THREE.MeshStandardMaterial({
                   color: 0xffeedd,
                   emissive: 0xffaa55,
@@ -401,7 +411,7 @@
           // Crear luz
           if (bulbFound) {
             bulbLight = new THREE.PointLight(0xffaa66, 0.9, 3.5);
-            bulbLight.position.set(0, 1.2, 0); // Posición estimada
+            bulbLight.position.set(0, 1.2, 0);
             bulbLight.castShadow = true;
             scene.add(bulbLight);
             console.log('✅ Luz añadida');
@@ -417,7 +427,7 @@
           if (percent % 20 === 0) console.log(`Cargando: ${percent}%`);
         },
         (error) => {
-          console.error('❌ Error cargando lámpara:', error);
+          console.error('❌ Error cargando la lámpara:', error);
           container.innerHTML = `<div class="error-msg">⚠️ Error al cargar la lámpara<br><small>${modeloPath}</small><br><br>📁 Verifica que el archivo exista en la ruta correcta</div>`;
         }
       );
@@ -449,15 +459,10 @@
     // === CREAR VISORES ===
     console.log('🚀 Iniciando visores 3D...');
     
-    // Verificar que los IDs existan
-    console.log('modelo1:', document.getElementById('modelo1') ? '✅' : '❌');
-    console.log('modelo2-lampara:', document.getElementById('modelo2-lampara') ? '✅' : '❌');
-    console.log('modelo3:', document.getElementById('modelo3') ? '✅' : '❌');
-
     // Objeto I - Espejo
     crearVisor3D('modelo1', './mirror.glb', 1.2, 0);
     
-    // Objeto II - LÁMPARA (ruta verificada)
+    // Objeto II - LÁMPARA
     crearVisorLampara('modelo2-lampara', './models/lampara_oval.glb', 1.0, 0);
     
     // Objeto III
