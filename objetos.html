@@ -74,7 +74,7 @@
       border: 1px solid rgba(255,255,255,0.3);
     }
 
-    /* Contenedor del modelo 3D (mismo tamaño que .imagen en cuadros) */
+    /* Contenedor del modelo 3D */
     .modelo-3d {
       width: 100%;
       height: 220px;
@@ -89,7 +89,6 @@
       cursor: grabbing;
     }
 
-    /* Canvas interno del modelo 3D */
     .modelo-3d canvas {
       width: 100% !important;
       height: 100% !important;
@@ -114,6 +113,19 @@
       margin-top: 8px;
       text-align: center;
     }
+
+    /* Badge para indicar que tiene luz interactiva */
+    .light-badge {
+      display: inline-block;
+      background: rgba(255, 170, 85, 0.2);
+      border: 1px solid rgba(255, 170, 85, 0.3);
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 9px;
+      letter-spacing: 1px;
+      color: #ffaa55;
+      margin-top: 5px;
+    }
   </style>
 </head>
 
@@ -130,7 +142,7 @@
 
     <section class="grid">
 
-      <!-- OBJETO 1 - Modelo 3D interactivo -->
+      <!-- OBJETO 1 - Espejo (modelo estándar) -->
       <div class="obra">
         <div class="modelo-3d" id="modelo1"></div>
         <h2>Objeto I - Espejo Orgánico</h2>
@@ -139,16 +151,16 @@
         <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
       </div>
 
-      <!-- OBJETO 2 - Modelo 3D interactivo -->
+      <!-- OBJETO 2 - LÁMPARA (con luz interactiva) -->
       <div class="obra">
-        <div class="modelo-3d" id="modelo2"></div>
-        <h2>Objeto II - Estudio Formal</h2>
-        <p>Modelado 3D interactivo · Madera/Resina</p>
-        <p>2024 · Edición limitada</p>
-        <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
+        <div class="modelo-3d" id="modelo2-lampara"></div>
+        <h2>Objeto II - Lámpara Velador <span class="light-badge">💡 Luz interactiva</span></h2>
+        <p>Modelado 3D interactivo · MDF flexible · Lámpara de pie</p>
+        <p>2025 · Pieza única</p>
+        <div class="instruccion">🖱️ Haz clic y arrastra para rotar · 💡 Bombilla emisiva</div>
       </div>
 
-      <!-- OBJETO 3 - Modelo 3D interactivo -->
+      <!-- OBJETO 3 - Percepción Táctil (modelo estándar) -->
       <div class="obra">
         <div class="modelo-3d" id="modelo3"></div>
         <h2>Objeto III - Percepción Táctil</h2>
@@ -160,7 +172,7 @@
     </section>
   </main>
 
-  <!-- THREE.JS y dependencias (cargado una sola vez para todos los modelos) -->
+  <!-- THREE.JS y dependencias -->
   <script type="importmap">
     {
       "imports": {
@@ -176,39 +188,124 @@
     import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
     import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-    // Configuración compartida
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1;
+    // === CONFIGURACIÓN COMPARTIDA ===
+    const rendererGlobal = new THREE.WebGLRenderer({ antialias: true });
+    rendererGlobal.setPixelRatio(window.devicePixelRatio);
+    rendererGlobal.toneMapping = THREE.ACESFilmicToneMapping;
+    rendererGlobal.toneMappingExposure = 1;
 
-    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    const pmremGenerator = new THREE.PMREMGenerator(rendererGlobal);
     const envTexture = new RoomEnvironment();
     const environment = pmremGenerator.fromScene(envTexture).texture;
 
-    // Función para crear un viewer en un contenedor específico
+    // === FUNCIÓN PARA VISOR ESTÁNDAR (para objetos sin luz especial) ===
     function crearVisor3D(containerId, modeloPath, scale = 1, positionY = 0) {
       const container = document.getElementById(containerId);
       if (!container) return;
 
-      // Limpiar contenedor por si acaso
       container.innerHTML = '';
 
-      // Escena individual para cada modelo
       const scene = new THREE.Scene();
       scene.environment = environment;
-      scene.background = null; // Transparente para que se vea el fondo #1a1a1a del div
+      scene.background = null;
 
-      // Cámara
       const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
       camera.position.set(2, 1, 3);
       camera.lookAt(0, 0, 0);
 
-      // Renderer específico para este contenedor
-      const localRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); // alpha true para fondo transparente
+      const localRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
       localRenderer.setSize(container.clientWidth, container.clientHeight);
-      localRenderer.setClearColor(0x000000, 0); // Transparente
+      localRenderer.setClearColor(0x000000, 0);
       localRenderer.setPixelRatio(window.devicePixelRatio);
+      container.appendChild(localRenderer.domElement);
+
+      const controls = new OrbitControls(camera, localRenderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.autoRotate = false;
+      controls.enableZoom = true;
+      controls.enablePan = false;
+      controls.zoomSpeed = 1.2;
+      controls.rotateSpeed = 1.5;
+
+      const loader = new GLTFLoader();
+      loader.load(
+        modeloPath,
+        (gltf) => {
+          const model = gltf.scene;
+          model.scale.set(scale, scale, scale);
+          model.position.set(0, positionY, 0);
+          scene.add(model);
+          
+          const fillLight = new THREE.DirectionalLight(0xffffff, 0.5);
+          fillLight.position.set(1, 2, 1);
+          scene.add(fillLight);
+          
+          console.log(`Modelo cargado en ${containerId}`);
+        },
+        undefined,
+        (error) => {
+          console.error(`Error cargando modelo en ${containerId}:`, error);
+          container.style.display = 'flex';
+          container.style.alignItems = 'center';
+          container.style.justifyContent = 'center';
+          container.style.color = '#666';
+          container.style.fontSize = '12px';
+          container.textContent = 'Error al cargar modelo';
+        }
+      );
+
+      const ambientLight = new THREE.AmbientLight(0x404040);
+      scene.add(ambientLight);
+      
+      const mainLight = new THREE.DirectionalLight(0xffffff, 1);
+      mainLight.position.set(2, 3, 2);
+      scene.add(mainLight);
+      
+      const backLight = new THREE.DirectionalLight(0x88aaff, 0.4);
+      backLight.position.set(-1, 1, -2);
+      scene.add(backLight);
+
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        localRenderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        localRenderer.setSize(width, height);
+      });
+    }
+
+    // === FUNCIÓN ESPECIAL PARA LA LÁMPARA (CON LUZ) ===
+    function crearVisorLampara(containerId, modeloPath, scale = 1, positionY = 0) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      container.innerHTML = '';
+
+      // Escena
+      const scene = new THREE.Scene();
+      scene.environment = environment;
+      scene.background = null;
+
+      // Cámara
+      const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+      camera.position.set(2.5, 1.8, 3.5);
+      camera.lookAt(0, 0.8, 0);
+
+      // Renderer
+      const localRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      localRenderer.setSize(container.clientWidth, container.clientHeight);
+      localRenderer.setClearColor(0x000000, 0);
+      localRenderer.setPixelRatio(window.devicePixelRatio);
+      localRenderer.shadowMap.enabled = true;
+      localRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
       container.appendChild(localRenderer.domElement);
 
       // Controles
@@ -220,8 +317,39 @@
       controls.enablePan = false;
       controls.zoomSpeed = 1.2;
       controls.rotateSpeed = 1.5;
+      controls.target.set(0, 0.8, 0);
 
-      // Cargar modelo GLTF
+      // ILUMINACIÓN
+      const ambientLight = new THREE.AmbientLight(0x404060, 0.6);
+      scene.add(ambientLight);
+
+      const mainLight = new THREE.DirectionalLight(0xffffff, 1);
+      mainLight.position.set(3, 5, 2);
+      mainLight.castShadow = true;
+      mainLight.shadow.mapSize.width = 512;
+      mainLight.shadow.mapSize.height = 512;
+      scene.add(mainLight);
+
+      const fillLight = new THREE.DirectionalLight(0xcc8844, 0.3);
+      fillLight.position.set(0, -1, 0);
+      scene.add(fillLight);
+
+      const backLight = new THREE.DirectionalLight(0x6688aa, 0.25);
+      backLight.position.set(-2, 1.5, -2);
+      scene.add(backLight);
+
+      // Suelo referencia (sutil)
+      const gridHelper = new THREE.GridHelper(4, 16, 0x888888, 0x444444);
+      gridHelper.position.y = -0.3;
+      gridHelper.material.transparent = true;
+      gridHelper.material.opacity = 0.15;
+      scene.add(gridHelper);
+
+      // Variables para la bombilla
+      let bulbLight = null;
+      let bulbMesh = null;
+
+      // Cargar modelo
       const loader = new GLTFLoader();
       loader.load(
         modeloPath,
@@ -229,19 +357,73 @@
           const model = gltf.scene;
           model.scale.set(scale, scale, scale);
           model.position.set(0, positionY, 0);
+          
+          // Centrar y apoyar en el suelo
+          const box = new THREE.Box3().setFromObject(model);
+          const center = box.getCenter(new THREE.Vector3());
+          model.position.x = -center.x;
+          model.position.z = -center.z;
+          model.position.y = -box.min.y + positionY;
+
+          // Buscar la bombilla por nombre (B24.002)
+          model.traverse((child) => {
+            if (child.isMesh) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              
+              // Buscar por nombre exacto o por palabras clave
+              const name = child.name.toLowerCase();
+              if (name.includes('b24') || 
+                  name.includes('bombilla') || 
+                  name.includes('bulb') || 
+                  name.includes('esfera') ||
+                  name.includes('lamp') ||
+                  name.includes('light') ||
+                  name.includes('vidrio')) {
+                
+                bulbMesh = child;
+                
+                // Aplicar material emisivo
+                child.material = new THREE.MeshStandardMaterial({
+                  color: 0xffeedd,
+                  emissive: 0xffaa55,
+                  emissiveIntensity: 1.5,
+                  roughness: 0.2,
+                  metalness: 0.0,
+                });
+                
+                console.log('✅ Bombilla encontrada y material emisivo aplicado:', child.name);
+              }
+            }
+          });
+
           scene.add(model);
-          
-          // Pequeña luz adicional para mejorar visibilidad
-          const fillLight = new THREE.DirectionalLight(0xffffff, 0.5);
-          fillLight.position.set(1, 2, 1);
-          scene.add(fillLight);
-          
-          console.log(`Modelo cargado en ${containerId}`);
+          console.log('✅ Modelo de lámpara cargado correctamente');
+
+          // Crear luz puntual en la bombilla
+          if (bulbMesh) {
+            const bulbWorldPos = bulbMesh.getWorldPosition(new THREE.Vector3());
+            bulbLight = new THREE.PointLight(0xffaa66, 0.9, 3.5);
+            bulbLight.position.copy(bulbWorldPos);
+            bulbLight.castShadow = true;
+            bulbLight.shadow.mapSize.width = 256;
+            bulbLight.shadow.mapSize.height = 256;
+            scene.add(bulbLight);
+            console.log('✅ Luz puntual añadida en la bombilla');
+          } else {
+            // Si no se encontró, poner luz en posición estimada
+            bulbLight = new THREE.PointLight(0xffaa66, 0.7, 3);
+            bulbLight.position.set(0, 1.2, 0);
+            bulbLight.castShadow = true;
+            scene.add(bulbLight);
+            console.log('⚠️ No se encontró la bombilla, luz en posición estimada');
+          }
         },
-        undefined,
+        (xhr) => {
+          console.log(`Cargando lámpara: ${Math.round(xhr.loaded / xhr.total * 100)}%`);
+        },
         (error) => {
-          console.error(`Error cargando modelo en ${containerId}:`, error);
-          // Mostrar mensaje de error en el contenedor
+          console.error('❌ Error cargando la lámpara:', error);
           container.style.display = 'flex';
           container.style.alignItems = 'center';
           container.style.justifyContent = 'center';
@@ -251,29 +433,24 @@
         }
       );
 
-      // Luz ambiental suave
-      const ambientLight = new THREE.AmbientLight(0x404040);
-      scene.add(ambientLight);
-      
-      // Luz principal
-      const mainLight = new THREE.DirectionalLight(0xffffff, 1);
-      mainLight.position.set(2, 3, 2);
-      scene.add(mainLight);
-      
-      // Luz de relleno trasera
-      const backLight = new THREE.DirectionalLight(0x88aaff, 0.4);
-      backLight.position.set(-1, 1, -2);
-      scene.add(backLight);
-
-      // Animación loop para este visor
+      // Animación
+      let time = 0;
       function animate() {
         requestAnimationFrame(animate);
+        time += 0.016;
+
+        // Efecto de latido suave en la luz
+        if (bulbLight) {
+          const intensity = 0.7 + Math.sin(time * 2.5) * 0.08;
+          bulbLight.intensity = intensity;
+        }
+
         controls.update();
         localRenderer.render(scene, camera);
       }
       animate();
 
-      // Manejar resize del contenedor (cuando cambia tamaño de ventana)
+      // Resize
       window.addEventListener('resize', () => {
         const width = container.clientWidth;
         const height = container.clientHeight;
@@ -283,15 +460,16 @@
       });
     }
 
-    // Crear los visores 3D con tus modelos
-    // ¡CAMBIA LAS RUTAS A TUS PROPios MODELOS .GLB O .GLTF!
+    // === CREAR LOS VISORES ===
     
+    // Objeto I - Espejo (modelo estándar)
     crearVisor3D('modelo1', './mirror.glb', 1.2, 0);
-    crearVisor3D('modelo2', './objeto2.glb', 0.8, 0);
-    crearVisor3D('modelo3', './objeto3.glb', 0.8, 0);
     
-    // Si el modelo es mirror.glb (el que tenías), cambia la ruta:
-    // crearVisor3D('modelo1', './mirror.glb', 1.2, 0);
+    // Objeto II - LÁMPARA (con luz especial)
+    crearVisorLampara('modelo2-lampara', './models/lampara_oval.glb', 1.0, 0);
+    
+    // Objeto III - Percepción Táctil (modelo estándar)
+    crearVisor3D('modelo3', './objeto3.glb', 0.8, 0);
     
   </script>
 </body>
