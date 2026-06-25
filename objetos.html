@@ -208,7 +208,6 @@
     function crearLoaderConDraco() {
       const loader = new GLTFLoader();
       const dracoLoader = new DRACOLoader();
-      // Usar el CDN de Google para el decodificador Draco
       dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
       loader.setDRACOLoader(dracoLoader);
       return loader;
@@ -462,8 +461,8 @@
     // Objeto I - Espejo
     crearVisor3D('modelo1', './mirror.glb', 1.2, 0);
     
-    // Objeto II - LÁMPARA
-    crearVisorLampara('modelo2-lampara', './models/lampara_oval.glb', 1.0, 0);
+    // Objeto II - LÁMPARA (RUTA CORREGIDA - archivo en la raíz)
+    crearVisorLampara('modelo2-lampara', './lampara_oval.glb', 1.0, 0);
     
     // Objeto III
     crearVisor3D('modelo3', './objeto3.glb', 0.8, 0);
