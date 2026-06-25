@@ -74,7 +74,6 @@
       border: 1px solid rgba(255,255,255,0.3);
     }
 
-    /* Contenedor del modelo 3D */
     .modelo-3d {
       width: 100%;
       height: 220px;
@@ -114,7 +113,6 @@
       text-align: center;
     }
 
-    /* Badge para indicar que tiene luz interactiva */
     .light-badge {
       display: inline-block;
       background: rgba(255, 170, 85, 0.2);
@@ -125,6 +123,14 @@
       letter-spacing: 1px;
       color: #ffaa55;
       margin-top: 5px;
+    }
+
+    /* Mensaje de error más visible */
+    .error-msg {
+      color: #ff6666;
+      font-size: 12px;
+      text-align: center;
+      padding: 20px;
     }
   </style>
 </head>
@@ -142,7 +148,7 @@
 
     <section class="grid">
 
-      <!-- OBJETO 1 - Espejo (modelo estándar) -->
+      <!-- OBJETO 1 - Espejo -->
       <div class="obra">
         <div class="modelo-3d" id="modelo1"></div>
         <h2>Objeto I - Espejo Orgánico</h2>
@@ -151,7 +157,7 @@
         <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
       </div>
 
-      <!-- OBJETO 2 - LÁMPARA (con luz interactiva) -->
+      <!-- OBJETO 2 - LÁMPARA -->
       <div class="obra">
         <div class="modelo-3d" id="modelo2-lampara"></div>
         <h2>Objeto II - Lámpara Velador <span class="light-badge">💡 Luz interactiva</span></h2>
@@ -160,7 +166,7 @@
         <div class="instruccion">🖱️ Haz clic y arrastra para rotar · 💡 Bombilla emisiva</div>
       </div>
 
-      <!-- OBJETO 3 - Percepción Táctil (modelo estándar) -->
+      <!-- OBJETO 3 - Percepción Táctil -->
       <div class="obra">
         <div class="modelo-3d" id="modelo3"></div>
         <h2>Objeto III - Percepción Táctil</h2>
@@ -172,7 +178,6 @@
     </section>
   </main>
 
-  <!-- THREE.JS y dependencias -->
   <script type="importmap">
     {
       "imports": {
@@ -198,7 +203,7 @@
     const envTexture = new RoomEnvironment();
     const environment = pmremGenerator.fromScene(envTexture).texture;
 
-    // === FUNCIÓN PARA VISOR ESTÁNDAR (para objetos sin luz especial) ===
+    // === FUNCIÓN PARA VISOR ESTÁNDAR ===
     function crearVisor3D(containerId, modeloPath, scale = 1, positionY = 0) {
       const container = document.getElementById(containerId);
       if (!container) return;
@@ -228,33 +233,7 @@
       controls.zoomSpeed = 1.2;
       controls.rotateSpeed = 1.5;
 
-      const loader = new GLTFLoader();
-      loader.load(
-        modeloPath,
-        (gltf) => {
-          const model = gltf.scene;
-          model.scale.set(scale, scale, scale);
-          model.position.set(0, positionY, 0);
-          scene.add(model);
-          
-          const fillLight = new THREE.DirectionalLight(0xffffff, 0.5);
-          fillLight.position.set(1, 2, 1);
-          scene.add(fillLight);
-          
-          console.log(`Modelo cargado en ${containerId}`);
-        },
-        undefined,
-        (error) => {
-          console.error(`Error cargando modelo en ${containerId}:`, error);
-          container.style.display = 'flex';
-          container.style.alignItems = 'center';
-          container.style.justifyContent = 'center';
-          container.style.color = '#666';
-          container.style.fontSize = '12px';
-          container.textContent = 'Error al cargar modelo';
-        }
-      );
-
+      // ILUMINACIÓN
       const ambientLight = new THREE.AmbientLight(0x404040);
       scene.add(ambientLight);
       
@@ -265,6 +244,25 @@
       const backLight = new THREE.DirectionalLight(0x88aaff, 0.4);
       backLight.position.set(-1, 1, -2);
       scene.add(backLight);
+
+      const loader = new GLTFLoader();
+      loader.load(
+        modeloPath,
+        (gltf) => {
+          const model = gltf.scene;
+          model.scale.set(scale, scale, scale);
+          model.position.set(0, positionY, 0);
+          scene.add(model);
+          console.log(`✅ Modelo cargado en ${containerId}`);
+        },
+        (xhr) => {
+          // Progreso
+        },
+        (error) => {
+          console.error(`❌ Error cargando ${containerId}:`, error);
+          container.innerHTML = `<div class="error-msg">⚠️ Error al cargar modelo<br><small>${modeloPath}</small></div>`;
+        }
+      );
 
       function animate() {
         requestAnimationFrame(animate);
@@ -282,7 +280,7 @@
       });
     }
 
-    // === FUNCIÓN ESPECIAL PARA LA LÁMPARA (CON LUZ) ===
+    // === FUNCIÓN ESPECIAL PARA LA LÁMPARA ===
     function crearVisorLampara(containerId, modeloPath, scale = 1, positionY = 0) {
       const container = document.getElementById(containerId);
       if (!container) return;
@@ -338,16 +336,14 @@
       backLight.position.set(-2, 1.5, -2);
       scene.add(backLight);
 
-      // Suelo referencia (sutil)
+      // Grid de referencia
       const gridHelper = new THREE.GridHelper(4, 16, 0x888888, 0x444444);
       gridHelper.position.y = -0.3;
       gridHelper.material.transparent = true;
       gridHelper.material.opacity = 0.15;
       scene.add(gridHelper);
 
-      // Variables para la bombilla
       let bulbLight = null;
-      let bulbMesh = null;
 
       // Cargar modelo
       const loader = new GLTFLoader();
@@ -355,35 +351,37 @@
         modeloPath,
         (gltf) => {
           const model = gltf.scene;
-          model.scale.set(scale, scale, scale);
-          model.position.set(0, positionY, 0);
           
-          // Centrar y apoyar en el suelo
+          // Escalar
+          model.scale.set(scale, scale, scale);
+          
+          // Centrar
           const box = new THREE.Box3().setFromObject(model);
           const center = box.getCenter(new THREE.Vector3());
           model.position.x = -center.x;
           model.position.z = -center.z;
           model.position.y = -box.min.y + positionY;
 
-          // Buscar la bombilla por nombre (B24.002)
+          // Buscar bombilla
+          let bulbFound = false;
           model.traverse((child) => {
             if (child.isMesh) {
               child.castShadow = true;
               child.receiveShadow = true;
               
-              // Buscar por nombre exacto o por palabras clave
               const name = child.name.toLowerCase();
-              if (name.includes('b24') || 
-                  name.includes('bombilla') || 
+              // Buscar por palabras clave
+              if (name.includes('bombilla') || 
                   name.includes('bulb') || 
                   name.includes('esfera') ||
+                  name.includes('vidrio') ||
                   name.includes('lamp') ||
                   name.includes('light') ||
-                  name.includes('vidrio')) {
+                  name.includes('b24')) {
                 
-                bulbMesh = child;
+                bulbFound = true;
                 
-                // Aplicar material emisivo
+                // Material emisivo
                 child.material = new THREE.MeshStandardMaterial({
                   color: 0xffeedd,
                   emissive: 0xffaa55,
@@ -392,44 +390,35 @@
                   metalness: 0.0,
                 });
                 
-                console.log('✅ Bombilla encontrada y material emisivo aplicado:', child.name);
+                console.log(`✅ Bombilla encontrada: ${child.name}`);
               }
             }
           });
 
           scene.add(model);
-          console.log('✅ Modelo de lámpara cargado correctamente');
+          console.log('✅ Modelo de lámpara cargado');
 
-          // Crear luz puntual en la bombilla
-          if (bulbMesh) {
-            const bulbWorldPos = bulbMesh.getWorldPosition(new THREE.Vector3());
+          // Crear luz
+          if (bulbFound) {
             bulbLight = new THREE.PointLight(0xffaa66, 0.9, 3.5);
-            bulbLight.position.copy(bulbWorldPos);
+            bulbLight.position.set(0, 1.2, 0); // Posición estimada
             bulbLight.castShadow = true;
-            bulbLight.shadow.mapSize.width = 256;
-            bulbLight.shadow.mapSize.height = 256;
             scene.add(bulbLight);
-            console.log('✅ Luz puntual añadida en la bombilla');
+            console.log('✅ Luz añadida');
           } else {
-            // Si no se encontró, poner luz en posición estimada
             bulbLight = new THREE.PointLight(0xffaa66, 0.7, 3);
             bulbLight.position.set(0, 1.2, 0);
-            bulbLight.castShadow = true;
             scene.add(bulbLight);
-            console.log('⚠️ No se encontró la bombilla, luz en posición estimada');
+            console.log('⚠️ Bombilla no encontrada, luz en posición estimada');
           }
         },
         (xhr) => {
-          console.log(`Cargando lámpara: ${Math.round(xhr.loaded / xhr.total * 100)}%`);
+          const percent = Math.round(xhr.loaded / xhr.total * 100);
+          if (percent % 20 === 0) console.log(`Cargando: ${percent}%`);
         },
         (error) => {
-          console.error('❌ Error cargando la lámpara:', error);
-          container.style.display = 'flex';
-          container.style.alignItems = 'center';
-          container.style.justifyContent = 'center';
-          container.style.color = '#666';
-          container.style.fontSize = '12px';
-          container.textContent = 'Error al cargar modelo';
+          console.error('❌ Error cargando lámpara:', error);
+          container.innerHTML = `<div class="error-msg">⚠️ Error al cargar la lámpara<br><small>${modeloPath}</small><br><br>📁 Verifica que el archivo exista en la ruta correcta</div>`;
         }
       );
 
@@ -439,10 +428,8 @@
         requestAnimationFrame(animate);
         time += 0.016;
 
-        // Efecto de latido suave en la luz
         if (bulbLight) {
-          const intensity = 0.7 + Math.sin(time * 2.5) * 0.08;
-          bulbLight.intensity = intensity;
+          bulbLight.intensity = 0.7 + Math.sin(time * 2.5) * 0.08;
         }
 
         controls.update();
@@ -450,7 +437,6 @@
       }
       animate();
 
-      // Resize
       window.addEventListener('resize', () => {
         const width = container.clientWidth;
         const height = container.clientHeight;
@@ -460,15 +446,21 @@
       });
     }
 
-    // === CREAR LOS VISORES ===
+    // === CREAR VISORES ===
+    console.log('🚀 Iniciando visores 3D...');
     
-    // Objeto I - Espejo (modelo estándar)
+    // Verificar que los IDs existan
+    console.log('modelo1:', document.getElementById('modelo1') ? '✅' : '❌');
+    console.log('modelo2-lampara:', document.getElementById('modelo2-lampara') ? '✅' : '❌');
+    console.log('modelo3:', document.getElementById('modelo3') ? '✅' : '❌');
+
+    // Objeto I - Espejo
     crearVisor3D('modelo1', './mirror.glb', 1.2, 0);
     
-    // Objeto II - LÁMPARA (con luz especial)
+    // Objeto II - LÁMPARA (ruta verificada)
     crearVisorLampara('modelo2-lampara', './models/lampara_oval.glb', 1.0, 0);
     
-    // Objeto III - Percepción Táctil (modelo estándar)
+    // Objeto III
     crearVisor3D('modelo3', './objeto3.glb', 0.8, 0);
     
   </script>
