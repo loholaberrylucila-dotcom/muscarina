@@ -197,8 +197,9 @@
     // === CONFIGURACIÓN COMPARTIDA ===
     const rendererGlobal = new THREE.WebGLRenderer({ antialias: true });
     rendererGlobal.setPixelRatio(window.devicePixelRatio);
-    rendererGlobal.toneMapping = THREE.ACESFilmicToneMapping;
-    rendererGlobal.toneMappingExposure = 1;
+    // --- MEJORA: tono neutro como en visor.dev ---
+    rendererGlobal.toneMapping = THREE.NoToneMapping; // Neutral como "tone-mapping=neutral"
+    rendererGlobal.toneMappingExposure = 0.31; // Mismo valor que visor.dev
 
     const pmremGenerator = new THREE.PMREMGenerator(rendererGlobal);
     const envTexture = new RoomEnvironment();
@@ -328,30 +329,40 @@
       controls.rotateSpeed = 1.5;
       controls.target.set(0, 0.8, 0);
 
-      // ILUMINACIÓN
-      const ambientLight = new THREE.AmbientLight(0x404060, 0.6);
+      // --- ILUMINACIÓN MEJORADA (como en visor.dev) ---
+      // Luz ambiental suave
+      const ambientLight = new THREE.AmbientLight(0x404060, 0.4);
       scene.add(ambientLight);
 
-      const mainLight = new THREE.DirectionalLight(0xffffff, 1);
+      // Luz principal desde arriba-derecha (simula luz natural)
+      const mainLight = new THREE.DirectionalLight(0xffeedd, 1.2);
       mainLight.position.set(3, 5, 2);
       mainLight.castShadow = true;
-      mainLight.shadow.mapSize.width = 512;
-      mainLight.shadow.mapSize.height = 512;
+      mainLight.shadow.mapSize.width = 1024;
+      mainLight.shadow.mapSize.height = 1024;
+      mainLight.shadow.bias = -0.001;
       scene.add(mainLight);
 
-      const fillLight = new THREE.DirectionalLight(0xcc8844, 0.3);
+      // Luz de relleno cálida desde abajo
+      const fillLight = new THREE.DirectionalLight(0xffaa66, 0.3);
       fillLight.position.set(0, -1, 0);
       scene.add(fillLight);
 
-      const backLight = new THREE.DirectionalLight(0x6688aa, 0.25);
+      // Luz trasera fría (para resaltar bordes)
+      const backLight = new THREE.DirectionalLight(0x88bbff, 0.2);
       backLight.position.set(-2, 1.5, -2);
       scene.add(backLight);
 
-      // Grid de referencia
-      const gridHelper = new THREE.GridHelper(4, 16, 0x888888, 0x444444);
+      // Segunda luz de relleno desde la izquierda
+      const leftFill = new THREE.DirectionalLight(0xccddff, 0.2);
+      leftFill.position.set(-1, 2, 1);
+      scene.add(leftFill);
+
+      // Grid de referencia (más sutil)
+      const gridHelper = new THREE.GridHelper(4, 16, 0x666666, 0x333333);
       gridHelper.position.y = -0.3;
       gridHelper.material.transparent = true;
-      gridHelper.material.opacity = 0.15;
+      gridHelper.material.opacity = 0.12;
       scene.add(gridHelper);
 
       let bulbLight = null;
@@ -366,7 +377,7 @@
           // Escalar
           model.scale.set(scale, scale, scale);
           
-          // Centrar
+          // Centrar y apoyar en el suelo
           const box = new THREE.Box3().setFromObject(model);
           const center = box.getCenter(new THREE.Vector3());
           model.position.x = -center.x;
@@ -391,11 +402,12 @@
                 
                 bulbFound = true;
                 
+                // Material emisivo más sutil
                 child.material = new THREE.MeshStandardMaterial({
-                  color: 0xffeedd,
-                  emissive: 0xffaa55,
-                  emissiveIntensity: 1.5,
-                  roughness: 0.2,
+                  color: 0xffeecc,
+                  emissive: 0xffaa44,
+                  emissiveIntensity: 1.2,
+                  roughness: 0.3,
                   metalness: 0.0,
                 });
                 
@@ -407,15 +419,17 @@
           scene.add(model);
           console.log('✅ Modelo de lámpara cargado');
 
-          // Crear luz
+          // Crear luz puntual cálida (como la bombilla encendida)
           if (bulbFound) {
-            bulbLight = new THREE.PointLight(0xffaa66, 0.9, 3.5);
+            bulbLight = new THREE.PointLight(0xffaa55, 0.6, 3.5);
             bulbLight.position.set(0, 1.2, 0);
             bulbLight.castShadow = true;
+            bulbLight.shadow.mapSize.width = 256;
+            bulbLight.shadow.mapSize.height = 256;
             scene.add(bulbLight);
-            console.log('✅ Luz añadida');
+            console.log('✅ Luz puntual añadida');
           } else {
-            bulbLight = new THREE.PointLight(0xffaa66, 0.7, 3);
+            bulbLight = new THREE.PointLight(0xffaa55, 0.5, 3);
             bulbLight.position.set(0, 1.2, 0);
             scene.add(bulbLight);
             console.log('⚠️ Bombilla no encontrada, luz en posición estimada');
@@ -437,8 +451,9 @@
         requestAnimationFrame(animate);
         time += 0.016;
 
+        // Efecto de latido muy suave en la luz
         if (bulbLight) {
-          bulbLight.intensity = 0.7 + Math.sin(time * 2.5) * 0.08;
+          bulbLight.intensity = 0.55 + Math.sin(time * 2.0) * 0.05;
         }
 
         controls.update();
@@ -461,7 +476,7 @@
     // Objeto I - Espejo
     crearVisor3D('modelo1', './mirror.glb', 1.2, 0);
     
-    // Objeto II - LÁMPARA (RUTA CORREGIDA - archivo en la raíz)
+    // Objeto II - LÁMPARA (con iluminación mejorada como visor.dev)
     crearVisorLampara('modelo2-lampara', './lampara_oval.glb', 1.0, 0);
     
     // Objeto III
@@ -470,3 +485,4 @@
   </script>
 </body>
 </html>
+
