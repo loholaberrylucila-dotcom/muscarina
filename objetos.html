@@ -2,13 +2,14 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Muscarina — Objetos</title>
 
   <!-- Cargar Model Viewer -->
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 
   <style>
+    /* ===== RESET Y ESTILOS GENERALES ===== */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -20,6 +21,7 @@
       color: #f2f2f2;
       font-family: Arial, Helvetica, sans-serif;
       min-height: 100vh;
+      -webkit-tap-highlight-color: transparent;
     }
 
     nav {
@@ -77,7 +79,7 @@
       border: 1px solid rgba(255,255,255,0.3);
     }
 
-    /* Contenedor del modelo 3D */
+    /* ===== CONTENEDOR 3D ===== */
     .modelo-3d {
       width: 100%;
       height: 220px;
@@ -87,18 +89,36 @@
       overflow: hidden;
     }
 
-    /* Estilos para Model Viewer */
+    /* ===== MODEL VIEWER ===== */
     model-viewer {
-      width: 100%;
-      height: 100%;
-      display: block;
+      width: 100% !important;
+      height: 100% !important;
+      display: block !important;
+      background-color: #1a1a1a;
     }
 
     /* Ocultar barra de progreso */
     .progress-bar {
-      display: none;
+      display: none !important;
     }
 
+    /* Botón AR optimizado para móvil */
+    #ar-button {
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+    }
+
+    #ar-prompt {
+      display: none !important;
+    }
+
+    /* ===== TEXTOS ===== */
     .obra h2 {
       font-size: 14px;
       margin-bottom: 6px;
@@ -129,6 +149,28 @@
       color: #ffaa55;
       margin-top: 5px;
     }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav {
+        gap: 20px;
+        padding: 12px;
+      }
+      
+      nav a {
+        font-size: 11px;
+        letter-spacing: 1px;
+      }
+      
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .modelo-3d {
+        height: 180px;
+      }
+    }
   </style>
 </head>
 
@@ -145,7 +187,7 @@
 
     <section class="grid">
 
-      <!-- OBJETO 1 - Espejo (sigue con Three.js) -->
+      <!-- OBJETO 1 - Espejo (Three.js) -->
       <div class="obra">
         <div class="modelo-3d" id="modelo1"></div>
         <h2>Objeto I - Espejo Orgánico</h2>
@@ -154,30 +196,33 @@
         <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
       </div>
 
-      <!-- OBJETO 2 - LÁMPARA (USA MODEL VIEWER) -->
+      <!-- OBJETO 2 - LÁMPARA (Model Viewer OPTIMIZADO) -->
       <div class="obra">
-        <div class="modelo-3d" id="modelo2-lampara">
+        <div class="modelo-3d">
           <model-viewer 
             src="./lampara_oval.glb" 
             ar 
             ar-modes="webxr scene-viewer quick-look" 
             camera-controls 
             tone-mapping="neutral" 
-            poster="poster.webp" 
-            shadow-intensity="2" 
             exposure="0.31" 
+            shadow-intensity="2" 
             shadow-softness="1"
             alt="Lámpara Velador 3D"
             auto-rotate
             rotation-per-second="15deg"
-            style="background-color: #1a1a1a;">
+            disable-zoom
+            interaction-prompt="none"
+            loading="lazy"
+            reveal="auto"
+            style="background-color: #1a1a1a; width: 100%; height: 100%;">
             
             <div class="progress-bar hide" slot="progress-bar">
               <div class="update-bar"></div>
             </div>
             
             <button slot="ar-button" id="ar-button">
-              View in your space
+              🔍 Ver en AR
             </button>
             
             <div id="ar-prompt">
@@ -191,7 +236,7 @@
         <div class="instruccion">🖱️ Haz clic y arrastra para rotar · 💡 Bombilla emisiva</div>
       </div>
 
-      <!-- OBJETO 3 - Percepción Táctil (sigue con Three.js) -->
+      <!-- OBJETO 3 - Percepción Táctil (Three.js) -->
       <div class="obra">
         <div class="modelo-3d" id="modelo3"></div>
         <h2>Objeto III - Percepción Táctil</h2>
@@ -203,7 +248,7 @@
     </section>
   </main>
 
-  <!-- THREE.JS solo para los objetos que NO usan Model Viewer -->
+  <!-- THREE.JS para espejo y objeto3 -->
   <script type="importmap">
     {
       "imports": {
@@ -214,13 +259,11 @@
   </script>
 
   <script type="module">
-    // Solo importamos Three.js para los objetos que lo necesitan
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
     import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
     import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-    // Configuración compartida
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -230,7 +273,6 @@
     const envTexture = new RoomEnvironment();
     const environment = pmremGenerator.fromScene(envTexture).texture;
 
-    // Función para crear un viewer en un contenedor específico
     function crearVisor3D(containerId, modeloPath, scale = 1, positionY = 0) {
       const container = document.getElementById(containerId);
       if (!container) return;
@@ -248,7 +290,7 @@
       const localRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
       localRenderer.setSize(container.clientWidth, container.clientHeight);
       localRenderer.setClearColor(0x000000, 0);
-      localRenderer.setPixelRatio(window.devicePixelRatio);
+      localRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       container.appendChild(localRenderer.domElement);
 
       const controls = new OrbitControls(camera, localRenderer.domElement);
@@ -279,17 +321,12 @@
           model.scale.set(scale, scale, scale);
           model.position.set(0, positionY, 0);
           scene.add(model);
-          console.log(`Modelo cargado en ${containerId}`);
+          console.log(`✅ Modelo cargado en ${containerId}`);
         },
         undefined,
         (error) => {
-          console.error(`Error cargando modelo en ${containerId}:`, error);
-          container.style.display = 'flex';
-          container.style.alignItems = 'center';
-          container.style.justifyContent = 'center';
-          container.style.color = '#666';
-          container.style.fontSize = '12px';
-          container.textContent = 'Error al cargar modelo';
+          console.error(`❌ Error en ${containerId}:`, error);
+          container.innerHTML = `<div style="color:#666;font-size:12px;text-align:center;padding:20px;">⚠️ Error al cargar modelo</div>`;
         }
       );
 
@@ -309,7 +346,7 @@
       });
     }
 
-    // Solo creamos visores para los objetos que NO usan Model Viewer
+    // Solo crear visores para objetos que NO usan Model Viewer
     crearVisor3D('modelo1', './mirror.glb', 1.2, 0);
     crearVisor3D('modelo3', './objeto3.glb', 0.8, 0);
     
