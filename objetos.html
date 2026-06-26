@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Muscarina — Objetos</title>
 
-  <!-- Cargar Model Viewer con polyfills para móvil -->
-  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+  <!-- Cargar Model Viewer desde CDN (versión estable) -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
 
   <style>
     * {
@@ -95,30 +95,19 @@
       background-color: #1a1a1a;
     }
 
-    /* Ocultar TODOS los iconos y botones de Model Viewer */
-    model-viewer::part(default-progress-bar) {
-      display: none !important;
-    }
-
-    model-viewer::part(default-ar-button) {
-      display: none !important;
-    }
-
+    /* Ocultar todos los elementos visuales no deseados */
+    model-viewer::part(default-progress-bar),
+    model-viewer::part(default-ar-button),
     model-viewer::part(default-poster) {
       display: none !important;
     }
 
-    /* Ocultar el botón AR por defecto */
-    .ar-button {
+    /* Ocultar cualquier elemento flotante */
+    model-viewer > *:not(canvas) {
       display: none !important;
     }
 
-    /* Ocultar cualquier elemento flotante de Model Viewer */
-    model-viewer > * {
-      display: none !important;
-    }
-
-    /* Solo mostrar el canvas del modelo */
+    /* Solo mostrar el canvas */
     model-viewer > canvas {
       display: block !important;
     }
@@ -200,13 +189,14 @@
         <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
       </div>
 
-      <!-- OBJETO 2 - LÁMPARA (Model Viewer optimizado para móvil) -->
+      <!-- OBJETO 2 - LÁMPARA (Model Viewer mejorado) -->
       <div class="obra">
         <div class="modelo-3d">
           <model-viewer 
             id="lampara-viewer"
             src="./lampara_oval.glb" 
-            camera-controls 
+            camera-controls
+            touch-action="pan-y"
             tone-mapping="neutral" 
             exposure="0.31" 
             shadow-intensity="2" 
@@ -214,11 +204,10 @@
             alt="Lámpara Velador 3D"
             auto-rotate
             rotation-per-second="15deg"
-            loading="eager"
+            loading="lazy"
             reveal="auto"
-            disable-zoom
-            disable-tap
-            data-ignore-gestures="true"
+            ar
+            ar-modes="webxr scene-viewer quick-look"
             style="background-color: #1a1a1a; width: 100%; height: 100%;">
             
             <!-- Eliminar TODOS los slots visuales -->
@@ -350,26 +339,26 @@
     
   </script>
 
-  <!-- SCRIPT PARA FORZAR CARGA EN MÓVIL -->
+  <!-- SCRIPT PARA FORZAR CARGA EN MÓVIL Y MANEJO DE ERRORES -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const viewer = document.getElementById('lampara-viewer');
       if (viewer) {
-        // Forzar recarga en móviles
+        // En móviles, forzar recarga si no carga en 5 segundos
         if (window.innerWidth < 768) {
           setTimeout(() => {
-            viewer.src = viewer.src;
-          }, 500);
+            if (!viewer.loaded) {
+              viewer.src = viewer.src;
+            }
+          }, 3000);
         }
         
-        // Asegurar que los controles funcionen en móvil
         viewer.addEventListener('load', () => {
-          console.log('✅ Lámpara cargada en Model Viewer');
+          console.log('✅ Lámpara cargada exitosamente');
         });
         
         viewer.addEventListener('error', (e) => {
           console.error('❌ Error en Model Viewer:', e);
-          // Mostrar mensaje amigable
           const container = viewer.parentElement;
           if (container) {
             container.innerHTML = `
