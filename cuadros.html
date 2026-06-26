@@ -2,46 +2,56 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Muscarina — Cuadros</title>
+
+  <!-- Model Viewer -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
 
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      background-color: #0f0f0f;
+      background: #0f0f0f;
       color: #f2f2f2;
       font-family: Arial, Helvetica, sans-serif;
       min-height: 100vh;
+      -webkit-tap-highlight-color: transparent;
     }
 
     nav {
       position: fixed;
       top: 0;
       width: 100%;
-      padding: 20px;
       display: flex;
       justify-content: center;
       gap: 40px;
-      background: rgba(15,15,15,0.9);
+      padding: 20px;
+      background: rgba(15, 15, 15, .9);
       backdrop-filter: blur(6px);
+      z-index: 100;
     }
 
     nav a {
       color: #f2f2f2;
       text-decoration: none;
-      font-size: 14px;
-      letter-spacing: 2px;
       text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 14px;
+      transition: .3s;
+    }
+
+    nav a:hover {
+      opacity: .6;
     }
 
     main {
       max-width: 1100px;
-      margin: 0 auto;
+      margin: auto;
       padding: 160px 20px 100px;
     }
 
@@ -54,73 +64,213 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 40px;
     }
 
     .obra {
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255, 255, 255, .1);
       padding: 20px;
+      transition: .3s;
     }
 
-    .imagen {
+    .obra:hover {
+      border: 1px solid rgba(255, 255, 255, .3);
+    }
+
+    .modelo-3d {
       width: 100%;
       height: 220px;
-      background-color: #1a1a1a;
+      background: #1a1a1a;
       margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      opacity: 0.3;
+      overflow: hidden;
+      position: relative;
+    }
+
+    model-viewer {
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: #1a1a1a;
     }
 
     .obra h2 {
       font-size: 14px;
       margin-bottom: 6px;
+      letter-spacing: 1px;
     }
 
     .obra p {
       font-size: 12px;
-      opacity: 0.6;
+      opacity: .6;
+      margin-bottom: 4px;
+    }
+
+    .instruccion {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 10px;
+      opacity: .45;
+    }
+
+    /* Ocultar botones e iconos de Model Viewer */
+    model-viewer::part(default-progress-bar),
+    model-viewer::part(default-ar-button),
+    model-viewer::part(default-poster) {
+      display: none !important;
+    }
+
+    model-viewer > *:not(canvas) {
+      display: none !important;
+    }
+
+    model-viewer > canvas {
+      display: block !important;
+    }
+
+    .ar-button {
+      display: none !important;
+    }
+
+    #ar-prompt {
+      display: none !important;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        gap: 20px;
+        padding: 12px;
+      }
+
+      nav a {
+        font-size: 11px;
+        letter-spacing: 1px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modelo-3d {
+        height: 190px;
+      }
     }
   </style>
+
 </head>
 
 <body>
 
   <nav>
-    <a href="index.html">Inicio</a>
-    <a href="tienda.html">Tienda</a>
-    <a href="bio.html">Portfolio</a>
+    <a href="index.html">INICIO</a>
+    <a href="tienda.html">TIENDA</a>
+    <a href="bio.html">PORTFOLIO</a>
   </nav>
 
   <main>
+
     <h1>CUADROS</h1>
 
     <section class="grid">
 
+      <!-- CUADRO I - Model Viewer -->
       <div class="obra">
-        <div class="imagen">imagen</div>
-        <h2>Cuadro I</h2>
-        <p>Técnica · año</p>
+        <div class="modelo-3d">
+          <model-viewer
+            id="cuadro1-viewer"
+            src="./cuadro_prueba.glb"
+            alt="Cuadro 3D"
+            camera-controls
+            auto-rotate
+            auto-rotate-delay="0"
+            rotation-per-second="8deg"
+            loading="eager"
+            reveal="auto"
+            shadow-intensity="1.66"
+            shadow-softness="0.91"
+            exposure="0.93"
+            tone-mapping="neutral"
+            interaction-prompt="none"
+            style="width:100%;height:100%;background:#1a1a1a;">
+            
+            <!-- Ocultar todos los elementos visuales -->
+            <div slot="progress-bar" style="display:none !important;"></div>
+            <div slot="ar-button" style="display:none !important;"></div>
+            <div slot="ar-prompt" style="display:none !important;"></div>
+            <div slot="poster" style="display:none !important;"></div>
+            
+          </model-viewer>
+        </div>
+        <h2>Cuadro I - Prueba</h2>
+        <p>Modelo 3D interactivo · Óleo sobre lienzo</p>
+        <p>2025 · Pieza única</p>
+        <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
       </div>
 
+      <!-- CUADRO II - Placeholder (Three.js opcional) -->
       <div class="obra">
-        <div class="imagen">imagen</div>
+        <div class="modelo-3d" id="modelo2-placeholder">
+          <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#666;font-size:12px;">
+            🖼️ Próximamente
+          </div>
+        </div>
         <h2>Cuadro II</h2>
-        <p>Técnica · año</p>
+        <p>Modelo 3D interactivo · Técnica mixta</p>
+        <p>2025 · Pieza única</p>
+        <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
       </div>
 
+      <!-- CUADRO III - Placeholder -->
       <div class="obra">
-        <div class="imagen">imagen</div>
+        <div class="modelo-3d" id="modelo3-placeholder">
+          <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#666;font-size:12px;">
+            🖼️ Próximamente
+          </div>
+        </div>
         <h2>Cuadro III</h2>
-        <p>Técnica · año</p>
+        <p>Modelo 3D interactivo · Acrílico</p>
+        <p>2025 · Pieza única</p>
+        <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
       </div>
 
     </section>
+
   </main>
+
+  <!-- DIAGNÓSTICO: escuchar eventos del Model Viewer -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const viewer = document.getElementById("cuadro1-viewer");
+
+      if (viewer) {
+        viewer.addEventListener("load", () => {
+          console.log("✅ CUADRO_PRUEBA.glb cargado correctamente");
+        });
+        
+        viewer.addEventListener("error", (e) => {
+          console.error("❌ Error en CUADRO_PRUEBA.glb:", e);
+          // Mostrar mensaje de error en el contenedor
+          const container = viewer.parentElement;
+          if (container) {
+            container.innerHTML = `
+              <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#888;font-size:12px;text-align:center;padding:20px;">
+                ⚠️ Error al cargar el cuadro<br>
+                <small style="opacity:0.5;">Verifica que el archivo existe</small>
+              </div>
+            `;
+          }
+        });
+
+        // Forzar recarga si después de 5 segundos no cargó
+        setTimeout(() => {
+          if (!viewer.loaded) {
+            console.log("⚠️ CUADRO_PRUEBA.glb no cargó, forzando recarga...");
+            viewer.src = viewer.src;
+          }
+        }, 5000);
+      }
+    });
+  </script>
 
 </body>
 </html>
-
