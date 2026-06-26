@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,372 +6,463 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Muscarina — Objetos</title>
 
-  <!-- Cargar Model Viewer desde CDN (versión estable) -->
+  <!-- Model Viewer -->
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
     }
 
-    body {
-      background-color: #0f0f0f;
-      color: #f2f2f2;
-      font-family: Arial, Helvetica, sans-serif;
-      min-height: 100vh;
-      -webkit-tap-highlight-color: transparent;
+    body{
+      background:#0f0f0f;
+      color:#f2f2f2;
+      font-family:Arial,Helvetica,sans-serif;
+      min-height:100vh;
+      -webkit-tap-highlight-color:transparent;
     }
 
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      background: rgba(15,15,15,0.9);
-      backdrop-filter: blur(6px);
-      z-index: 100;
+    nav{
+      position:fixed;
+      top:0;
+      width:100%;
+      display:flex;
+      justify-content:center;
+      gap:40px;
+      padding:20px;
+      background:rgba(15,15,15,.9);
+      backdrop-filter:blur(6px);
+      z-index:100;
     }
 
-    nav a {
-      color: #f2f2f2;
-      text-decoration: none;
-      font-size: 14px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      transition: opacity 0.3s;
+    nav a{
+      color:#f2f2f2;
+      text-decoration:none;
+      text-transform:uppercase;
+      letter-spacing:2px;
+      font-size:14px;
+      transition:.3s;
     }
 
-    nav a:hover {
-      opacity: 0.6;
+    nav a:hover{
+      opacity:.6;
     }
 
-    main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 160px 20px 100px;
+    main{
+      max-width:1100px;
+      margin:auto;
+      padding:160px 20px 100px;
     }
 
-    h1 {
-      text-align: center;
-      font-size: 26px;
-      letter-spacing: 4px;
-      margin-bottom: 60px;
+    h1{
+      text-align:center;
+      font-size:26px;
+      letter-spacing:4px;
+      margin-bottom:60px;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 40px;
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:40px;
     }
 
-    .obra {
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 20px;
-      transition: border 0.3s ease;
+    .obra{
+      border:1px solid rgba(255,255,255,.1);
+      padding:20px;
+      transition:.3s;
     }
 
-    .obra:hover {
-      border: 1px solid rgba(255,255,255,0.3);
+    .obra:hover{
+      border:1px solid rgba(255,255,255,.3);
     }
 
-    .modelo-3d {
-      width: 100%;
-      height: 220px;
-      background-color: #1a1a1a;
-      margin-bottom: 15px;
-      position: relative;
-      overflow: hidden;
+    .modelo-3d{
+      width:100%;
+      height:220px;
+      background:#1a1a1a;
+      margin-bottom:15px;
+      overflow:hidden;
+      position:relative;
     }
 
-    /* ===== ESTILOS PARA MODEL VIEWER ===== */
-    model-viewer {
-      width: 100% !important;
-      height: 100% !important;
-      display: block !important;
-      background-color: #1a1a1a;
+    model-viewer{
+      width:100%;
+      height:100%;
+      display:block;
+      background:#1a1a1a;
     }
 
-    /* Ocultar todos los elementos visuales no deseados */
-    model-viewer::part(default-progress-bar),
-    model-viewer::part(default-ar-button),
-    model-viewer::part(default-poster) {
-      display: none !important;
+    .obra h2{
+      font-size:14px;
+      margin-bottom:6px;
+      letter-spacing:1px;
     }
 
-    /* Ocultar cualquier elemento flotante */
-    model-viewer > *:not(canvas) {
-      display: none !important;
+    .obra p{
+      font-size:12px;
+      opacity:.6;
+      margin-bottom:4px;
     }
 
-    /* Solo mostrar el canvas */
-    model-viewer > canvas {
-      display: block !important;
+    .instruccion{
+      text-align:center;
+      margin-top:8px;
+      font-size:10px;
+      opacity:.45;
     }
 
-    .obra h2 {
-      font-size: 14px;
-      margin-bottom: 6px;
-      letter-spacing: 1px;
+    .light-badge{
+      display:inline-block;
+      padding:2px 10px;
+      border-radius:12px;
+      background:rgba(255,170,85,.2);
+      border:1px solid rgba(255,170,85,.3);
+      color:#ffaa55;
+      font-size:9px;
+      letter-spacing:1px;
+      margin-top:5px;
     }
 
-    .obra p {
-      font-size: 12px;
-      opacity: 0.6;
-      margin-bottom: 4px;
-    }
+    @media(max-width:768px){
 
-    .instruccion {
-      font-size: 10px;
-      opacity: 0.4;
-      margin-top: 8px;
-      text-align: center;
-    }
-
-    .light-badge {
-      display: inline-block;
-      background: rgba(255, 170, 85, 0.2);
-      border: 1px solid rgba(255, 170, 85, 0.3);
-      padding: 2px 10px;
-      border-radius: 12px;
-      font-size: 9px;
-      letter-spacing: 1px;
-      color: #ffaa55;
-      margin-top: 5px;
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 768px) {
-      nav {
-        gap: 20px;
-        padding: 12px;
+      nav{
+        gap:20px;
+        padding:12px;
       }
-      
-      nav a {
-        font-size: 11px;
-        letter-spacing: 1px;
+
+      nav a{
+        font-size:11px;
+        letter-spacing:1px;
       }
-      
-      .grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
+
+      .grid{
+        grid-template-columns:1fr;
       }
-      
-      .modelo-3d {
-        height: 180px;
+
+      .modelo-3d{
+        height:190px;
       }
+
     }
+
   </style>
+
 </head>
 
 <body>
 
-  <nav>
-    <a href="index.html">INICIO</a>
-    <a href="tienda.html">TIENDA</a>
-    <a href="bio.html">PORTFOLIO</a>
-  </nav>
+<nav>
+  <a href="index.html">INICIO</a>
+  <a href="tienda.html">TIENDA</a>
+  <a href="bio.html">PORTFOLIO</a>
+</nav>
 
-  <main>
-    <h1>OBJETOS</h1>
+<main>
 
-    <section class="grid">
+<h1>OBJETOS</h1>
 
-      <!-- OBJETO 1 - Espejo (Three.js) -->
-      <div class="obra">
-        <div class="modelo-3d" id="modelo1"></div>
-        <h2>Objeto I - Espejo Orgánico</h2>
-        <p>Modelado 3D interactivo · Resina digital</p>
-        <p>2024 · Pieza única</p>
-        <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
-      </div>
+<section class="grid">
 
-      <!-- OBJETO 2 - LÁMPARA (Model Viewer mejorado) -->
-      <div class="obra">
-        <div class="modelo-3d">
-          <model-viewer 
-            id="lampara-viewer"
-            src="./lampara_oval.glb" 
-            camera-controls
-            touch-action="pan-y"
-            tone-mapping="neutral" 
-            exposure="0.31" 
-            shadow-intensity="2" 
-            shadow-softness="1"
-            alt="Lámpara Velador 3D"
-            auto-rotate
-            rotation-per-second="15deg"
-            loading="lazy"
-            reveal="auto"
-            ar
-            ar-modes="webxr scene-viewer quick-look"
-            style="background-color: #1a1a1a; width: 100%; height: 100%;">
-            
-            <!-- Eliminar TODOS los slots visuales -->
-            <div slot="progress-bar" style="display:none !important;"></div>
-            <div slot="ar-button" style="display:none !important;"></div>
-            <div slot="ar-prompt" style="display:none !important;"></div>
-            <div slot="poster" style="display:none !important;"></div>
-            
-          </model-viewer>
-        </div>
-        <h2>Objeto II - Lámpara Velador <span class="light-badge">💡 Luz interactiva</span></h2>
-        <p>Modelado 3D interactivo · MDF flexible · Lámpara de pie</p>
-        <p>2025 · Pieza única</p>
-        <div class="instruccion">🖱️ Haz clic y arrastra para rotar · 💡 Bombilla emisiva</div>
-      </div>
+<!-- ESPEJO -->
 
-      <!-- OBJETO 3 - Percepción Táctil (Three.js) -->
-      <div class="obra">
-        <div class="modelo-3d" id="modelo3"></div>
-        <h2>Objeto III - Percepción Táctil</h2>
-        <p>Modelado 3D interactivo · Cerámica</p>
-        <p>2024 · Pieza única</p>
-        <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
-      </div>
+<div class="obra">
 
-    </section>
-  </main>
+<div class="modelo-3d" id="modelo1"></div>
 
-  <!-- THREE.JS para espejo y objeto3 -->
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.161.0/build/three.module.js?module",
-        "three/addons/": "https://unpkg.com/three@0.161.0/examples/jsm/"
-      }
-    }
-  </script>
+<h2>Objeto I - Espejo Orgánico</h2>
 
-  <script type="module">
-    import * as THREE from 'three';
-    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+<p>Modelado 3D interactivo · Resina digital</p>
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1;
+<p>2024 · Pieza única</p>
 
-    const pmremGenerator = new THREE.PMREMGenerator(renderer);
-    const envTexture = new RoomEnvironment();
-    const environment = pmremGenerator.fromScene(envTexture).texture;
+<div class="instruccion">
+🖱️ Haz clic y arrastra para rotar
+</div>
 
-    function crearVisor3D(containerId, modeloPath, scale = 1, positionY = 0) {
-      const container = document.getElementById(containerId);
-      if (!container) return;
+</div>
 
-      container.innerHTML = '';
+<!-- LÁMPARA -->
 
-      const scene = new THREE.Scene();
-      scene.environment = environment;
-      scene.background = null;
+<div class="obra">
 
-      const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
-      camera.position.set(2, 1, 3);
-      camera.lookAt(0, 0, 0);
+<div class="modelo-3d">
 
-      const localRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      localRenderer.setSize(container.clientWidth, container.clientHeight);
-      localRenderer.setClearColor(0x000000, 0);
-      localRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      container.appendChild(localRenderer.domElement);
+<model-viewer
 
-      const controls = new OrbitControls(camera, localRenderer.domElement);
-      controls.enableDamping = true;
-      controls.dampingFactor = 0.05;
-      controls.autoRotate = false;
-      controls.enableZoom = true;
-      controls.enablePan = false;
-      controls.zoomSpeed = 1.2;
-      controls.rotateSpeed = 1.5;
+id="lampara-viewer"
 
-      const ambientLight = new THREE.AmbientLight(0x404040);
-      scene.add(ambientLight);
-      
-      const mainLight = new THREE.DirectionalLight(0xffffff, 1);
-      mainLight.position.set(2, 3, 2);
-      scene.add(mainLight);
-      
-      const backLight = new THREE.DirectionalLight(0x88aaff, 0.4);
-      backLight.position.set(-1, 1, -2);
-      scene.add(backLight);
+src="./lampara_oval.glb"
 
-      const loader = new GLTFLoader();
-      loader.load(
-        modeloPath,
-        (gltf) => {
-          const model = gltf.scene;
-          model.scale.set(scale, scale, scale);
-          model.position.set(0, positionY, 0);
-          scene.add(model);
-          console.log(`✅ Modelo cargado en ${containerId}`);
-        },
-        undefined,
-        (error) => {
-          console.error(`❌ Error en ${containerId}:`, error);
-          container.innerHTML = `<div style="color:#666;font-size:12px;text-align:center;padding:20px;">⚠️ Error al cargar modelo</div>`;
-        }
-      );
+alt="Lámpara Velador"
 
-      function animate() {
-        requestAnimationFrame(animate);
-        controls.update();
-        localRenderer.render(scene, camera);
-      }
-      animate();
+camera-controls
 
-      window.addEventListener('resize', () => {
-        const width = container.clientWidth;
-        const height = container.clientHeight;
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-        localRenderer.setSize(width, height);
-      });
-    }
+auto-rotate
 
-    crearVisor3D('modelo1', './mirror.glb', 1.2, 0);
-    crearVisor3D('modelo3', './objeto3.glb', 0.8, 0);
-    
-  </script>
+auto-rotate-delay="0"
 
-  <!-- SCRIPT PARA FORZAR CARGA EN MÓVIL Y MANEJO DE ERRORES -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const viewer = document.getElementById('lampara-viewer');
-      if (viewer) {
-        // En móviles, forzar recarga si no carga en 5 segundos
-        if (window.innerWidth < 768) {
-          setTimeout(() => {
-            if (!viewer.loaded) {
-              viewer.src = viewer.src;
-            }
-          }, 3000);
-        }
-        
-        viewer.addEventListener('load', () => {
-          console.log('✅ Lámpara cargada exitosamente');
-        });
-        
-        viewer.addEventListener('error', (e) => {
-          console.error('❌ Error en Model Viewer:', e);
-          const container = viewer.parentElement;
-          if (container) {
-            container.innerHTML = `
-              <div style="display:flex;align-items:center;justify-content:center;height:100%;color:#666;font-size:12px;text-align:center;padding:20px;background:#1a1a1a;">
-                ⚠️ Modelo no disponible en este dispositivo<br>
-                <small style="opacity:0.5;">Intenta desde una computadora</small>
-              </div>
-            `;
-          }
-        });
-      }
-    });
-  </script>
+rotation-per-second="12deg"
+
+loading="eager"
+
+reveal="auto"
+
+shadow-intensity="1"
+
+shadow-softness="0.5"
+
+exposure="1"
+
+tone-mapping="neutral"
+
+interaction-prompt="none"
+
+style="width:100%;height:100%;background:#1a1a1a;">
+
+</model-viewer>
+
+</div>
+
+<h2>
+Objeto II - Lámpara Velador
+<span class="light-badge">💡 Luz interactiva</span>
+</h2>
+
+<p>Modelado 3D interactivo · MDF flexible · Lámpara de pie</p>
+
+<p>2025 · Pieza única</p>
+
+<div class="instruccion">
+🖱️ Haz clic y arrastra para rotar
+</div>
+
+</div>
+
+<!-- OBJETO 3 -->
+
+<div class="obra">
+
+<div class="modelo-3d" id="modelo3"></div>
+
+<h2>Objeto III - Percepción Táctil</h2>
+
+<p>Modelado 3D interactivo · Cerámica</p>
+
+<p>2024 · Pieza única</p>
+
+<div class="instruccion">
+🖱️ Haz clic y arrastra para rotar
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<!-- THREE.JS -->
+
+<script type="importmap">
+{
+  "imports":{
+    "three":"https://unpkg.com/three@0.161.0/build/three.module.js?module",
+    "three/addons/":"https://unpkg.com/three@0.161.0/examples/jsm/"
+  }
+}
+</script>
+```
+```html
+<script type="module">
+
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const renderer = new THREE.WebGLRenderer({ antialias:true });
+
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1;
+
+const pmremGenerator = new THREE.PMREMGenerator(renderer);
+const envTexture = new RoomEnvironment();
+const environment = pmremGenerator.fromScene(envTexture).texture;
+
+function crearVisor3D(containerId,modeloPath,scale=1,positionY=0){
+
+const container=document.getElementById(containerId);
+
+if(!container) return;
+
+container.innerHTML="";
+
+const scene=new THREE.Scene();
+
+scene.environment=environment;
+
+const camera=new THREE.PerspectiveCamera(
+45,
+container.clientWidth/container.clientHeight,
+0.1,
+1000
+);
+
+camera.position.set(2,1,3);
+
+const localRenderer=new THREE.WebGLRenderer({
+antialias:true,
+alpha:true
+});
+
+localRenderer.setSize(container.clientWidth,container.clientHeight);
+
+localRenderer.setPixelRatio(
+Math.min(window.devicePixelRatio,2)
+);
+
+localRenderer.setClearColor(0x000000,0);
+
+container.appendChild(localRenderer.domElement);
+
+const controls=new OrbitControls(
+camera,
+localRenderer.domElement
+);
+
+controls.enableDamping=true;
+controls.enablePan=false;
+
+scene.add(new THREE.AmbientLight(0xffffff,1));
+
+const light=new THREE.DirectionalLight(0xffffff,2);
+
+light.position.set(3,5,3);
+
+scene.add(light);
+
+const loader=new GLTFLoader();
+
+loader.load(
+
+modeloPath,
+
+(gltf)=>{
+
+const model=gltf.scene;
+
+model.scale.set(scale,scale,scale);
+
+model.position.set(0,positionY,0);
+
+scene.add(model);
+
+},
+
+undefined,
+
+(error)=>{
+
+console.error(error);
+
+container.innerHTML=`
+<div style="
+display:flex;
+justify-content:center;
+align-items:center;
+height:100%;
+color:#888;
+font-size:12px;
+text-align:center;">
+Error al cargar modelo
+</div>
+`;
+
+}
+
+);
+
+function animate(){
+
+requestAnimationFrame(animate);
+
+controls.update();
+
+localRenderer.render(scene,camera);
+
+}
+
+animate();
+
+window.addEventListener("resize",()=>{
+
+const w=container.clientWidth;
+
+const h=container.clientHeight;
+
+camera.aspect=w/h;
+
+camera.updateProjectionMatrix();
+
+localRenderer.setSize(w,h);
+
+});
+
+}
+
+crearVisor3D("modelo1","./mirror.glb",1.2,0);
+
+crearVisor3D("modelo3","./objeto3.glb",0.8,0);
+
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+const viewer=document.getElementById("lampara-viewer");
+
+if(!viewer) return;
+
+viewer.addEventListener("load",()=>{
+
+console.log("Lámpara cargada correctamente");
+
+});
+
+viewer.addEventListener("error",(e)=>{
+
+console.error("Error Model Viewer",e);
+
+viewer.parentElement.innerHTML=`
+
+<div style="
+display:flex;
+justify-content:center;
+align-items:center;
+height:100%;
+padding:20px;
+text-align:center;
+font-size:13px;
+color:white;
+">
+
+Error al cargar la lámpara
+
+</div>
+
+`;
+
+});
+
+});
+
+</script>
+
 </body>
 </html>
+```
