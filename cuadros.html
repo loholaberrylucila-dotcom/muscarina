@@ -78,15 +78,6 @@
       text-align: center;
     }
 
-    h1 {
-      font-family: 'Inter', sans-serif;
-      font-weight: 500;
-      font-size: 26px;
-      letter-spacing: 4px;
-      margin-bottom: 60px;
-      color: #000018;
-    }
-
     /* ===== GRID ===== */
     .grid {
       display: grid;
@@ -121,7 +112,7 @@
       mask-size: 7100% 100%;
       
       animation: ani2 0.7s steps(70) forwards;
-      pointer-events: none; /* para que no interfiera con clics */
+      pointer-events: none;
       transition: all 0.4s ease;
     }
 
@@ -184,7 +175,7 @@
       color: #000018;
     }
 
-    /* ===== BOTÓN CONSULTAR ===== */
+    /* ===== BOTÓN CONSULTAR (CUADRADO) ===== */
     .btn-consultar {
       display: inline-block;
       padding: 8px 24px;
@@ -192,7 +183,7 @@
       background: transparent;
       color: #000018;
       border: 1px solid rgba(0,0,24,0.3);
-      border-radius: 4px;
+      border-radius: 0px; /* <-- AHORA ES CUADRADO */
       text-decoration: none;
       font-family: 'Inter', sans-serif;
       font-weight: 400;
@@ -265,11 +256,6 @@
       main {
         padding: 120px 15px 60px;
       }
-
-      h1 {
-        font-size: 22px;
-        letter-spacing: 3px;
-      }
     }
   </style>
 
@@ -286,7 +272,7 @@
 
   <main>
 
-    <h1>CUADROS</h1>
+    <!-- EL TÍTULO "CUADROS" HA SIDO ELIMINADO -->
 
     <section class="grid">
 
