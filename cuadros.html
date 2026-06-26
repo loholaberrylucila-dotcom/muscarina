@@ -173,22 +173,22 @@
 
     <section class="grid">
 
-      <!-- CUADRO I - Model Viewer -->
+      <!-- CUADRO I - MEDUSA (Model Viewer) -->
       <div class="obra">
         <div class="modelo-3d">
           <model-viewer
             id="cuadro1-viewer"
-            src="./cuadro_prueba.glb"
-            alt="Cuadro 3D"
+            src="./Medusa_cuadro.glb"
+            alt="Medusa - Lápices de color sobre papel"
             camera-controls
             auto-rotate
             auto-rotate-delay="0"
             rotation-per-second="8deg"
             loading="eager"
             reveal="auto"
-            shadow-intensity="1.66"
-            shadow-softness="0.91"
-            exposure="0.93"
+            shadow-intensity="1.12"
+            shadow-softness="1"
+            exposure="0.69"
             tone-mapping="neutral"
             interaction-prompt="none"
             style="width:100%;height:100%;background:#1a1a1a;">
@@ -202,12 +202,12 @@
           </model-viewer>
         </div>
         <h2>Medusa</h2>
-        <p>Lápices de color sobre papel · 16X20cm </p>
+        <p>Lápices de color sobre papel · 16X20cm</p>
         <p>Año 2025 · Pieza única</p>
         <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
       </div>
 
-      <!-- CUADRO II - Placeholder (Three.js opcional) -->
+      <!-- CUADRO II - Placeholder -->
       <div class="obra">
         <div class="modelo-3d" id="modelo2-placeholder">
           <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#666;font-size:12px;">
@@ -244,11 +244,11 @@
 
       if (viewer) {
         viewer.addEventListener("load", () => {
-          console.log("✅ CUADRO_PRUEBA.glb cargado correctamente");
+          console.log("✅ Medusa_cuadro.glb cargado correctamente");
         });
         
         viewer.addEventListener("error", (e) => {
-          console.error("❌ Error en CUADRO_PRUEBA.glb:", e);
+          console.error("❌ Error en Medusa_cuadro.glb:", e);
           // Mostrar mensaje de error en el contenedor
           const container = viewer.parentElement;
           if (container) {
@@ -264,7 +264,7 @@
         // Forzar recarga si después de 5 segundos no cargó
         setTimeout(() => {
           if (!viewer.loaded) {
-            console.log("⚠️ CUADRO_PRUEBA.glb no cargó, forzando recarga...");
+            console.log("⚠️ Medusa_cuadro.glb no cargó, forzando recarga...");
             viewer.src = viewer.src;
           }
         }, 5000);
