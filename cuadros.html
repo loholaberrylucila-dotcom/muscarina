@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Muscarina — Cuadros</title>
 
-  <!-- GOOGLE FONTS INTER (misma que tienda.html) -->
+  <!-- GOOGLE FONTS INTER -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <!-- Model Viewer -->
@@ -26,7 +26,7 @@
       min-height: 100vh;
     }
 
-    /* ===== NAV (EXACTAMENTE IGUAL AL DE TIENDA) ===== */
+    /* ===== NAV ===== */
     nav {
       position: fixed;
       top: 30px;
@@ -62,7 +62,6 @@
       background: rgba(255,255,255,0.1);
     }
 
-    /* ===== MÁSCARAS (MISMAS QUE TIENDA) ===== */
     @keyframes ani { 
       from { mask-position: 0 0; } 
       to { mask-position: 100% 0; } 
@@ -80,7 +79,6 @@
       text-align: center;
     }
 
-    /* ===== TÍTULO ===== */
     h1 {
       font-family: 'Inter', sans-serif;
       font-weight: 500;
@@ -97,14 +95,26 @@
       gap: 40px;
     }
 
-    /* ===== TARJETA DE OBRA ===== */
+    /* ===== TARJETA DE OBRA (con máscara decorativa) ===== */
     .obra {
+      position: relative;
       border: 1px solid rgba(0,0,24,0.3);
       padding: 20px;
       transition: all 0.4s ease;
       background: rgba(255,255,255,0.02);
       display: flex;
       flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Pseudo-elemento decorativo con la máscara (solo fondo y borde) */
+    .obra::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(0,0,24,0.3);
       
       -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
       mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -112,13 +122,20 @@
       mask-size: 7100% 100%;
       
       animation: ani2 0.7s steps(70) forwards;
+      pointer-events: none; /* para que no interfiera con clics */
+      transition: all 0.4s ease;
     }
 
-    .obra:hover {
-      border: 1px solid rgba(0,0,24,0.6);
-      background: rgba(255,255,255,0.06);
-      transform: translateY(-5px);
+    .obra:hover::before {
       animation: ani 0.7s steps(70) forwards;
+      border-color: rgba(0,0,24,0.6);
+      background: rgba(255,255,255,0.06);
+    }
+
+    /* Contenido de la tarjeta (por encima del pseudo-elemento) */
+    .obra > * {
+      position: relative;
+      z-index: 1;
     }
 
     /* ===== CONTENEDOR 3D ===== */
@@ -186,6 +203,8 @@
       transition: all 0.3s ease;
       cursor: pointer;
       align-self: center;
+      position: relative;
+      z-index: 2;
     }
 
     .btn-consultar:hover {
@@ -259,7 +278,7 @@
 
 <body>
 
-  <!-- MENÚ IGUAL AL DE TIENDA -->
+  <!-- MENÚ -->
   <nav>
     <a href="index.html">INICIO</a>
     <a href="tienda.html">TIENDA</a>
@@ -292,7 +311,6 @@
             interaction-prompt="none"
             style="width:100%;height:100%;background:#1a1a1a;">
             
-            <!-- Ocultar todos los elementos visuales -->
             <div slot="progress-bar" style="display:none !important;"></div>
             <div slot="ar-button" style="display:none !important;"></div>
             <div slot="ar-prompt" style="display:none !important;"></div>
@@ -305,7 +323,6 @@
         <p>Año 2025 · Pieza única</p>
         <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
         
-        <!-- BOTÓN CONSULTAR -->
         <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Medusa&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Medusa." 
            class="btn-consultar">
            Consultar
@@ -342,7 +359,7 @@
 
   </main>
 
-  <!-- VANTA FOG (EXACTAMENTE IGUAL AL DE TIENDA) -->
+  <!-- VANTA FOG -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="https://unpkg.com/vanta@latest/dist/vanta.fog.min.js"></script>
   <script>
@@ -364,7 +381,7 @@
     });
   </script>
 
-  <!-- DIAGNÓSTICO: escuchar eventos del Model Viewer -->
+  <!-- DIAGNÓSTICO -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const viewer = document.getElementById("cuadro1-viewer");
