@@ -18,8 +18,8 @@
     }
 
     body {
-      background-color: #111111;
-      color: #000018;
+      background-color: #000181; /* Fondo liso azul oscuro */
+      color: #E8A0FF; /* Texto en rosa/lavanda */
       font-family: 'Inter', sans-serif;
       font-weight: 400;
       min-height: 100vh;
@@ -42,10 +42,10 @@
       font-size: 13px;
       letter-spacing: 2px;
       font-weight: 400;
-      border: 1px solid rgba(0,0,24,0.4);
-      color: #000018;
+      border: 1px solid rgba(232, 160, 255, 0.4); /* Borde en E8A0FF con transparencia */
+      color: #E8A0FF;
       text-decoration: none;
-      background: rgba(255,255,255,0.03);
+      background: rgba(232, 160, 255, 0.03);
 
       -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
       mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -58,7 +58,7 @@
 
     nav a:hover { 
       animation: ani 0.7s steps(70) forwards;
-      background: rgba(255,255,255,0.1);
+      background: rgba(232, 160, 255, 0.1);
     }
 
     @keyframes ani { 
@@ -88,10 +88,10 @@
     /* ===== TARJETA DE OBRA (con máscara decorativa) ===== */
     .obra {
       position: relative;
-      border: 1px solid rgba(0,0,24,0.3);
+      border: 1px solid rgba(232, 160, 255, 0.3);
       padding: 20px;
       transition: all 0.4s ease;
-      background: rgba(255,255,255,0.02);
+      background: rgba(232, 160, 255, 0.02);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -102,8 +102,8 @@
       position: absolute;
       inset: 0;
       z-index: 0;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(0,0,24,0.3);
+      background: rgba(232, 160, 255, 0.02);
+      border: 1px solid rgba(232, 160, 255, 0.3);
       
       -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
       mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -117,8 +117,8 @@
 
     .obra:hover::before {
       animation: ani 0.7s steps(70) forwards;
-      border-color: rgba(0,0,24,0.6);
-      background: rgba(255,255,255,0.06);
+      border-color: rgba(232, 160, 255, 0.6);
+      background: rgba(232, 160, 255, 0.06);
     }
 
     .obra > * {
@@ -146,31 +146,32 @@
     /* ===== TEXTO DE LA OBRA ===== */
     .obra h2 {
       font-family: 'Inter', sans-serif;
-      font-weight: 500;
+      font-weight: 700; /* BOLD */
       font-size: 14px;
       letter-spacing: 1px;
       margin-bottom: 6px;
-      color: #000018;
+      color: #E8A0FF;
+      text-transform: uppercase; /* MAYÚSCULAS */
     }
 
     .obra p {
       font-family: 'Inter', sans-serif;
       font-weight: 300;
       font-size: 12px;
-      opacity: 0.7;
+      opacity: 0.8;
       letter-spacing: 1px;
       margin-bottom: 4px;
-      color: #000018;
+      color: #E8A0FF;
     }
 
     .instruccion {
       font-family: 'Inter', sans-serif;
       font-weight: 300;
       font-size: 10px;
-      opacity: 0.45;
+      opacity: 0.6;
       text-align: center;
       margin-top: 8px;
-      color: #000018;
+      color: #E8A0FF;
     }
 
     /* ===== BOTÓN CONSULTAR (BASE) ===== */
@@ -179,8 +180,8 @@
       padding: 8px 24px;
       margin-top: 15px;
       background: transparent;
-      color: #000018;
-      border: 1px solid rgba(0,0,24,0.3);
+      color: #E8A0FF;
+      border: 1px solid rgba(232, 160, 255, 0.3);
       border-radius: 0px;
       text-decoration: none;
       font-family: 'Inter', sans-serif;
@@ -196,8 +197,8 @@
     }
 
     .btn-consultar:hover {
-      background: rgba(0,0,24,0.05);
-      border-color: rgba(0,0,24,0.6);
+      background: rgba(232, 160, 255, 0.05);
+      border-color: rgba(232, 160, 255, 0.6);
       transform: translateY(-2px);
     }
 
@@ -290,7 +291,7 @@
 
     <section class="grid">
 
-      <!-- CUADRO I - MEDUSA -->
+      <!-- CUADRO I - MEDUSA (con valores de La Muerte) -->
       <div class="obra">
         <div class="modelo-3d">
           <model-viewer
@@ -303,9 +304,9 @@
             rotation-per-second="8deg"
             loading="eager"
             reveal="auto"
-            shadow-intensity="1.12"
+            shadow-intensity="1.52"
             shadow-softness="1"
-            exposure="0.69"
+            exposure="0.86"
             tone-mapping="neutral"
             interaction-prompt="none"
             style="width:100%;height:100%;background:#1a1a1a;">
@@ -383,7 +384,7 @@
       <!-- CUADRO III - Placeholder -->
       <div class="obra">
         <div class="modelo-3d" id="modelo3-placeholder">
-          <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#000018;opacity:0.4;font-size:12px;font-family:'Inter',sans-serif;">
+          <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#E8A0FF;opacity:0.4;font-size:12px;font-family:'Inter',sans-serif;">
             🖼️ Próximamente
           </div>
         </div>
@@ -397,27 +398,7 @@
 
   </main>
 
-  <!-- VANTA FOG -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <script src="https://unpkg.com/vanta@latest/dist/vanta.fog.min.js"></script>
-  <script>
-    VANTA.FOG({
-      el: "body",
-      backgroundAlpha: 1.0,
-      baseColor: 0xd0ff94,
-      highlightColor: 0x83e7ff,
-      midtoneColor: 0xe8a0ff,
-      lowlightColor: 0x006ee9,
-      blurFactor: 0.9,
-      speed: 2.8,
-      zoom: 1.4,
-      scale: 2.0,
-      scaleMobile: 4.0,
-      mouseControls: true,
-      touchControls: true,
-      gyroControls: false
-    });
-  </script>
+  <!-- ELIMINADO VANTA FOG -->
 
   <!-- DIAGNÓSTICO -->
   <script>
@@ -435,7 +416,7 @@
           const container = viewer1.parentElement;
           if (container) {
             container.innerHTML = `
-              <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#000018;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
+              <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#E8A0FF;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
                 ⚠️ Error al cargar el cuadro<br>
                 <small style="opacity:0.4;">Verifica que el archivo existe</small>
               </div>
@@ -460,7 +441,7 @@
           const container = viewer2.parentElement;
           if (container) {
             container.innerHTML = `
-              <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#000018;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
+              <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#E8A0FF;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
                 ⚠️ Error al cargar el cuadro<br>
                 <small style="opacity:0.4;">Verifica que el archivo existe</small>
               </div>
