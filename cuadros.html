@@ -45,7 +45,7 @@
       border: 1px solid rgba(232, 160, 255, 0.4);
       color: #E8A0FF;
       text-decoration: none;
-      background: transparent; /* Sin fondo */
+      background: transparent;
 
       -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
       mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -85,13 +85,13 @@
       gap: 40px;
     }
 
-    /* ===== TARJETA DE OBRA (sin fondo, solo borde) ===== */
+    /* ===== TARJETA DE OBRA ===== */
     .obra {
       position: relative;
       border: 1px solid rgba(232, 160, 255, 0.3);
       padding: 20px;
       transition: all 0.4s ease;
-      background: transparent; /* Mismo fondo que el body */
+      background: transparent;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -102,7 +102,7 @@
       position: absolute;
       inset: 0;
       z-index: 0;
-      background: transparent; /* Sin fondo */
+      background: transparent;
       border: 1px solid rgba(232, 160, 255, 0.3);
       
       -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -130,7 +130,7 @@
     .modelo-3d {
       width: 100%;
       height: 220px;
-      background: transparent; /* Sin fondo */
+      background: transparent;
       margin-bottom: 15px;
       overflow: hidden;
       position: relative;
@@ -140,7 +140,7 @@
       width: 100%;
       height: 100%;
       display: block;
-      background: transparent; /* Sin fondo */
+      background: transparent;
     }
 
     /* ===== TEXTO DE LA OBRA ===== */
@@ -174,12 +174,12 @@
       color: #E8A0FF;
     }
 
-    /* ===== BOTÓN CONSULTAR (sin fondo) ===== */
+    /* ===== BOTÓN CONSULTAR ===== */
     .btn-consultar {
       display: inline-block;
       padding: 8px 24px;
       margin-top: 15px;
-      background: transparent; /* Sin fondo */
+      background: transparent;
       color: #E8A0FF;
       border: 1px solid rgba(232, 160, 255, 0.3);
       border-radius: 0px;
@@ -290,7 +290,7 @@
 
     <section class="grid">
 
-      <!-- CUADRO I - MEDUSA -->
+      <!-- CUADRO I - MEDUSA (SIN AUTO-ROTATE) -->
       <div class="obra">
         <div class="modelo-3d">
           <model-viewer
@@ -298,9 +298,6 @@
             src="./Medusa_cuadro.glb"
             alt="MEDUSA - Lápices de color sobre papel"
             camera-controls
-            auto-rotate
-            auto-rotate-delay="0"
-            rotation-per-second="8deg"
             loading="eager"
             reveal="auto"
             shadow-intensity="1.52"
@@ -333,7 +330,7 @@
         </a>
       </div>
 
-      <!-- CUADRO II - LA MUERTE -->
+      <!-- CUADRO II - LA MUERTE (SIN AUTO-ROTATE) -->
       <div class="obra">
         <div class="modelo-3d">
           <model-viewer
@@ -341,9 +338,6 @@
             src="./La_muerte_cuadro.glb"
             alt="LA MUERTE - Tinta sobre papel"
             camera-controls
-            auto-rotate
-            auto-rotate-delay="0"
-            rotation-per-second="8deg"
             loading="eager"
             reveal="auto"
             shadow-intensity="1.52"
