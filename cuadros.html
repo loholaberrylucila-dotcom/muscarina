@@ -296,7 +296,7 @@
           <model-viewer
             id="cuadro1-viewer"
             src="./Medusa_cuadro.glb"
-            alt="Medusa - Lápices de color sobre papel"
+            alt="MEDUSA - Lápices de color sobre papel"
             camera-controls
             auto-rotate
             auto-rotate-delay="0"
@@ -335,17 +335,49 @@
         </a>
       </div>
 
-      <!-- CUADRO II - Placeholder -->
+      <!-- CUADRO II - LA MUERTE -->
       <div class="obra">
-        <div class="modelo-3d" id="modelo2-placeholder">
-          <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#000018;opacity:0.4;font-size:12px;font-family:'Inter',sans-serif;">
-            🖼️ Próximamente
-          </div>
+        <div class="modelo-3d">
+          <model-viewer
+            id="cuadro2-viewer"
+            src="./La_muerte_cuadro.glb"
+            alt="LA MUERTE - Tinta sobre papel"
+            camera-controls
+            auto-rotate
+            auto-rotate-delay="0"
+            rotation-per-second="8deg"
+            loading="eager"
+            reveal="auto"
+            shadow-intensity="1.52"
+            shadow-softness="1"
+            exposure="0.86"
+            tone-mapping="neutral"
+            interaction-prompt="none"
+            style="width:100%;height:100%;background:#1a1a1a;">
+            
+            <div slot="progress-bar" style="display:none !important;"></div>
+            <div slot="ar-button" style="display:none !important;"></div>
+            <div slot="ar-prompt" style="display:none !important;"></div>
+            <div slot="poster" style="display:none !important;"></div>
+            
+          </model-viewer>
         </div>
-        <h2>Cuadro II</h2>
-        <p>Modelo 3D interactivo · Técnica mixta</p>
-        <p>2025 · Pieza única</p>
+        <h2>La Muerte</h2>
+        <p>Tinta sobre papel · 16X20cm</p>
+        <p>Año 2025 · Pieza única</p>
         <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
+        
+        <!-- BOTÓN PARA PC (abre Gmail en navegador) -->
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20La%20Muerte&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20La%20Muerte." 
+           class="btn-consultar btn-pc" target="_blank">
+           Consultar
+        </a>
+
+        <!-- BOTÓN PARA MÓVIL (abre app de correo nativa) -->
+        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20La%20Muerte&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20La%20Muerte." 
+           class="btn-consultar btn-movil">
+           Consultar
+        </a>
       </div>
 
       <!-- CUADRO III - Placeholder -->
@@ -390,16 +422,17 @@
   <!-- DIAGNÓSTICO -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const viewer = document.getElementById("cuadro1-viewer");
+      const viewer1 = document.getElementById("cuadro1-viewer");
+      const viewer2 = document.getElementById("cuadro2-viewer");
 
-      if (viewer) {
-        viewer.addEventListener("load", () => {
+      // Diagnosticar Medusa
+      if (viewer1) {
+        viewer1.addEventListener("load", () => {
           console.log("✅ Medusa_cuadro.glb cargado correctamente");
         });
-        
-        viewer.addEventListener("error", (e) => {
+        viewer1.addEventListener("error", (e) => {
           console.error("❌ Error en Medusa_cuadro.glb:", e);
-          const container = viewer.parentElement;
+          const container = viewer1.parentElement;
           if (container) {
             container.innerHTML = `
               <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#000018;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
@@ -409,11 +442,35 @@
             `;
           }
         });
-
         setTimeout(() => {
-          if (!viewer.loaded) {
+          if (!viewer1.loaded) {
             console.log("⚠️ Medusa_cuadro.glb no cargó, forzando recarga...");
-            viewer.src = viewer.src;
+            viewer1.src = viewer1.src;
+          }
+        }, 5000);
+      }
+
+      // Diagnosticar La Muerte
+      if (viewer2) {
+        viewer2.addEventListener("load", () => {
+          console.log("✅ La_muerte_cuadro.glb cargado correctamente");
+        });
+        viewer2.addEventListener("error", (e) => {
+          console.error("❌ Error en La_muerte_cuadro.glb:", e);
+          const container = viewer2.parentElement;
+          if (container) {
+            container.innerHTML = `
+              <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#000018;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
+                ⚠️ Error al cargar el cuadro<br>
+                <small style="opacity:0.4;">Verifica que el archivo existe</small>
+              </div>
+            `;
+          }
+        });
+        setTimeout(() => {
+          if (!viewer2.loaded) {
+            console.log("⚠️ La_muerte_cuadro.glb no cargó, forzando recarga...");
+            viewer2.src = viewer2.src;
           }
         }, 5000);
       }
