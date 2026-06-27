@@ -18,8 +18,8 @@
     }
 
     body {
-      background-color: #000018; /* Fondo liso azul oscuro */
-      color: #E8A0FF; /* Texto en rosa/lavanda */
+      background-color: #000018;
+      color: #E8A0FF;
       font-family: 'Inter', sans-serif;
       font-weight: 400;
       min-height: 100vh;
@@ -42,10 +42,10 @@
       font-size: 13px;
       letter-spacing: 2px;
       font-weight: 400;
-      border: 1px solid rgba(232, 160, 255, 0.4); /* Borde en E8A0FF con transparencia */
+      border: 1px solid rgba(232, 160, 255, 0.4);
       color: #E8A0FF;
       text-decoration: none;
-      background: rgba(232, 160, 255, 0.03);
+      background: transparent; /* Sin fondo */
 
       -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
       mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -58,7 +58,7 @@
 
     nav a:hover { 
       animation: ani 0.7s steps(70) forwards;
-      background: rgba(232, 160, 255, 0.1);
+      background: rgba(232, 160, 255, 0.05);
     }
 
     @keyframes ani { 
@@ -85,13 +85,13 @@
       gap: 40px;
     }
 
-    /* ===== TARJETA DE OBRA (con máscara decorativa) ===== */
+    /* ===== TARJETA DE OBRA (sin fondo, solo borde) ===== */
     .obra {
       position: relative;
       border: 1px solid rgba(232, 160, 255, 0.3);
       padding: 20px;
       transition: all 0.4s ease;
-      background: rgba(232, 160, 255, 0.02);
+      background: transparent; /* Mismo fondo que el body */
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -102,7 +102,7 @@
       position: absolute;
       inset: 0;
       z-index: 0;
-      background: rgba(232, 160, 255, 0.02);
+      background: transparent; /* Sin fondo */
       border: 1px solid rgba(232, 160, 255, 0.3);
       
       -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -118,7 +118,7 @@
     .obra:hover::before {
       animation: ani 0.7s steps(70) forwards;
       border-color: rgba(232, 160, 255, 0.6);
-      background: rgba(232, 160, 255, 0.06);
+      background: rgba(232, 160, 255, 0.03);
     }
 
     .obra > * {
@@ -126,11 +126,11 @@
       z-index: 1;
     }
 
-    /* ===== CONTENEDOR 3D ===== */
+    /* ===== CONTENEDOR 3D (SIN FONDO NEGRO) ===== */
     .modelo-3d {
       width: 100%;
       height: 220px;
-      background: #1a1a1a;
+      background: transparent; /* Sin fondo */
       margin-bottom: 15px;
       overflow: hidden;
       position: relative;
@@ -140,18 +140,18 @@
       width: 100%;
       height: 100%;
       display: block;
-      background: #1a1a1a;
+      background: transparent; /* Sin fondo */
     }
 
     /* ===== TEXTO DE LA OBRA ===== */
     .obra h2 {
       font-family: 'Inter', sans-serif;
-      font-weight: 700; /* BOLD */
+      font-weight: 700;
       font-size: 14px;
       letter-spacing: 1px;
       margin-bottom: 6px;
       color: #E8A0FF;
-      text-transform: uppercase; /* MAYÚSCULAS */
+      text-transform: uppercase;
     }
 
     .obra p {
@@ -174,12 +174,12 @@
       color: #E8A0FF;
     }
 
-    /* ===== BOTÓN CONSULTAR (BASE) ===== */
+    /* ===== BOTÓN CONSULTAR (sin fondo) ===== */
     .btn-consultar {
       display: inline-block;
       padding: 8px 24px;
       margin-top: 15px;
-      background: transparent;
+      background: transparent; /* Sin fondo */
       color: #E8A0FF;
       border: 1px solid rgba(232, 160, 255, 0.3);
       border-radius: 0px;
@@ -265,7 +265,6 @@
         padding: 120px 15px 60px;
       }
 
-      /* EN MÓVIL: mostramos el botón mailto y ocultamos el de Gmail */
       .btn-pc {
         display: none;
       }
@@ -291,7 +290,7 @@
 
     <section class="grid">
 
-      <!-- CUADRO I - MEDUSA (con valores de La Muerte) -->
+      <!-- CUADRO I - MEDUSA -->
       <div class="obra">
         <div class="modelo-3d">
           <model-viewer
@@ -309,7 +308,7 @@
             exposure="0.86"
             tone-mapping="neutral"
             interaction-prompt="none"
-            style="width:100%;height:100%;background:#1a1a1a;">
+            style="width:100%;height:100%;background:transparent;">
             
             <div slot="progress-bar" style="display:none !important;"></div>
             <div slot="ar-button" style="display:none !important;"></div>
@@ -323,13 +322,11 @@
         <p>Año 2025 · Pieza única</p>
         <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
         
-        <!-- BOTÓN PARA PC (abre Gmail en navegador) -->
         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Medusa&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Medusa." 
            class="btn-consultar btn-pc" target="_blank">
            Consultar
         </a>
 
-        <!-- BOTÓN PARA MÓVIL (abre app de correo nativa) -->
         <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Medusa&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Medusa." 
            class="btn-consultar btn-movil">
            Consultar
@@ -354,7 +351,7 @@
             exposure="0.86"
             tone-mapping="neutral"
             interaction-prompt="none"
-            style="width:100%;height:100%;background:#1a1a1a;">
+            style="width:100%;height:100%;background:transparent;">
             
             <div slot="progress-bar" style="display:none !important;"></div>
             <div slot="ar-button" style="display:none !important;"></div>
@@ -368,13 +365,11 @@
         <p>Año 2025 · Pieza única</p>
         <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
         
-        <!-- BOTÓN PARA PC (abre Gmail en navegador) -->
         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20La%20Muerte&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20La%20Muerte." 
            class="btn-consultar btn-pc" target="_blank">
            Consultar
         </a>
 
-        <!-- BOTÓN PARA MÓVIL (abre app de correo nativa) -->
         <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20La%20Muerte&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20La%20Muerte." 
            class="btn-consultar btn-movil">
            Consultar
@@ -398,15 +393,12 @@
 
   </main>
 
-  <!-- ELIMINADO VANTA FOG -->
-
   <!-- DIAGNÓSTICO -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const viewer1 = document.getElementById("cuadro1-viewer");
       const viewer2 = document.getElementById("cuadro2-viewer");
 
-      // Diagnosticar Medusa
       if (viewer1) {
         viewer1.addEventListener("load", () => {
           console.log("✅ Medusa_cuadro.glb cargado correctamente");
@@ -431,7 +423,6 @@
         }, 5000);
       }
 
-      // Diagnosticar La Muerte
       if (viewer2) {
         viewer2.addEventListener("load", () => {
           console.log("✅ La_muerte_cuadro.glb cargado correctamente");
