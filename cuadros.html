@@ -126,7 +126,7 @@
       z-index: 1;
     }
 
-    /* ===== CONTENEDOR 3D ===== */
+    /* ===== CONTENEDOR 3D (SIN FONDO NEGRO) ===== */
     .modelo-3d {
       width: 100%;
       height: 220px;
@@ -290,7 +290,7 @@
 
     <section class="grid">
 
-      <!-- CUADRO I - MEDUSA (con perspectiva y zoom) -->
+      <!-- CUADRO I - MEDUSA (SIN AUTO-ROTATE) -->
       <div class="obra">
         <div class="modelo-3d">
           <model-viewer
@@ -298,8 +298,6 @@
             src="./Medusa_cuadro.glb"
             alt="MEDUSA - Lápices de color sobre papel"
             camera-controls
-            camera-orbit="0deg 15deg 1.5m"
-            camera-target="0m 0m 0m"
             loading="eager"
             reveal="auto"
             shadow-intensity="1.52"
@@ -332,7 +330,7 @@
         </a>
       </div>
 
-      <!-- CUADRO II - LA MUERTE (con perspectiva y zoom) -->
+      <!-- CUADRO II - LA MUERTE (SIN AUTO-ROTATE) -->
       <div class="obra">
         <div class="modelo-3d">
           <model-viewer
@@ -340,8 +338,6 @@
             src="./La_muerte_cuadro.glb"
             alt="LA MUERTE - Tinta sobre papel"
             camera-controls
-            camera-orbit="0deg 15deg 1.5m"
-            camera-target="0m 0m 0m"
             loading="eager"
             reveal="auto"
             shadow-intensity="1.52"
