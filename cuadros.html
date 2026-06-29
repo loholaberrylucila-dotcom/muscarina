@@ -23,9 +23,10 @@
       font-family: 'Inter', sans-serif;
       font-weight: 400;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    /* ===== NAV ===== */
+    /* ===== NAV FIJO ===== */
     nav {
       position: fixed;
       top: 30px;
@@ -53,22 +54,26 @@
       background: rgba(232, 160, 255, 0.05);
     }
 
-    /* ===== MAIN ===== */
+    /* ===== CONTENEDOR PRINCIPAL ===== */
     main {
-      max-width: 1100px;
+      max-width: 100%;
       margin: 0 auto;
       padding: 140px 20px 80px;
-      text-align: center;
+      overflow-x: auto;
+      overflow-y: visible;
+      -webkit-overflow-scrolling: touch;
     }
 
-    /* ===== GRID ===== */
+    /* ===== GRID HORIZONTAL ===== */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(3, minmax(280px, 1fr));
       gap: 40px;
+      width: max-content;
+      min-width: 100%;
     }
 
-    /* ===== TARJETA DE OBRA (SIN MÁSCARA) ===== */
+    /* ===== TARJETA DE OBRA ===== */
     .obra {
       position: relative;
       border: 1px solid rgba(232, 160, 255, 0.3);
@@ -78,6 +83,8 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      min-width: 280px;
+      max-width: 350px;
     }
 
     .obra:hover {
@@ -200,7 +207,6 @@
 
     /* ===== MÁSCARA: SOLO EN PC (NAV Y BOTÓN CONSULTAR) ===== */
     @media (min-width: 769px) {
-      /* MÁSCARA EN NAV */
       nav a {
         -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
         mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -213,7 +219,6 @@
         animation: ani 0.7s steps(70) forwards;
       }
 
-      /* MÁSCARA EN BOTÓN CONSULTAR */
       .btn-consultar {
         -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
         mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -237,40 +242,40 @@
       }
     }
 
-    /* ===== OPTIMIZACIONES PARA MÓVIL ===== */
+    /* ===== RESPONSIVE MÓVIL ===== */
     @media (max-width: 768px) {
       nav {
-        gap: 20px;
+        gap: 15px;
         top: 15px;
       }
 
       nav a {
         font-size: 11px;
         letter-spacing: 1px;
-        padding: 8px 12px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-      }
-
-      .obra {
-        padding: 20px;
-        margin: 0 5px;
-      }
-
-      .modelo-3d {
-        height: 190px;
-      }
-
-      .btn-consultar {
-        padding: 10px 28px;
-        font-size: 11px;
+        padding: 6px 12px;
       }
 
       main {
-        padding: 120px 15px 60px;
+        padding: 100px 10px 40px;
+      }
+
+      .grid {
+        grid-template-columns: repeat(3, minmax(220px, 1fr));
+        gap: 20px;
+      }
+
+      .obra {
+        min-width: 200px;
+        padding: 15px;
+      }
+
+      .modelo-3d {
+        height: 160px;
+      }
+
+      .btn-consultar {
+        padding: 8px 16px;
+        font-size: 10px;
       }
 
       .btn-pc {
@@ -281,15 +286,46 @@
         display: inline-block;
       }
 
-      /* REDUCIR CALIDAD DE SOMBRAS Y RENDER EN MÓVIL */
       model-viewer {
         shadow-intensity: 1 !important;
         shadow-softness: 0.3 !important;
         render-scale: 0.5 !important;
-        
-        /* Optimización: contenido solo visible cuando se necesita */
         content-visibility: auto;
         contain: strict;
+      }
+    }
+
+    /* ===== Ajuste para pantallas muy pequeñas ===== */
+    @media (max-width: 480px) {
+      .grid {
+        grid-template-columns: repeat(3, minmax(160px, 1fr));
+        gap: 15px;
+      }
+
+      .obra {
+        min-width: 140px;
+        padding: 12px;
+      }
+
+      .modelo-3d {
+        height: 120px;
+      }
+
+      .obra h2 {
+        font-size: 11px;
+      }
+
+      .obra p {
+        font-size: 10px;
+      }
+
+      .instruccion {
+        font-size: 8px;
+      }
+
+      .btn-consultar {
+        padding: 6px 12px;
+        font-size: 9px;
       }
     }
   </style>
@@ -298,7 +334,7 @@
 
 <body>
 
-  <!-- MENÚ -->
+  <!-- MENÚ FIJO -->
   <nav>
     <a href="index.html">INICIO</a>
     <a href="tienda.html">TIENDA</a>
@@ -435,6 +471,37 @@
         </a>
       </div>
 
+      <!-- Puedes agregar más cuadros aquí y se añadirán a la derecha -->
+      <!-- CUADRO IV - EJEMPLO -->
+      <!--
+      <div class="obra">
+        <div class="modelo-3d">
+          <model-viewer
+            id="cuadro4-viewer"
+            src="./cuadro4.glb"
+            data-src="./cuadro4.glb"
+            alt="CUADRO IV - Técnica"
+            camera-controls
+            camera-orbit="0deg 90deg 0.8m"
+            loading="eager"
+            reveal="auto"
+            shadow-intensity="1.52"
+            shadow-softness="1"
+            exposure="0.86"
+            tone-mapping="neutral"
+            interaction-prompt="none"
+            style="width:100%;height:100%;background:transparent;">
+          </model-viewer>
+        </div>
+        <h2>Cuadro IV</h2>
+        <p>Técnica · Medidas</p>
+        <p>Año · Pieza única</p>
+        <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
+        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20el%20Cuadro%20IV" class="btn-consultar btn-pc" target="_blank">Consultar</a>
+        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20el%20Cuadro%20IV" class="btn-consultar btn-movil">Consultar</a>
+      </div>
+      -->
+
     </section>
 
   </main>
@@ -442,7 +509,6 @@
   <!-- OPTIMIZACIÓN PARA MÓVIL: LIBERAR MODELOS AL SALIR DE PANTALLA -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Solo aplicar en móvil
       const isMobile = window.innerWidth <= 768;
       
       if (!isMobile) {
@@ -454,7 +520,6 @@
 
       const viewers = document.querySelectorAll("model-viewer");
 
-      // Guardar la ruta original en data-src si no existe
       viewers.forEach(viewer => {
         if (!viewer.getAttribute("data-src") && viewer.getAttribute("src")) {
           viewer.setAttribute("data-src", viewer.getAttribute("src"));
@@ -466,14 +531,12 @@
           const viewer = entry.target;
 
           if (entry.isIntersecting) {
-            // El modelo entra en pantalla → cargar desde data-src
             const dataSrc = viewer.getAttribute("data-src");
             if (dataSrc && !viewer.getAttribute("src")) {
               viewer.setAttribute("src", dataSrc);
               console.log(`✅ Cargando modelo: ${viewer.id}`);
             }
           } else {
-            // El modelo sale de pantalla → liberar memoria
             if (viewer.getAttribute("src")) {
               viewer.removeAttribute("src");
               console.log(`🔄 Liberando modelo: ${viewer.id}`);
@@ -487,13 +550,11 @@
 
       viewers.forEach(viewer => observer.observe(viewer));
 
-      // Manejar errores de carga
       viewers.forEach(viewer => {
         viewer.addEventListener("error", (e) => {
           console.error(`❌ Error en ${viewer.id}:`, e);
           const container = viewer.parentElement;
           if (container) {
-            // Si hay un fallback con imagen, mostrarlo
             const fallback = container.querySelector('.fallback-image');
             if (fallback) {
               fallback.style.display = 'block';
