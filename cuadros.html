@@ -25,6 +25,7 @@
       min-height: 100vh;
     }
 
+    /* ===== NAV MEJORADO ===== */
     nav {
       position: fixed;
       top: 30px;
@@ -45,10 +46,12 @@
       color: #E8A0FF;
       text-decoration: none;
       background: transparent;
+
       -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
       mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
       -webkit-mask-size: 7100% 100%;
       mask-size: 7100% 100%;
+
       animation: ani2 0.7s steps(70) forwards;
       transition: all 0.3s ease;
     }
@@ -67,6 +70,7 @@
       to { mask-position: 0 0; } 
     }
 
+    /* ===== MAIN ===== */
     main {
       max-width: 1100px;
       margin: 0 auto;
@@ -74,12 +78,14 @@
       text-align: center;
     }
 
+    /* ===== GRID ===== */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 40px;
     }
 
+    /* ===== TARJETA DE OBRA ===== */
     .obra {
       position: relative;
       border: 1px solid rgba(232, 160, 255, 0.3);
@@ -98,10 +104,12 @@
       z-index: 0;
       background: transparent;
       border: 1px solid rgba(232, 160, 255, 0.3);
+      
       -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
       mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
       -webkit-mask-size: 7100% 100%;
       mask-size: 7100% 100%;
+      
       animation: ani2 0.7s steps(70) forwards;
       pointer-events: none;
       transition: all 0.4s ease;
@@ -118,6 +126,7 @@
       z-index: 1;
     }
 
+    /* ===== CONTENEDOR 3D ===== */
     .modelo-3d {
       width: 100%;
       height: 220px;
@@ -134,6 +143,7 @@
       background: transparent;
     }
 
+    /* ===== TEXTO DE LA OBRA ===== */
     .obra h2 {
       font-family: 'Inter', sans-serif;
       font-weight: 700;
@@ -164,6 +174,7 @@
       color: #E8A0FF;
     }
 
+    /* ===== BOTÓN CONSULTAR ===== */
     .btn-consultar {
       display: inline-block;
       padding: 8px 24px;
@@ -191,6 +202,7 @@
       transform: translateY(-2px);
     }
 
+    /* ===== BOTONES POR DISPOSITIVO ===== */
     .btn-pc {
       display: inline-block;
     }
@@ -199,6 +211,7 @@
       display: none;
     }
 
+    /* ===== OCULTAR ELEMENTOS DE MODEL VIEWER ===== */
     model-viewer::part(default-progress-bar),
     model-viewer::part(default-ar-button),
     model-viewer::part(default-poster) {
@@ -221,8 +234,9 @@
       display: none !important;
     }
 
-    /* ===== OPTIMIZACIONES PARA MÓVIL ===== */
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
+      /* === NAV IGUAL QUE EN TIENDA.HTML === */
       nav {
         gap: 20px;
         top: 15px;
@@ -234,22 +248,28 @@
         padding: 8px 12px;
       }
 
+      /* === RECTÁNGULOS MÁS GRANDES === */
       .grid {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 40px; /* Más separación entre tarjetas */
+      }
+
+      .obra {
+        padding: 25px; /* Más padding interno */
+        margin: 0 5px; /* Pequeño margen lateral */
       }
 
       .modelo-3d {
-        height: 190px;
+        height: 250px; /* Más alto en móvil */
       }
 
       .btn-consultar {
-        padding: 10px 28px;
-        font-size: 11px;
+        padding: 12px 32px; /* Botón más grande */
+        font-size: 12px;
       }
 
       main {
-        padding: 120px 15px 60px;
+        padding: 130px 15px 60px;
       }
 
       .btn-pc {
@@ -434,7 +454,7 @@
             }
           });
         }, {
-          rootMargin: '200px', // Comienza a cargar 200px antes de que sea visible
+          rootMargin: '200px',
           threshold: 0.1
         });
 
