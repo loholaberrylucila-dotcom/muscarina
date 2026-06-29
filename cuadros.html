@@ -36,7 +36,7 @@
       justify-content: center;
       gap: 28px;
       z-index: 100;
-      pointer-events: none; /* Permite hacer click a través del nav en el scroll */
+      pointer-events: none;
     }
 
     nav a {
@@ -50,7 +50,7 @@
       background: rgba(0, 0, 24, 0.7);
       backdrop-filter: blur(4px);
       transition: all 0.3s ease;
-      pointer-events: auto; /* Reactiva el click en los enlaces */
+      pointer-events: auto;
     }
 
     nav a:hover { 
@@ -60,8 +60,9 @@
     /* ===== CONTENEDOR PRINCIPAL ===== */
     main {
       width: 100%;
-      height: 100vh;
-      overflow-y: hidden; /* Oculta el scroll vertical */
+      min-height: 100vh;
+      overflow-y: visible; /* Permite que el contenido fluya */
+      padding: 120px 20px 60px;
       position: relative;
     }
 
@@ -69,46 +70,66 @@
     .scroll-container {
       display: flex;
       flex-wrap: nowrap;
-      height: 100vh;
-      width: max-content;
+      gap: 40px;
       overflow-x: auto;
-      overflow-y: hidden;
+      overflow-y: visible;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
-      padding: 0 10px;
+      padding: 20px 10px 30px;
       scroll-behavior: smooth;
+      width: 100%;
     }
 
-    /* ===== TARJETA DE OBRA ===== */
+    /* Ocultar la barra de scroll en navegadores */
+    .scroll-container::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .scroll-container::-webkit-scrollbar-track {
+      background: rgba(232, 160, 255, 0.1);
+      border-radius: 10px;
+    }
+
+    .scroll-container::-webkit-scrollbar-thumb {
+      background: rgba(232, 160, 255, 0.3);
+      border-radius: 10px;
+    }
+
+    .scroll-container::-webkit-scrollbar-thumb:hover {
+      background: rgba(232, 160, 255, 0.5);
+    }
+
+    /* ===== TARJETA DE OBRA (ESTILO ORIGINAL) ===== */
     .obra {
       flex: 0 0 auto;
-      width: 90vw; /* Ancho en móvil */
-      max-width: 700px; /* Ancho máximo en PC */
-      height: 100vh;
-      padding: 100px 30px 40px;
-      border-right: 1px solid rgba(232, 160, 255, 0.2);
+      width: 300px;
+      max-width: 85vw;
+      border: 1px solid rgba(232, 160, 255, 0.3);
+      padding: 20px;
+      transition: all 0.4s ease;
+      background: transparent;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
       scroll-snap-align: start;
-      transition: all 0.3s ease;
-      position: relative;
     }
 
-    .obra:last-child {
-      border-right: none;
-      padding-right: 30px;
+    .obra:hover {
+      border-color: rgba(232, 160, 255, 0.6);
+      background: rgba(232, 160, 255, 0.03);
+    }
+
+    .obra > * {
+      position: relative;
+      z-index: 1;
     }
 
     /* ===== CONTENEDOR 3D ===== */
     .modelo-3d {
       width: 100%;
-      max-width: 500px;
-      height: 55vh;
-      max-height: 450px;
+      height: 220px;
       background: transparent;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
+      overflow: hidden;
       position: relative;
     }
 
@@ -123,29 +144,27 @@
     .obra h2 {
       font-family: 'Inter', sans-serif;
       font-weight: 700;
-      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-      letter-spacing: 2px;
-      margin-bottom: 8px;
+      font-size: 14px;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
       color: #E8A0FF;
       text-transform: uppercase;
-      text-align: center;
     }
 
     .obra p {
       font-family: 'Inter', sans-serif;
       font-weight: 300;
-      font-size: clamp(0.8rem, 1.2vw, 1rem);
+      font-size: 12px;
       opacity: 0.8;
       letter-spacing: 1px;
       margin-bottom: 4px;
       color: #E8A0FF;
-      text-align: center;
     }
 
     .instruccion {
       font-family: 'Inter', sans-serif;
       font-weight: 300;
-      font-size: clamp(0.7rem, 0.9vw, 0.8rem);
+      font-size: 10px;
       opacity: 0.6;
       text-align: center;
       margin-top: 8px;
@@ -155,16 +174,16 @@
     /* ===== BOTÓN CONSULTAR ===== */
     .btn-consultar {
       display: inline-block;
-      padding: 10px 30px;
+      padding: 8px 24px;
       margin-top: 15px;
       background: transparent;
       color: #E8A0FF;
-      border: 1px solid rgba(232, 160, 255, 0.4);
+      border: 1px solid rgba(232, 160, 255, 0.3);
       border-radius: 0px;
       text-decoration: none;
       font-family: 'Inter', sans-serif;
       font-weight: 400;
-      font-size: clamp(0.7rem, 1vw, 0.85rem);
+      font-size: 12px;
       letter-spacing: 2px;
       text-transform: uppercase;
       transition: all 0.3s ease;
@@ -176,7 +195,7 @@
 
     .btn-consultar:hover {
       background: rgba(232, 160, 255, 0.05);
-      border-color: rgba(232, 160, 255, 0.7);
+      border-color: rgba(232, 160, 255, 0.6);
       transform: translateY(-2px);
     }
 
@@ -210,7 +229,6 @@
 
     /* ===== MÁSCARA: SOLO EN PC (NAV Y BOTÓN CONSULTAR) ===== */
     @media (min-width: 769px) {
-      /* MÁSCARA EN NAV */
       nav a {
         -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
         mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -223,7 +241,6 @@
         animation: ani 0.7s steps(70) forwards;
       }
 
-      /* MÁSCARA EN BOTÓN CONSULTAR */
       .btn-consultar {
         -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
         mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -234,10 +251,6 @@
 
       .btn-consultar:hover {
         animation: ani 0.7s steps(70) forwards;
-      }
-
-      .obra {
-        width: 60vw;
       }
 
       @keyframes ani {
@@ -251,7 +264,7 @@
       }
     }
 
-    /* ===== OPTIMIZACIONES PARA MÓVIL ===== */
+    /* ===== RESPONSIVE MÓVIL ===== */
     @media (max-width: 768px) {
       nav {
         gap: 15px;
@@ -265,19 +278,27 @@
         background: rgba(0, 0, 24, 0.8);
       }
 
+      main {
+        padding: 100px 10px 40px;
+      }
+
+      .scroll-container {
+        gap: 20px;
+        padding: 10px 5px 20px;
+      }
+
       .obra {
-        width: 90vw;
-        padding: 80px 15px 30px;
+        width: 260px;
+        padding: 15px;
       }
 
       .modelo-3d {
-        height: 45vh;
-        max-height: 350px;
+        height: 190px;
       }
 
       .btn-consultar {
         padding: 10px 20px;
-        font-size: 10px;
+        font-size: 11px;
       }
 
       .btn-pc {
@@ -496,7 +517,6 @@
           console.error(`❌ Error en ${viewer.id}:`, e);
           const container = viewer.parentElement;
           if (container) {
-            // Si hay un fallback con imagen, mostrarlo
             const fallback = container.querySelector('.fallback-image');
             if (fallback) {
               fallback.style.display = 'block';
