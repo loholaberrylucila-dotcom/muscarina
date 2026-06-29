@@ -25,7 +25,6 @@
       min-height: 100vh;
     }
 
-    /* ===== NAV ===== */
     nav {
       position: fixed;
       top: 30px;
@@ -46,12 +45,10 @@
       color: #E8A0FF;
       text-decoration: none;
       background: transparent;
-
       -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
       mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
       -webkit-mask-size: 7100% 100%;
       mask-size: 7100% 100%;
-
       animation: ani2 0.7s steps(70) forwards;
       transition: all 0.3s ease;
     }
@@ -70,7 +67,6 @@
       to { mask-position: 0 0; } 
     }
 
-    /* ===== MAIN ===== */
     main {
       max-width: 1100px;
       margin: 0 auto;
@@ -78,14 +74,12 @@
       text-align: center;
     }
 
-    /* ===== GRID ===== */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 40px;
     }
 
-    /* ===== TARJETA DE OBRA ===== */
     .obra {
       position: relative;
       border: 1px solid rgba(232, 160, 255, 0.3);
@@ -104,12 +98,10 @@
       z-index: 0;
       background: transparent;
       border: 1px solid rgba(232, 160, 255, 0.3);
-      
       -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
       mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
       -webkit-mask-size: 7100% 100%;
       mask-size: 7100% 100%;
-      
       animation: ani2 0.7s steps(70) forwards;
       pointer-events: none;
       transition: all 0.4s ease;
@@ -126,7 +118,6 @@
       z-index: 1;
     }
 
-    /* ===== CONTENEDOR 3D ===== */
     .modelo-3d {
       width: 100%;
       height: 220px;
@@ -143,7 +134,6 @@
       background: transparent;
     }
 
-    /* ===== TEXTO DE LA OBRA ===== */
     .obra h2 {
       font-family: 'Inter', sans-serif;
       font-weight: 700;
@@ -174,7 +164,6 @@
       color: #E8A0FF;
     }
 
-    /* ===== BOTÓN CONSULTAR ===== */
     .btn-consultar {
       display: inline-block;
       padding: 8px 24px;
@@ -202,7 +191,6 @@
       transform: translateY(-2px);
     }
 
-    /* ===== BOTONES POR DISPOSITIVO ===== */
     .btn-pc {
       display: inline-block;
     }
@@ -211,7 +199,6 @@
       display: none;
     }
 
-    /* ===== OCULTAR ELEMENTOS DE MODEL VIEWER ===== */
     model-viewer::part(default-progress-bar),
     model-viewer::part(default-ar-button),
     model-viewer::part(default-poster) {
@@ -234,7 +221,7 @@
       display: none !important;
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* ===== OPTIMIZACIONES PARA MÓVIL ===== */
     @media (max-width: 768px) {
       nav {
         gap: 20px;
@@ -272,6 +259,13 @@
       .btn-movil {
         display: inline-block;
       }
+
+      /* REDUCIR CALIDAD DE SOMBRAS Y RENDER EN MÓVIL */
+      model-viewer {
+        shadow-intensity: 1 !important;
+        shadow-softness: 0.3 !important;
+        render-scale: 0.5 !important;
+      }
     }
   </style>
 
@@ -299,7 +293,7 @@
             alt="MEDUSA - Lápices de color sobre papel"
             camera-controls
             camera-orbit="0deg 90deg 0.8m"
-            loading="eager"
+            loading="lazy"
             reveal="auto"
             shadow-intensity="1.52"
             shadow-softness="1"
@@ -340,7 +334,7 @@
             alt="LA MUERTE - Lápices de color sobre papel"
             camera-controls
             camera-orbit="0deg 90deg 0.8m"
-            loading="eager"
+            loading="lazy"
             reveal="auto"
             shadow-intensity="1.52"
             shadow-softness="1"
@@ -381,7 +375,7 @@
             alt="CHICA HONGOS Y CHICA GATO - Grafito sobre papel"
             camera-controls
             camera-orbit="0deg 90deg 0.8m"
-            loading="eager"
+            loading="lazy"
             reveal="auto"
             shadow-intensity="2"
             shadow-softness="0.5"
@@ -424,6 +418,38 @@
       const viewer2 = document.getElementById("cuadro2-viewer");
       const viewer3 = document.getElementById("cuadro3-viewer");
 
+      // === LAZY LOADING CON INTERSECTION OBSERVER ===
+      const observers = [];
+
+      function crearLazyLoader(viewer) {
+        if (!viewer) return;
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              // Cuando el modelo entra en vista, se carga
+              viewer.src = viewer.src; // Forzar recarga si ya estaba definido
+              observer.unobserve(viewer);
+              console.log(`✅ Cargando modelo: ${viewer.id}`);
+            }
+          });
+        }, {
+          rootMargin: '200px', // Comienza a cargar 200px antes de que sea visible
+          threshold: 0.1
+        });
+
+        observer.observe(viewer);
+        observers.push(observer);
+      }
+
+      // Aplicar Lazy Loading a cada viewer
+      [viewer1, viewer2, viewer3].forEach(viewer => {
+        if (viewer) {
+          crearLazyLoader(viewer);
+        }
+      });
+
+      // Eventos de carga y error
       if (viewer1) {
         viewer1.addEventListener("load", () => {
           console.log("✅ Medusa_cuadro.glb cargado correctamente");
@@ -440,12 +466,6 @@
             `;
           }
         });
-        setTimeout(() => {
-          if (!viewer1.loaded) {
-            console.log("⚠️ Medusa_cuadro.glb no cargó, forzando recarga...");
-            viewer1.src = viewer1.src;
-          }
-        }, 5000);
       }
 
       if (viewer2) {
@@ -464,12 +484,6 @@
             `;
           }
         });
-        setTimeout(() => {
-          if (!viewer2.loaded) {
-            console.log("⚠️ La_muerte_cuadro.glb no cargó, forzando recarga...");
-            viewer2.src = viewer2.src;
-          }
-        }, 5000);
       }
 
       if (viewer3) {
@@ -488,12 +502,6 @@
             `;
           }
         });
-        setTimeout(() => {
-          if (!viewer3.loaded) {
-            console.log("⚠️ Chica_hongos_gato_cuadro.glb no cargó, forzando recarga...");
-            viewer3.src = viewer3.src;
-          }
-        }, 5000);
       }
     });
   </script>
