@@ -23,9 +23,10 @@
       font-family: 'Inter', sans-serif;
       font-weight: 400;
       min-height: 100vh;
+      overflow-x: hidden; /* Oculta el scroll horizontal del body */
     }
 
-    /* ===== NAV ===== */
+    /* ===== NAV FIJO ===== */
     nav {
       position: fixed;
       top: 30px;
@@ -35,6 +36,7 @@
       justify-content: center;
       gap: 28px;
       z-index: 100;
+      pointer-events: none; /* Permite hacer click a través del nav en el scroll */
     }
 
     nav a {
@@ -45,58 +47,68 @@
       border: 1px solid rgba(232, 160, 255, 0.4);
       color: #E8A0FF;
       text-decoration: none;
-      background: transparent;
+      background: rgba(0, 0, 24, 0.7);
+      backdrop-filter: blur(4px);
       transition: all 0.3s ease;
+      pointer-events: auto; /* Reactiva el click en los enlaces */
     }
 
     nav a:hover { 
-      background: rgba(232, 160, 255, 0.05);
+      background: rgba(232, 160, 255, 0.15);
     }
 
-    /* ===== MAIN ===== */
+    /* ===== CONTENEDOR PRINCIPAL ===== */
     main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 140px 20px 80px;
-      text-align: center;
-    }
-
-    /* ===== GRID ===== */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 40px;
-    }
-
-    /* ===== TARJETA DE OBRA (SIN MÁSCARA) ===== */
-    .obra {
+      width: 100%;
+      height: 100vh;
+      overflow-y: hidden; /* Oculta el scroll vertical */
       position: relative;
-      border: 1px solid rgba(232, 160, 255, 0.3);
-      padding: 20px;
-      transition: all 0.4s ease;
-      background: transparent;
+    }
+
+    /* ===== CONTENEDOR DE SCROLL HORIZONTAL ===== */
+    .scroll-container {
+      display: flex;
+      flex-wrap: nowrap;
+      height: 100vh;
+      width: max-content;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 0 10px;
+      scroll-behavior: smooth;
+    }
+
+    /* ===== TARJETA DE OBRA ===== */
+    .obra {
+      flex: 0 0 auto;
+      width: 90vw; /* Ancho en móvil */
+      max-width: 700px; /* Ancho máximo en PC */
+      height: 100vh;
+      padding: 100px 30px 40px;
+      border-right: 1px solid rgba(232, 160, 255, 0.2);
       display: flex;
       flex-direction: column;
-      overflow: hidden;
-    }
-
-    .obra:hover {
-      border-color: rgba(232, 160, 255, 0.6);
-      background: rgba(232, 160, 255, 0.03);
-    }
-
-    .obra > * {
+      justify-content: center;
+      align-items: center;
+      scroll-snap-align: start;
+      transition: all 0.3s ease;
       position: relative;
-      z-index: 1;
+    }
+
+    .obra:last-child {
+      border-right: none;
+      padding-right: 30px;
     }
 
     /* ===== CONTENEDOR 3D ===== */
     .modelo-3d {
       width: 100%;
-      height: 220px;
+      max-width: 500px;
+      height: 55vh;
+      max-height: 450px;
       background: transparent;
-      margin-bottom: 15px;
-      overflow: hidden;
+      margin-bottom: 20px;
       position: relative;
     }
 
@@ -111,27 +123,29 @@
     .obra h2 {
       font-family: 'Inter', sans-serif;
       font-weight: 700;
-      font-size: 14px;
-      letter-spacing: 1px;
-      margin-bottom: 6px;
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      letter-spacing: 2px;
+      margin-bottom: 8px;
       color: #E8A0FF;
       text-transform: uppercase;
+      text-align: center;
     }
 
     .obra p {
       font-family: 'Inter', sans-serif;
       font-weight: 300;
-      font-size: 12px;
+      font-size: clamp(0.8rem, 1.2vw, 1rem);
       opacity: 0.8;
       letter-spacing: 1px;
       margin-bottom: 4px;
       color: #E8A0FF;
+      text-align: center;
     }
 
     .instruccion {
       font-family: 'Inter', sans-serif;
       font-weight: 300;
-      font-size: 10px;
+      font-size: clamp(0.7rem, 0.9vw, 0.8rem);
       opacity: 0.6;
       text-align: center;
       margin-top: 8px;
@@ -141,16 +155,16 @@
     /* ===== BOTÓN CONSULTAR ===== */
     .btn-consultar {
       display: inline-block;
-      padding: 8px 24px;
+      padding: 10px 30px;
       margin-top: 15px;
       background: transparent;
       color: #E8A0FF;
-      border: 1px solid rgba(232, 160, 255, 0.3);
+      border: 1px solid rgba(232, 160, 255, 0.4);
       border-radius: 0px;
       text-decoration: none;
       font-family: 'Inter', sans-serif;
       font-weight: 400;
-      font-size: 12px;
+      font-size: clamp(0.7rem, 1vw, 0.85rem);
       letter-spacing: 2px;
       text-transform: uppercase;
       transition: all 0.3s ease;
@@ -162,7 +176,7 @@
 
     .btn-consultar:hover {
       background: rgba(232, 160, 255, 0.05);
-      border-color: rgba(232, 160, 255, 0.6);
+      border-color: rgba(232, 160, 255, 0.7);
       transform: translateY(-2px);
     }
 
@@ -190,11 +204,7 @@
       display: block !important;
     }
 
-    .ar-button {
-      display: none !important;
-    }
-
-    #ar-prompt {
+    .ar-button, #ar-prompt {
       display: none !important;
     }
 
@@ -226,6 +236,10 @@
         animation: ani 0.7s steps(70) forwards;
       }
 
+      .obra {
+        width: 60vw;
+      }
+
       @keyframes ani {
         from { mask-position: 0 0; }
         to { mask-position: 100% 0; }
@@ -240,37 +254,30 @@
     /* ===== OPTIMIZACIONES PARA MÓVIL ===== */
     @media (max-width: 768px) {
       nav {
-        gap: 20px;
+        gap: 15px;
         top: 15px;
       }
 
       nav a {
         font-size: 11px;
         letter-spacing: 1px;
-        padding: 8px 12px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
+        padding: 6px 12px;
+        background: rgba(0, 0, 24, 0.8);
       }
 
       .obra {
-        padding: 20px;
-        margin: 0 5px;
+        width: 90vw;
+        padding: 80px 15px 30px;
       }
 
       .modelo-3d {
-        height: 190px;
+        height: 45vh;
+        max-height: 350px;
       }
 
       .btn-consultar {
-        padding: 10px 28px;
-        font-size: 11px;
-      }
-
-      main {
-        padding: 120px 15px 60px;
+        padding: 10px 20px;
+        font-size: 10px;
       }
 
       .btn-pc {
@@ -286,8 +293,6 @@
         shadow-intensity: 1 !important;
         shadow-softness: 0.3 !important;
         render-scale: 0.5 !important;
-        
-        /* Optimización: contenido solo visible cuando se necesita */
         content-visibility: auto;
         contain: strict;
       }
@@ -298,7 +303,7 @@
 
 <body>
 
-  <!-- MENÚ -->
+  <!-- MENÚ FIJO -->
   <nav>
     <a href="index.html">INICIO</a>
     <a href="tienda.html">TIENDA</a>
@@ -306,8 +311,7 @@
   </nav>
 
   <main>
-
-    <section class="grid">
+    <div class="scroll-container">
 
       <!-- CUADRO I - MEDUSA -->
       <div class="obra">
@@ -435,8 +439,7 @@
         </a>
       </div>
 
-    </section>
-
+    </div>
   </main>
 
   <!-- OPTIMIZACIÓN PARA MÓVIL: LIBERAR MODELOS AL SALIR DE PANTALLA -->
