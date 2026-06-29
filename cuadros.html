@@ -91,11 +91,11 @@
       background: transparent;
       display: flex;
       flex-direction: column;
-      align-items: center; /* Centra el contenido horizontalmente */
+      align-items: center;
       overflow: hidden;
       min-width: 280px;
       max-width: 350px;
-      text-align: center; /* Centra el texto */
+      text-align: center;
     }
 
     .obra:hover {
@@ -487,16 +487,16 @@
           </a>
         </div>
 
-        <!-- Puedes agregar más cuadros aquí y se añadirán a la derecha -->
-        <!-- EJEMPLO DE CUADRO IV (descomentar para usar) -->
-        <!--
+        <!-- ============================================================ -->
+        <!-- CUADRO IV - NUEVA FICHA (EJEMPLO PARA SCROLL HORIZONTAL)      -->
+        <!-- ============================================================ -->
         <div class="obra">
           <div class="modelo-3d">
             <model-viewer
               id="cuadro4-viewer"
               src="./cuadro4.glb"
               data-src="./cuadro4.glb"
-              alt="CUADRO IV - Técnica"
+              alt="CUADRO IV - Técnica mixta"
               camera-controls
               camera-orbit="0deg 90deg 0.8m"
               loading="eager"
@@ -507,16 +507,29 @@
               tone-mapping="neutral"
               interaction-prompt="none"
               style="width:100%;height:100%;background:transparent;">
+              
+              <div slot="progress-bar" style="display:none !important;"></div>
+              <div slot="ar-button" style="display:none !important;"></div>
+              <div slot="ar-prompt" style="display:none !important;"></div>
+              <div slot="poster" style="display:none !important;"></div>
+              
             </model-viewer>
           </div>
           <h2>Cuadro IV</h2>
-          <p>Técnica · Medidas</p>
-          <p>Año · Pieza única</p>
+          <p>Técnica mixta · 20X25cm</p>
+          <p>Año 2025 · Pieza única</p>
           <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
-          <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20el%20Cuadro%20IV" class="btn-consultar btn-pc" target="_blank">Consultar</a>
-          <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20el%20Cuadro%20IV" class="btn-consultar btn-movil">Consultar</a>
+          
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20el%20Cuadro%20IV&body=Hola%20Lucila,%20me%20interesa%20el%20Cuadro%20IV." 
+             class="btn-consultar btn-pc" target="_blank">
+             Consultar
+          </a>
+
+          <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20el%20Cuadro%20IV&body=Hola%20Lucila,%20me%20interesa%20el%20Cuadro%20IV." 
+             class="btn-consultar btn-movil">
+             Consultar
+          </a>
         </div>
-        -->
 
       </section>
 
@@ -584,6 +597,14 @@
                 </div>
               `;
             }
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
           }
         });
       });
