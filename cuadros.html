@@ -56,15 +56,43 @@
 
     /* ===== CONTENEDOR PRINCIPAL ===== */
     main {
-      max-width: 100%;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 140px 20px 80px;
+      position: relative;
+    }
+
+    /* ===== WRAPPER PARA SCROLL HORIZONTAL ===== */
+    .scroll-wrapper {
       overflow-x: auto;
       overflow-y: visible;
       -webkit-overflow-scrolling: touch;
+      padding-bottom: 20px;
+      margin: 0 -10px;
+      padding-left: 10px;
+      padding-right: 10px;
     }
 
-    /* ===== GRID HORIZONTAL ===== */
+    /* Ocultar la barra de scroll en navegadores (opcional) */
+    .scroll-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .scroll-wrapper::-webkit-scrollbar-track {
+      background: rgba(232, 160, 255, 0.1);
+      border-radius: 10px;
+    }
+
+    .scroll-wrapper::-webkit-scrollbar-thumb {
+      background: rgba(232, 160, 255, 0.3);
+      border-radius: 10px;
+    }
+
+    .scroll-wrapper::-webkit-scrollbar-thumb:hover {
+      background: rgba(232, 160, 255, 0.5);
+    }
+
+    /* ===== GRID (3 COLUMNAS) ===== */
     .grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(280px, 1fr));
@@ -242,7 +270,7 @@
       }
     }
 
-    /* ===== RESPONSIVE MÓVIL ===== */
+    /* ===== OPTIMIZACIONES PARA MÓVIL ===== */
     @media (max-width: 768px) {
       nav {
         gap: 15px;
@@ -260,12 +288,12 @@
       }
 
       .grid {
-        grid-template-columns: repeat(3, minmax(220px, 1fr));
+        grid-template-columns: repeat(3, minmax(200px, 1fr));
         gap: 20px;
       }
 
       .obra {
-        min-width: 200px;
+        min-width: 180px;
         padding: 15px;
       }
 
@@ -295,16 +323,16 @@
       }
     }
 
-    /* ===== Ajuste para pantallas muy pequeñas ===== */
+    /* ===== PANTALLAS MUY PEQUEÑAS ===== */
     @media (max-width: 480px) {
       .grid {
-        grid-template-columns: repeat(3, minmax(160px, 1fr));
-        gap: 15px;
+        grid-template-columns: repeat(3, minmax(140px, 1fr));
+        gap: 12px;
       }
 
       .obra {
-        min-width: 140px;
-        padding: 12px;
+        min-width: 130px;
+        padding: 10px;
       }
 
       .modelo-3d {
@@ -343,166 +371,171 @@
 
   <main>
 
-    <section class="grid">
+    <!-- WRAPPER PARA SCROLL HORIZONTAL -->
+    <div class="scroll-wrapper">
 
-      <!-- CUADRO I - MEDUSA -->
-      <div class="obra">
-        <div class="modelo-3d">
-          <model-viewer
-            id="cuadro1-viewer"
-            src="./Medusa_cuadro.glb"
-            data-src="./Medusa_cuadro.glb"
-            alt="MEDUSA - Lápices de color sobre papel"
-            camera-controls
-            camera-orbit="0deg 90deg 0.8m"
-            loading="eager"
-            reveal="auto"
-            shadow-intensity="1.52"
-            shadow-softness="1"
-            exposure="0.86"
-            tone-mapping="neutral"
-            interaction-prompt="none"
-            style="width:100%;height:100%;background:transparent;">
-            
-            <div slot="progress-bar" style="display:none !important;"></div>
-            <div slot="ar-button" style="display:none !important;"></div>
-            <div slot="ar-prompt" style="display:none !important;"></div>
-            <div slot="poster" style="display:none !important;"></div>
-            
-          </model-viewer>
+      <section class="grid">
+
+        <!-- CUADRO I - MEDUSA -->
+        <div class="obra">
+          <div class="modelo-3d">
+            <model-viewer
+              id="cuadro1-viewer"
+              src="./Medusa_cuadro.glb"
+              data-src="./Medusa_cuadro.glb"
+              alt="MEDUSA - Lápices de color sobre papel"
+              camera-controls
+              camera-orbit="0deg 90deg 0.8m"
+              loading="eager"
+              reveal="auto"
+              shadow-intensity="1.52"
+              shadow-softness="1"
+              exposure="0.86"
+              tone-mapping="neutral"
+              interaction-prompt="none"
+              style="width:100%;height:100%;background:transparent;">
+              
+              <div slot="progress-bar" style="display:none !important;"></div>
+              <div slot="ar-button" style="display:none !important;"></div>
+              <div slot="ar-prompt" style="display:none !important;"></div>
+              <div slot="poster" style="display:none !important;"></div>
+              
+            </model-viewer>
+          </div>
+          <h2>Medusa</h2>
+          <p>Lápices de color sobre papel · 16X20cm</p>
+          <p>Año 2025 · Pieza única</p>
+          <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
+          
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Medusa&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Medusa." 
+             class="btn-consultar btn-pc" target="_blank">
+             Consultar
+          </a>
+
+          <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Medusa&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Medusa." 
+             class="btn-consultar btn-movil">
+             Consultar
+          </a>
         </div>
-        <h2>Medusa</h2>
-        <p>Lápices de color sobre papel · 16X20cm</p>
-        <p>Año 2025 · Pieza única</p>
-        <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
-        
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Medusa&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Medusa." 
-           class="btn-consultar btn-pc" target="_blank">
-           Consultar
-        </a>
 
-        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Medusa&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Medusa." 
-           class="btn-consultar btn-movil">
-           Consultar
-        </a>
-      </div>
+        <!-- CUADRO II - LA MUERTE -->
+        <div class="obra">
+          <div class="modelo-3d">
+            <model-viewer
+              id="cuadro2-viewer"
+              src="./La_muerte_cuadro.glb"
+              data-src="./La_muerte_cuadro.glb"
+              alt="LA MUERTE - Lápices de color sobre papel"
+              camera-controls
+              camera-orbit="0deg 90deg 0.8m"
+              loading="eager"
+              reveal="auto"
+              shadow-intensity="1.52"
+              shadow-softness="1"
+              exposure="0.86"
+              tone-mapping="neutral"
+              interaction-prompt="none"
+              style="width:100%;height:100%;background:transparent;">
+              
+              <div slot="progress-bar" style="display:none !important;"></div>
+              <div slot="ar-button" style="display:none !important;"></div>
+              <div slot="ar-prompt" style="display:none !important;"></div>
+              <div slot="poster" style="display:none !important;"></div>
+              
+            </model-viewer>
+          </div>
+          <h2>La Muerte</h2>
+          <p>Lápices de color sobre papel · 27.5X20cm</p>
+          <p>Año 2025 · Pieza única</p>
+          <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
+          
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20La%20Muerte&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20La%20Muerte." 
+             class="btn-consultar btn-pc" target="_blank">
+             Consultar
+          </a>
 
-      <!-- CUADRO II - LA MUERTE -->
-      <div class="obra">
-        <div class="modelo-3d">
-          <model-viewer
-            id="cuadro2-viewer"
-            src="./La_muerte_cuadro.glb"
-            data-src="./La_muerte_cuadro.glb"
-            alt="LA MUERTE - Lápices de color sobre papel"
-            camera-controls
-            camera-orbit="0deg 90deg 0.8m"
-            loading="eager"
-            reveal="auto"
-            shadow-intensity="1.52"
-            shadow-softness="1"
-            exposure="0.86"
-            tone-mapping="neutral"
-            interaction-prompt="none"
-            style="width:100%;height:100%;background:transparent;">
-            
-            <div slot="progress-bar" style="display:none !important;"></div>
-            <div slot="ar-button" style="display:none !important;"></div>
-            <div slot="ar-prompt" style="display:none !important;"></div>
-            <div slot="poster" style="display:none !important;"></div>
-            
-          </model-viewer>
+          <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20La%20Muerte&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20La%20Muerte." 
+             class="btn-consultar btn-movil">
+             Consultar
+          </a>
         </div>
-        <h2>La Muerte</h2>
-        <p>Lápices de color sobre papel · 27.5X20cm</p>
-        <p>Año 2025 · Pieza única</p>
-        <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
-        
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20La%20Muerte&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20La%20Muerte." 
-           class="btn-consultar btn-pc" target="_blank">
-           Consultar
-        </a>
 
-        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20La%20Muerte&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20La%20Muerte." 
-           class="btn-consultar btn-movil">
-           Consultar
-        </a>
-      </div>
+        <!-- CUADRO III - CHICA HONGOS GATO -->
+        <div class="obra">
+          <div class="modelo-3d">
+            <model-viewer
+              id="cuadro3-viewer"
+              src="./Chica_hongos_gato_cuadro.glb"
+              data-src="./Chica_hongos_gato_cuadro.glb"
+              alt="CHICA HONGOS Y CHICA GATO - Grafito sobre papel"
+              camera-controls
+              camera-orbit="0deg 90deg 0.9m"
+              loading="eager"
+              reveal="auto"
+              shadow-intensity="2"
+              shadow-softness="0.5"
+              exposure="0.77"
+              tone-mapping="aces"
+              interaction-prompt="none"
+              style="width:100%;height:100%;background:transparent;">
+              
+              <div slot="progress-bar" style="display:none !important;"></div>
+              <div slot="ar-button" style="display:none !important;"></div>
+              <div slot="ar-prompt" style="display:none !important;"></div>
+              <div slot="poster" style="display:none !important;"></div>
+              
+            </model-viewer>
+          </div>
+          <h2>Chica hongos y chica gato</h2>
+          <p> Grafito sobre papel · 29X21cm cada pieza</p>
+          <p>Año 2022 · Pieza única</p>
+          <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
+          
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Chica%20Hongos%20Gato&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Chica%20Hongos%20Gato." 
+             class="btn-consultar btn-pc" target="_blank">
+             Consultar
+          </a>
 
-      <!-- CUADRO III - CHICA HONGOS GATO -->
-      <div class="obra">
-        <div class="modelo-3d">
-          <model-viewer
-            id="cuadro3-viewer"
-            src="./Chica_hongos_gato_cuadro.glb"
-            data-src="./Chica_hongos_gato_cuadro.glb"
-            alt="CHICA HONGOS Y CHICA GATO - Grafito sobre papel"
-            camera-controls
-            camera-orbit="0deg 90deg 0.9m"
-            loading="eager"
-            reveal="auto"
-            shadow-intensity="2"
-            shadow-softness="0.5"
-            exposure="0.77"
-            tone-mapping="aces"
-            interaction-prompt="none"
-            style="width:100%;height:100%;background:transparent;">
-            
-            <div slot="progress-bar" style="display:none !important;"></div>
-            <div slot="ar-button" style="display:none !important;"></div>
-            <div slot="ar-prompt" style="display:none !important;"></div>
-            <div slot="poster" style="display:none !important;"></div>
-            
-          </model-viewer>
+          <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Chica%20Hongos%20Gato&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Chica%20Hongos%20Gato." 
+             class="btn-consultar btn-movil">
+             Consultar
+          </a>
         </div>
-        <h2>Chica hongos y chica gato</h2>
-        <p> Grafito sobre papel · 29X21cm cada pieza</p>
-        <p>Año 2022 · Pieza única</p>
-        <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
-        
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Chica%20Hongos%20Gato&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Chica%20Hongos%20Gato." 
-           class="btn-consultar btn-pc" target="_blank">
-           Consultar
-        </a>
 
-        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Chica%20Hongos%20Gato&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Chica%20Hongos%20Gato." 
-           class="btn-consultar btn-movil">
-           Consultar
-        </a>
-      </div>
-
-      <!-- Puedes agregar más cuadros aquí y se añadirán a la derecha -->
-      <!-- CUADRO IV - EJEMPLO -->
-      <!--
-      <div class="obra">
-        <div class="modelo-3d">
-          <model-viewer
-            id="cuadro4-viewer"
-            src="./cuadro4.glb"
-            data-src="./cuadro4.glb"
-            alt="CUADRO IV - Técnica"
-            camera-controls
-            camera-orbit="0deg 90deg 0.8m"
-            loading="eager"
-            reveal="auto"
-            shadow-intensity="1.52"
-            shadow-softness="1"
-            exposure="0.86"
-            tone-mapping="neutral"
-            interaction-prompt="none"
-            style="width:100%;height:100%;background:transparent;">
-          </model-viewer>
+        <!-- Puedes agregar más cuadros aquí y se añadirán a la derecha -->
+        <!-- EJEMPLO DE CUADRO IV (descomentar para usar) -->
+        <!--
+        <div class="obra">
+          <div class="modelo-3d">
+            <model-viewer
+              id="cuadro4-viewer"
+              src="./cuadro4.glb"
+              data-src="./cuadro4.glb"
+              alt="CUADRO IV - Técnica"
+              camera-controls
+              camera-orbit="0deg 90deg 0.8m"
+              loading="eager"
+              reveal="auto"
+              shadow-intensity="1.52"
+              shadow-softness="1"
+              exposure="0.86"
+              tone-mapping="neutral"
+              interaction-prompt="none"
+              style="width:100%;height:100%;background:transparent;">
+            </model-viewer>
+          </div>
+          <h2>Cuadro IV</h2>
+          <p>Técnica · Medidas</p>
+          <p>Año · Pieza única</p>
+          <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
+          <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20el%20Cuadro%20IV" class="btn-consultar btn-pc" target="_blank">Consultar</a>
+          <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20el%20Cuadro%20IV" class="btn-consultar btn-movil">Consultar</a>
         </div>
-        <h2>Cuadro IV</h2>
-        <p>Técnica · Medidas</p>
-        <p>Año · Pieza única</p>
-        <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
-        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20el%20Cuadro%20IV" class="btn-consultar btn-pc" target="_blank">Consultar</a>
-        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20el%20Cuadro%20IV" class="btn-consultar btn-movil">Consultar</a>
-      </div>
-      -->
+        -->
 
-    </section>
+      </section>
+
+    </div>
 
   </main>
 
