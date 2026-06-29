@@ -23,10 +23,9 @@
       font-family: 'Inter', sans-serif;
       font-weight: 400;
       min-height: 100vh;
-      overflow-x: hidden; /* Oculta el scroll horizontal del body */
     }
 
-    /* ===== NAV FIJO ===== */
+    /* ===== NAV ===== */
     nav {
       position: fixed;
       top: 30px;
@@ -36,7 +35,6 @@
       justify-content: center;
       gap: 28px;
       z-index: 100;
-      pointer-events: none;
     }
 
     nav a {
@@ -47,70 +45,39 @@
       border: 1px solid rgba(232, 160, 255, 0.4);
       color: #E8A0FF;
       text-decoration: none;
-      background: rgba(0, 0, 24, 0.7);
-      backdrop-filter: blur(4px);
+      background: transparent;
       transition: all 0.3s ease;
-      pointer-events: auto;
     }
 
     nav a:hover { 
-      background: rgba(232, 160, 255, 0.15);
+      background: rgba(232, 160, 255, 0.05);
     }
 
-    /* ===== CONTENEDOR PRINCIPAL ===== */
+    /* ===== MAIN ===== */
     main {
-      width: 100%;
-      min-height: 100vh;
-      overflow-y: visible; /* Permite que el contenido fluya */
-      padding: 120px 20px 60px;
-      position: relative;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 140px 20px 80px;
+      text-align: center;
     }
 
-    /* ===== CONTENEDOR DE SCROLL HORIZONTAL ===== */
-    .scroll-container {
-      display: flex;
-      flex-wrap: nowrap;
+    /* ===== GRID ===== */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 40px;
-      overflow-x: auto;
-      overflow-y: visible;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      padding: 20px 10px 30px;
-      scroll-behavior: smooth;
-      width: 100%;
     }
 
-    /* Ocultar la barra de scroll en navegadores */
-    .scroll-container::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .scroll-container::-webkit-scrollbar-track {
-      background: rgba(232, 160, 255, 0.1);
-      border-radius: 10px;
-    }
-
-    .scroll-container::-webkit-scrollbar-thumb {
-      background: rgba(232, 160, 255, 0.3);
-      border-radius: 10px;
-    }
-
-    .scroll-container::-webkit-scrollbar-thumb:hover {
-      background: rgba(232, 160, 255, 0.5);
-    }
-
-    /* ===== TARJETA DE OBRA (ESTILO ORIGINAL) ===== */
+    /* ===== TARJETA DE OBRA (SIN MÁSCARA) ===== */
     .obra {
-      flex: 0 0 auto;
-      width: 300px;
-      max-width: 85vw;
+      position: relative;
       border: 1px solid rgba(232, 160, 255, 0.3);
       padding: 20px;
       transition: all 0.4s ease;
       background: transparent;
       display: flex;
       flex-direction: column;
-      scroll-snap-align: start;
+      overflow: hidden;
     }
 
     .obra:hover {
@@ -223,12 +190,17 @@
       display: block !important;
     }
 
-    .ar-button, #ar-prompt {
+    .ar-button {
+      display: none !important;
+    }
+
+    #ar-prompt {
       display: none !important;
     }
 
     /* ===== MÁSCARA: SOLO EN PC (NAV Y BOTÓN CONSULTAR) ===== */
     @media (min-width: 769px) {
+      /* MÁSCARA EN NAV */
       nav a {
         -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
         mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -241,6 +213,7 @@
         animation: ani 0.7s steps(70) forwards;
       }
 
+      /* MÁSCARA EN BOTÓN CONSULTAR */
       .btn-consultar {
         -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
         mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -264,32 +237,27 @@
       }
     }
 
-    /* ===== RESPONSIVE MÓVIL ===== */
+    /* ===== OPTIMIZACIONES PARA MÓVIL ===== */
     @media (max-width: 768px) {
       nav {
-        gap: 15px;
+        gap: 20px;
         top: 15px;
       }
 
       nav a {
         font-size: 11px;
         letter-spacing: 1px;
-        padding: 6px 12px;
-        background: rgba(0, 0, 24, 0.8);
+        padding: 8px 12px;
       }
 
-      main {
-        padding: 100px 10px 40px;
-      }
-
-      .scroll-container {
-        gap: 20px;
-        padding: 10px 5px 20px;
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
       }
 
       .obra {
-        width: 260px;
-        padding: 15px;
+        padding: 20px;
+        margin: 0 5px;
       }
 
       .modelo-3d {
@@ -297,8 +265,12 @@
       }
 
       .btn-consultar {
-        padding: 10px 20px;
+        padding: 10px 28px;
         font-size: 11px;
+      }
+
+      main {
+        padding: 120px 15px 60px;
       }
 
       .btn-pc {
@@ -314,6 +286,8 @@
         shadow-intensity: 1 !important;
         shadow-softness: 0.3 !important;
         render-scale: 0.5 !important;
+        
+        /* Optimización: contenido solo visible cuando se necesita */
         content-visibility: auto;
         contain: strict;
       }
@@ -324,7 +298,7 @@
 
 <body>
 
-  <!-- MENÚ FIJO -->
+  <!-- MENÚ -->
   <nav>
     <a href="index.html">INICIO</a>
     <a href="tienda.html">TIENDA</a>
@@ -332,7 +306,8 @@
   </nav>
 
   <main>
-    <div class="scroll-container">
+
+    <section class="grid">
 
       <!-- CUADRO I - MEDUSA -->
       <div class="obra">
@@ -460,7 +435,8 @@
         </a>
       </div>
 
-    </div>
+    </section>
+
   </main>
 
   <!-- OPTIMIZACIÓN PARA MÓVIL: LIBERAR MODELOS AL SALIR DE PANTALLA -->
@@ -517,6 +493,7 @@
           console.error(`❌ Error en ${viewer.id}:`, e);
           const container = viewer.parentElement;
           if (container) {
+            // Si hay un fallback con imagen, mostrarlo
             const fallback = container.querySelector('.fallback-image');
             if (fallback) {
               fallback.style.display = 'block';
