@@ -73,25 +73,6 @@
       padding-right: 10px;
     }
 
-    /* Ocultar la barra de scroll en navegadores (opcional) */
-    .scroll-wrapper::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .scroll-wrapper::-webkit-scrollbar-track {
-      background: rgba(232, 160, 255, 0.1);
-      border-radius: 10px;
-    }
-
-    .scroll-wrapper::-webkit-scrollbar-thumb {
-      background: rgba(232, 160, 255, 0.3);
-      border-radius: 10px;
-    }
-
-    .scroll-wrapper::-webkit-scrollbar-thumb:hover {
-      background: rgba(232, 160, 255, 0.5);
-    }
-
     /* ===== GRID (3 COLUMNAS) ===== */
     .grid {
       display: grid;
@@ -110,9 +91,11 @@
       background: transparent;
       display: flex;
       flex-direction: column;
+      align-items: center; /* Centra el contenido horizontalmente */
       overflow: hidden;
       min-width: 280px;
       max-width: 350px;
+      text-align: center; /* Centra el texto */
     }
 
     .obra:hover {
@@ -142,7 +125,7 @@
       background: transparent;
     }
 
-    /* ===== TEXTO DE LA OBRA ===== */
+    /* ===== TEXTO DE LA OBRA (CENTRADO) ===== */
     .obra h2 {
       font-family: 'Inter', sans-serif;
       font-weight: 700;
@@ -151,6 +134,7 @@
       margin-bottom: 6px;
       color: #E8A0FF;
       text-transform: uppercase;
+      text-align: center;
     }
 
     .obra p {
@@ -161,6 +145,7 @@
       letter-spacing: 1px;
       margin-bottom: 4px;
       color: #E8A0FF;
+      text-align: center;
     }
 
     .instruccion {
