@@ -293,6 +293,7 @@
         <div class="modelo-3d">
           <model-viewer
             id="cuadro1-viewer"
+            src="./Medusa_cuadro.glb"
             data-src="./Medusa_cuadro.glb"
             alt="MEDUSA - Lápices de color sobre papel"
             camera-controls
@@ -334,6 +335,7 @@
         <div class="modelo-3d">
           <model-viewer
             id="cuadro2-viewer"
+            src="./La_muerte_cuadro.glb"
             data-src="./La_muerte_cuadro.glb"
             alt="LA MUERTE - Lápices de color sobre papel"
             camera-controls
@@ -375,6 +377,7 @@
         <div class="modelo-3d">
           <model-viewer
             id="cuadro3-viewer"
+            src="./Chica_hongos_gato_cuadro.glb"
             data-src="./Chica_hongos_gato_cuadro.glb"
             alt="CHICA HONGOS Y CHICA GATO - Grafito sobre papel"
             camera-controls
@@ -422,7 +425,7 @@
       const isMobile = window.innerWidth <= 768;
       
       if (!isMobile) {
-        console.log("📱 Modo PC: carga normal sin liberación");
+        console.log("💻 Modo PC: carga normal sin liberación");
         return;
       }
 
@@ -430,18 +433,23 @@
 
       const viewers = document.querySelectorAll("model-viewer");
 
+      // Guardar la ruta original en data-src si no existe
+      viewers.forEach(viewer => {
+        if (!viewer.getAttribute("data-src") && viewer.getAttribute("src")) {
+          viewer.setAttribute("data-src", viewer.getAttribute("src"));
+        }
+      });
+
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           const viewer = entry.target;
 
           if (entry.isIntersecting) {
-            // El modelo entra en pantalla → cargar
-            if (!viewer.getAttribute("src")) {
-              const dataSrc = viewer.getAttribute("data-src");
-              if (dataSrc) {
-                viewer.setAttribute("src", dataSrc);
-                console.log(`✅ Cargando modelo: ${viewer.id}`);
-              }
+            // El modelo entra en pantalla → cargar desde data-src
+            const dataSrc = viewer.getAttribute("data-src");
+            if (dataSrc && !viewer.getAttribute("src")) {
+              viewer.setAttribute("src", dataSrc);
+              console.log(`✅ Cargando modelo: ${viewer.id}`);
             }
           } else {
             // El modelo sale de pantalla → liberar memoria
@@ -464,12 +472,18 @@
           console.error(`❌ Error en ${viewer.id}:`, e);
           const container = viewer.parentElement;
           if (container) {
-            container.innerHTML = `
-              <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#E8A0FF;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
-                ⚠️ Error al cargar el cuadro<br>
-                <small style="opacity:0.4;">Verifica que el archivo existe</small>
-              </div>
-            `;
+            // Si hay un fallback con imagen, mostrarlo
+            const fallback = container.querySelector('.fallback-image');
+            if (fallback) {
+              fallback.style.display = 'block';
+            } else {
+              container.innerHTML = `
+                <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#E8A0FF;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
+                  ⚠️ Error al cargar el cuadro<br>
+                  <small style="opacity:0.4;">Verifica que el archivo existe</small>
+                </div>
+              `;
+            }
           }
         });
       });
