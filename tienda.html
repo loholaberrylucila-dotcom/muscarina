@@ -2,10 +2,10 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Muscarina — Tienda</title>
 
-  <!-- GOOGLE FONTS INTER (misma que index) -->
+  <!-- GOOGLE FONTS INTER -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
@@ -23,7 +23,7 @@
       min-height: 100vh;
     }
 
-    /* ===== NAV (EXACTAMENTE IGUAL AL INDEX) ===== */
+    /* ===== NAV ===== */
     nav {
       position: fixed;
       top: 30px;
@@ -44,29 +44,11 @@
       color: #000018;
       text-decoration: none;
       background: rgba(255,255,255,0.03);
-
-      -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      -webkit-mask-size: 7100% 100%;
-      mask-size: 7100% 100%;
-
-      animation: ani2 0.7s steps(70) forwards;
       transition: all 0.3s ease;
     }
 
     nav a:hover { 
-      animation: ani 0.7s steps(70) forwards;
       background: rgba(255,255,255,0.1);
-    }
-
-    /* ===== MÁSCARAS (MISMAS QUE INDEX) ===== */
-    @keyframes ani { 
-      from { mask-position: 0 0; } 
-      to { mask-position: 100% 0; } 
-    }
-    @keyframes ani2 { 
-      from { mask-position: 100% 0; } 
-      to { mask-position: 0 0; } 
     }
 
     /* ===== MAIN ===== */
@@ -77,7 +59,7 @@
       text-align: center;
     }
 
-    /* ===== TEXTO INTRO (estilo igual a .text-frame del index pero más compacto) ===== */
+    /* ===== TEXTO INTRO ===== */
     .intro {
       font-family: 'Inter', sans-serif;
       font-weight: 300;
@@ -88,17 +70,6 @@
       border: 1px solid rgba(0,0,24,0.4);
       display: inline-block;
       width: auto;
-      
-      -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      -webkit-mask-size: 7100% 100%;
-      mask-size: 7100% 100%;
-      
-      animation: ani2 0.7s steps(70) forwards;
-    }
-
-    .intro:hover {
-      animation: ani 0.7s steps(70) forwards;
     }
 
     /* ===== CATEGORÍAS ===== */
@@ -115,20 +86,12 @@
       color: #000018;
       transition: all 0.4s ease;
       background: rgba(255,255,255,0.02);
-      
-      -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      -webkit-mask-size: 7100% 100%;
-      mask-size: 7100% 100%;
-      
-      animation: ani2 0.7s steps(70) forwards;
     }
 
     .categoria:hover {
       border: 1px solid rgba(0,0,24,0.6);
       background: rgba(255,255,255,0.06);
       transform: translateY(-5px);
-      animation: ani 0.7s steps(70) forwards;
     }
 
     .categoria h2 {
@@ -157,12 +120,110 @@
       font-family: 'Inter', sans-serif;
       font-weight: 300;
     }
+
+    /* ===== MÁSCARA: SOLO EN PC ===== */
+    @media (min-width: 769px) {
+      nav a {
+        -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+        mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+        -webkit-mask-size: 7100% 100%;
+        mask-size: 7100% 100%;
+        animation: ani2 0.7s steps(70) forwards;
+      }
+
+      nav a:hover {
+        animation: ani 0.7s steps(70) forwards;
+      }
+
+      .intro {
+        -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+        mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+        -webkit-mask-size: 7100% 100%;
+        mask-size: 7100% 100%;
+        animation: ani2 0.7s steps(70) forwards;
+      }
+
+      .intro:hover {
+        animation: ani 0.7s steps(70) forwards;
+      }
+
+      .categoria {
+        -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+        mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+        -webkit-mask-size: 7100% 100%;
+        mask-size: 7100% 100%;
+        animation: ani2 0.7s steps(70) forwards;
+      }
+
+      .categoria:hover {
+        animation: ani 0.7s steps(70) forwards;
+      }
+
+      @keyframes ani {
+        from { mask-position: 0 0; }
+        to { mask-position: 100% 0; }
+      }
+
+      @keyframes ani2 {
+        from { mask-position: 100% 0; }
+        to { mask-position: 0 0; }
+      }
+    }
+
+    /* ===== RESPONSIVE MÓVIL ===== */
+    @media (max-width: 768px) {
+      nav {
+        gap: 20px;
+        top: 15px;
+      }
+
+      nav a {
+        font-size: 11px;
+        letter-spacing: 1px;
+        padding: 8px 12px;
+      }
+
+      main {
+        padding: 120px 15px 60px;
+      }
+
+      .intro {
+        padding: 20px 16px;
+        font-size: 12px;
+        margin-bottom: 50px;
+        width: 100% !important;
+      }
+
+      .categorias {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .categoria {
+        padding: 50px 20px;
+      }
+
+      .categoria h2 {
+        font-size: 16px;
+        letter-spacing: 3px;
+      }
+
+      .categoria p {
+        font-size: 11px;
+      }
+
+      footer {
+        font-size: 10px;
+        padding: 30px 20px;
+      }
+    }
   </style>
+
 </head>
 
 <body>
 
-  <!-- MENÚ IGUAL AL INDEX -->
+  <!-- MENÚ -->
   <nav>
     <a href="index.html">INICIO</a>
     <a href="tienda.html">TIENDA</a>
@@ -189,7 +250,7 @@
     </section>
   </main>
 
-  <!-- VANTA FOG (EXACTAMENTE IGUAL AL INDEX) -->
+  <!-- VANTA FOG -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="https://unpkg.com/vanta@latest/dist/vanta.fog.min.js"></script>
   <script>
