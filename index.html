@@ -2,11 +2,13 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LUCILA LOHOLABERRY</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  <!-- GOOGLE FONTS INTER (reemplaza a Jost) -->
+  <!-- GOOGLE FONTS INTER -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Model Viewer -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
 
   <style>
     * {
@@ -16,50 +18,23 @@
     }
 
     body {
-      background-color: #111111;
-      color: #000018;
+      background-color: #000018;
+      color: #E8A0FF;
       font-family: 'Inter', sans-serif;
       font-weight: 400;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
     }
-
-    /* ===== INTRO ===== */
-    #intro {
-      position: fixed;
-      inset: 0;
-      background: #e8a0ff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      animation: introHold 2.4s linear forwards, fadeOutIntro 2s ease forwards;
-      animation-delay: 0s, 2.4s;
-    }
-
-    #intro h1 {
-      font-size: clamp(1.6rem, 4.5vw, 3.8rem);
-      letter-spacing: clamp(0.18em, 0.9vw, 0.32em);
-      font-weight: 400;
-      opacity: 0;
-      animation: introFadeIn 0.4s ease forwards, scale-up-center 0.9s cubic-bezier(.895,.03,.685,.22) forwards;
-    }
-
-    @keyframes introFadeIn { to { opacity: 1; } }
-    @keyframes scale-up-center { from { transform: scale(0.5); } to { transform: scale(1); } }
-    @keyframes introHold {}
-    @keyframes fadeOutIntro { to { opacity: 0; visibility: hidden; pointer-events: none; } }
 
     /* ===== NAV ===== */
     nav {
       position: fixed;
       top: 30px;
+      left: 0;
+      right: 0;
       display: flex;
+      justify-content: center;
       gap: 28px;
+      z-index: 100;
     }
 
     nav a {
@@ -67,154 +42,465 @@
       font-size: 13px;
       letter-spacing: 2px;
       font-weight: 400;
-      border: 1px solid rgba(0,0,24,0.4);
-      color: #000018;
+      border: 1px solid rgba(232, 160, 255, 0.4);
+      color: #E8A0FF;
       text-decoration: none;
-
-      -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      -webkit-mask-size: 7100% 100%;
-      mask-size: 7100% 100%;
-
-      animation: ani2 0.7s steps(70) forwards;
+      background: transparent;
+      transition: all 0.3s ease;
     }
 
-    nav a:hover { animation: ani 0.7s steps(70) forwards; }
+    nav a:hover { 
+      background: rgba(232, 160, 255, 0.05);
+    }
 
-    /* ===== TEXT FRAME ===== */
-    .text-frame {
-      border: 1px solid rgba(0,0,24,0.4);
-      padding: 32px 38px;
-      margin: 0 auto 30px;
+    /* ===== MAIN ===== */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 140px 20px 80px;
       text-align: center;
-
-      -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      -webkit-mask-size: 7100% 100%;
-      mask-size: 7100% 100%;
-
-      animation: ani2 0.7s steps(70) forwards;
     }
 
-    .text-frame:hover {
-      animation: ani 0.7s steps(70) forwards;
+    /* ===== GRID ===== */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
     }
 
-    /* ===== TEXT FRAME TITLE ===== */
-    .text-frame h1 {
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      letter-spacing: 0em;
-      font-weight: 500;
-      margin-bottom: 48px;
+    /* ===== TARJETA DE OBRA ===== */
+    .obra {
+      position: relative;
+      border: 1px solid rgba(232, 160, 255, 0.3);
+      padding: 20px;
+      transition: all 0.4s ease;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
 
-    .text-frame p {
+    .obra > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== CONTENEDOR 3D ===== */
+    .modelo-3d {
+      width: 100%;
+      height: 220px;
+      background: transparent;
+      margin-bottom: 15px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    model-viewer {
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: transparent;
+    }
+
+    /* ===== TEXTO DE LA OBRA ===== */
+    .obra h2 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      color: #E8A0FF;
+      text-transform: uppercase;
+    }
+
+    .obra p {
       font-family: 'Inter', sans-serif;
       font-weight: 300;
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 30px;
+      font-size: 12px;
+      opacity: 0.8;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+      color: #E8A0FF;
     }
 
-    .text-frame p:last-child {
-      margin-bottom: 0;
+    .instruccion {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 10px;
+      opacity: 0.6;
+      text-align: center;
+      margin-top: 8px;
+      color: #E8A0FF;
     }
 
-    /* ===== CTA ===== */
-    .cta {
-      padding: 12px 30px;
+    /* ===== BOTÓN CONSULTAR ===== */
+    .btn-consultar {
+      display: inline-block;
+      padding: 8px 24px;
+      margin-top: 15px;
+      background: transparent;
+      color: #E8A0FF;
+      border: 1px solid rgba(232, 160, 255, 0.3);
+      border-radius: 0px;
+      text-decoration: none;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
       font-size: 12px;
       letter-spacing: 2px;
-      font-weight: 400;
-      border: 1px solid rgba(0,0,24,0.6);
-      text-decoration: none;
-      color: #000018;
-
-      -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-      -webkit-mask-size: 7100% 100%;
-      mask-size: 7100% 100%;
-
-      animation: ani2 0.7s steps(70) forwards;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      align-self: center;
+      position: relative;
+      z-index: 2;
     }
 
-    .cta:hover { animation: ani 0.7s steps(70) forwards; }
+    .btn-consultar:hover {
+      background: rgba(232, 160, 255, 0.05);
+      border-color: rgba(232, 160, 255, 0.6);
+      transform: translateY(-2px);
+    }
 
-    /* ===== MASK ===== */
-    @keyframes ani { from { mask-position: 0 0; } to { mask-position: 100% 0; } }
-    @keyframes ani2 { from { mask-position: 100% 0; } to { mask-position: 0 0; } }
+    /* ===== BOTONES POR DISPOSITIVO ===== */
+    .btn-pc {
+      display: inline-block;
+    }
+
+    .btn-movil {
+      display: none;
+    }
+
+    /* ===== OCULTAR ELEMENTOS DE MODEL VIEWER ===== */
+    model-viewer::part(default-progress-bar),
+    model-viewer::part(default-ar-button),
+    model-viewer::part(default-poster) {
+      display: none !important;
+    }
+
+    model-viewer > *:not(canvas) {
+      display: none !important;
+    }
+
+    model-viewer > canvas {
+      display: block !important;
+    }
+
+    .ar-button {
+      display: none !important;
+    }
+
+    #ar-prompt {
+      display: none !important;
+    }
+
+    /* ===== MÁSCARA SOLO EN PC ===== */
+    @media (min-width: 769px) {
+      /* Máscara para el nav */
+      nav a {
+        -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+        mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+        -webkit-mask-size: 7100% 100%;
+        mask-size: 7100% 100%;
+        animation: ani2 0.7s steps(70) forwards;
+      }
+
+      nav a:hover { 
+        animation: ani 0.7s steps(70) forwards;
+      }
+
+      /* Máscara para las tarjetas */
+      .obra {
+        -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+        mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
+        -webkit-mask-size: 7100% 100%;
+        mask-size: 7100% 100%;
+        animation: ani2 0.7s steps(70) forwards;
+      }
+
+      .obra:hover {
+        animation: ani 0.7s steps(70) forwards;
+      }
+
+      @keyframes ani { 
+        from { mask-position: 0 0; } 
+        to { mask-position: 100% 0; } 
+      }
+      @keyframes ani2 { 
+        from { mask-position: 100% 0; } 
+        to { mask-position: 0 0; } 
+      }
+    }
+
+    /* ===== RESPONSIVE MÓVIL ===== */
+    @media (max-width: 768px) {
+      nav {
+        gap: 20px;
+        top: 15px;
+      }
+
+      nav a {
+        font-size: 11px;
+        letter-spacing: 1px;
+        padding: 8px 12px;
+        /* Sin máscara en móvil */
+        -webkit-mask: none !important;
+        mask: none !important;
+        animation: none !important;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .obra {
+        padding: 25px;
+        margin: 0 5px;
+        /* Sin máscara en móvil */
+        -webkit-mask: none !important;
+        mask: none !important;
+        animation: none !important;
+      }
+
+      .modelo-3d {
+        height: 190px;
+      }
+
+      .btn-consultar {
+        padding: 10px 28px;
+        font-size: 11px;
+      }
+
+      main {
+        padding: 120px 15px 60px;
+      }
+
+      .btn-pc {
+        display: none;
+      }
+
+      .btn-movil {
+        display: inline-block;
+      }
+
+      /* REDUCIR CALIDAD DE SOMBRAS Y RENDER EN MÓVIL */
+      model-viewer {
+        shadow-intensity: 1 !important;
+        shadow-softness: 0.3 !important;
+        render-scale: 0.5 !important;
+        content-visibility: auto;
+        contain: strict;
+      }
+    }
   </style>
+
 </head>
 
 <body>
 
-  <div id="intro">
-    <h1>LUCILA LOHOLABERRY</h1>
-  </div>
-
+  <!-- MENÚ -->
   <nav>
     <a href="index.html">INICIO</a>
     <a href="tienda.html">TIENDA</a>
     <a href="bio.html">PORTFOLIO</a>
   </nav>
 
-  <div class="text-frame" id="text-frame">
-    <h1 id="main-title">LUCILA LOHOLABERRY</h1>
+  <main>
 
-    <p>
-      MAR DEL PLATA - ARGENTINA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■<br>
-      DISEÑADORA INDUSTRIAL DE PRODUCTO ■ ■ ■ ■ ■<br>
-      MI OBRA SE BASA EN DAR VOZ A LO INVISIBLE ■ ■ ■<br>
-      INVESTIGANDO LA RELACIÓN ENTRE LO VIRTUAL ■<br> 
-      Y LA MATERIA ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ 
-    </p>
+    <section class="grid">
 
-    <p>
-      TIENDA VIRTUAL DE ARTE Y OBJETOS DE DISEÑO<br>
-      EXPLORACION ESTETICA MATERIA Y PERCEPCION
-    </p>
-  </div>
+      <!-- CUADRO I - MEDUSA -->
+      <div class="obra">
+        <div class="modelo-3d">
+          <model-viewer
+            id="cuadro1-viewer"
+            src="./Medusa_cuadro.glb"
+            data-src="./Medusa_cuadro.glb"
+            alt="MEDUSA - Lápices de color sobre papel"
+            camera-controls
+            camera-orbit="0deg 90deg 0.8m"
+            loading="eager"
+            reveal="auto"
+            shadow-intensity="1.52"
+            shadow-softness="1"
+            exposure="0.86"
+            tone-mapping="neutral"
+            interaction-prompt="none"
+            style="width:100%;height:100%;background:transparent;">
+            
+            <div slot="progress-bar" style="display:none !important;"></div>
+            <div slot="ar-button" style="display:none !important;"></div>
+            <div slot="ar-prompt" style="display:none !important;"></div>
+            <div slot="poster" style="display:none !important;"></div>
+            
+          </model-viewer>
+        </div>
+        <h2>Medusa</h2>
+        <p>Lápices de color sobre papel · 16X20cm</p>
+        <p>Año 2025 · Pieza única</p>
+        <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
+        
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Medusa&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Medusa." 
+           class="btn-consultar btn-pc" target="_blank">
+           Consultar
+        </a>
 
-  <a class="cta" href="tienda.html">VER TIENDA</a>
+        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Medusa&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Medusa." 
+           class="btn-consultar btn-movil">
+           Consultar
+        </a>
+      </div>
 
-  <!-- VANTA -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <script src="https://unpkg.com/vanta@latest/dist/vanta.fog.min.js"></script>
+      <!-- CUADRO II - LA MUERTE -->
+      <div class="obra">
+        <div class="modelo-3d">
+          <model-viewer
+            id="cuadro2-viewer"
+            src="./La_muerte_cuadro.glb"
+            data-src="./La_muerte_cuadro.glb"
+            alt="LA MUERTE - Lápices de color sobre papel"
+            camera-controls
+            camera-orbit="0deg 90deg 0.8m"
+            loading="eager"
+            reveal="auto"
+            shadow-intensity="1.52"
+            shadow-softness="1"
+            exposure="0.86"
+            tone-mapping="neutral"
+            interaction-prompt="none"
+            style="width:100%;height:100%;background:transparent;">
+            
+            <div slot="progress-bar" style="display:none !important;"></div>
+            <div slot="ar-button" style="display:none !important;"></div>
+            <div slot="ar-prompt" style="display:none !important;"></div>
+            <div slot="poster" style="display:none !important;"></div>
+            
+          </model-viewer>
+        </div>
+        <h2>La Muerte</h2>
+        <p>Lápices de color sobre papel · 27.5X20cm</p>
+        <p>Año 2025 · Pieza única</p>
+        <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
+        
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20La%20Muerte&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20La%20Muerte." 
+           class="btn-consultar btn-pc" target="_blank">
+           Consultar
+        </a>
+
+        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20La%20Muerte&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20La%20Muerte." 
+           class="btn-consultar btn-movil">
+           Consultar
+        </a>
+      </div>
+
+      <!-- CUADRO III - CHICA HONGOS GATO -->
+      <div class="obra">
+        <div class="modelo-3d">
+          <model-viewer
+            id="cuadro3-viewer"
+            src="./Chica_hongos_gato_cuadro.glb"
+            data-src="./Chica_hongos_gato_cuadro.glb"
+            alt="CHICA HONGOS Y CHICA GATO - Grafito sobre papel"
+            camera-controls
+            camera-orbit="0deg 90deg 0.9m"
+            loading="eager"
+            reveal="auto"
+            shadow-intensity="2"
+            shadow-softness="0.5"
+            exposure="0.77"
+            tone-mapping="aces"
+            interaction-prompt="none"
+            style="width:100%;height:100%;background:transparent;">
+            
+            <div slot="progress-bar" style="display:none !important;"></div>
+            <div slot="ar-button" style="display:none !important;"></div>
+            <div slot="ar-prompt" style="display:none !important;"></div>
+            <div slot="poster" style="display:none !important;"></div>
+            
+          </model-viewer>
+        </div>
+        <h2>Chica hongos y chica gato</h2>
+        <p> Grafito sobre papel · 29X21cm cada pieza</p>
+        <p>Año 2022 · Pieza única</p>
+        <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
+        
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Chica%20Hongos%20Gato&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Chica%20Hongos%20Gato." 
+           class="btn-consultar btn-pc" target="_blank">
+           Consultar
+        </a>
+
+        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Chica%20Hongos%20Gato&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Chica%20Hongos%20Gato." 
+           class="btn-consultar btn-movil">
+           Consultar
+        </a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- OPTIMIZACIÓN PARA MÓVIL: LIBERAR MODELOS AL SALIR DE PANTALLA -->
   <script>
-    VANTA.FOG({
-      el: "body",
-      backgroundAlpha: 1.0,
-      baseColor: 0xd0ff94,
-      highlightColor: 0x83e7ff,
-      midtoneColor: 0xe8a0ff,
-      lowlightColor: 0x006ee9,
-      blurFactor: 0.9,
-      speed: 2.8,
-      zoom: 1.4,
-      scale: 2.0,
-      scaleMobile: 4.0,
-      mouseControls: true,
-      touchControls: true,
-      gyroControls: false
-    });
-  </script>
-  
-  <script>
-    function matchFrameToNav() {
-      const nav = document.getElementById("main-nav");
-      const frame = document.getElementById("text-frame");
-
-      if (!nav || !frame) return;
-
-      if (window.innerWidth > 768) {
-        frame.style.width = nav.offsetWidth + "px";
-      } else {
-        frame.style.width = "auto";
+    document.addEventListener("DOMContentLoaded", () => {
+      // Solo aplicar en móvil
+      const isMobile = window.innerWidth <= 768;
+      
+      if (!isMobile) {
+        console.log("💻 Modo PC: carga normal sin liberación");
+        return;
       }
-    }
 
-    window.addEventListener("load", matchFrameToNav);
-    window.addEventListener("resize", matchFrameToNav);
+      console.log("📱 Modo móvil: activando liberación de memoria");
+
+      const viewers = document.querySelectorAll("model-viewer");
+
+      // Guardar la ruta original en data-src si no existe
+      viewers.forEach(viewer => {
+        if (!viewer.getAttribute("data-src") && viewer.getAttribute("src")) {
+          viewer.setAttribute("data-src", viewer.getAttribute("src"));
+        }
+      });
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const viewer = entry.target;
+
+          if (entry.isIntersecting) {
+            const dataSrc = viewer.getAttribute("data-src");
+            if (dataSrc && !viewer.getAttribute("src")) {
+              viewer.setAttribute("src", dataSrc);
+              console.log(`✅ Cargando modelo: ${viewer.id}`);
+            }
+          } else {
+            if (viewer.getAttribute("src")) {
+              viewer.removeAttribute("src");
+              console.log(`🔄 Liberando modelo: ${viewer.id}`);
+            }
+          }
+        });
+      }, {
+        rootMargin: "150px",
+        threshold: 0.2
+      });
+
+      viewers.forEach(viewer => observer.observe(viewer));
+
+      // Manejar errores de carga
+      viewers.forEach(viewer => {
+        viewer.addEventListener("error", (e) => {
+          console.error(`❌ Error en ${viewer.id}:`, e);
+          const container = viewer.parentElement;
+          if (container) {
+            container.innerHTML = `
+              <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#E8A0FF;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
+                ⚠️ Error al cargar el cuadro<br>
+                <small style="opacity:0.4;">Verifica que el archivo existe</small>
+              </div>
+            `;
+          }
+        });
+      });
+    });
   </script>
 
 </body>
