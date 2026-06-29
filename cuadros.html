@@ -265,6 +265,10 @@
         shadow-intensity: 1 !important;
         shadow-softness: 0.3 !important;
         render-scale: 0.5 !important;
+        
+        /* Optimización: contenido solo visible cuando se necesita */
+        content-visibility: auto;
+        contain: strict;
       }
     }
   </style>
@@ -289,11 +293,11 @@
         <div class="modelo-3d">
           <model-viewer
             id="cuadro1-viewer"
-            src="./Medusa_cuadro.glb"
+            data-src="./Medusa_cuadro.glb"
             alt="MEDUSA - Lápices de color sobre papel"
             camera-controls
             camera-orbit="0deg 90deg 0.8m"
-            loading="lazy"
+            loading="eager"
             reveal="auto"
             shadow-intensity="1.52"
             shadow-softness="1"
@@ -330,11 +334,11 @@
         <div class="modelo-3d">
           <model-viewer
             id="cuadro2-viewer"
-            src="./La_muerte_cuadro.glb"
+            data-src="./La_muerte_cuadro.glb"
             alt="LA MUERTE - Lápices de color sobre papel"
             camera-controls
             camera-orbit="0deg 90deg 0.8m"
-            loading="lazy"
+            loading="eager"
             reveal="auto"
             shadow-intensity="1.52"
             shadow-softness="1"
@@ -371,11 +375,11 @@
         <div class="modelo-3d">
           <model-viewer
             id="cuadro3-viewer"
-            src="./Chica_hongos_gato_cuadro.glb"
+            data-src="./Chica_hongos_gato_cuadro.glb"
             alt="CHICA HONGOS Y CHICA GATO - Grafito sobre papel"
             camera-controls
             camera-orbit="0deg 90deg 0.9m"
-            loading="lazy"
+            loading="eager"
             reveal="auto"
             shadow-intensity="2"
             shadow-softness="0.5"
@@ -411,70 +415,54 @@
 
   </main>
 
-  <!-- DIAGNÓSTICO -->
+  <!-- OPTIMIZACIÓN PARA MÓVIL: LIBERAR MODELOS AL SALIR DE PANTALLA -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const viewer1 = document.getElementById("cuadro1-viewer");
-      const viewer2 = document.getElementById("cuadro2-viewer");
-      const viewer3 = document.getElementById("cuadro3-viewer");
-
-      // === LAZY LOADING CON INTERSECTION OBSERVER ===
-      const observers = [];
-
-      function crearLazyLoader(viewer) {
-        if (!viewer) return;
-
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              // Cuando el modelo entra en vista, se carga
-              viewer.src = viewer.src; // Forzar recarga si ya estaba definido
-              observer.unobserve(viewer);
-              console.log(`✅ Cargando modelo: ${viewer.id}`);
-            }
-          });
-        }, {
-          rootMargin: '200px', // Comienza a cargar 200px antes de que sea visible
-          threshold: 0.1
-        });
-
-        observer.observe(viewer);
-        observers.push(observer);
+      // Solo aplicar en móvil
+      const isMobile = window.innerWidth <= 768;
+      
+      if (!isMobile) {
+        console.log("📱 Modo PC: carga normal sin liberación");
+        return;
       }
 
-      // Aplicar Lazy Loading a cada viewer
-      [viewer1, viewer2, viewer3].forEach(viewer => {
-        if (viewer) {
-          crearLazyLoader(viewer);
-        }
+      console.log("📱 Modo móvil: activando liberación de memoria");
+
+      const viewers = document.querySelectorAll("model-viewer");
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const viewer = entry.target;
+
+          if (entry.isIntersecting) {
+            // El modelo entra en pantalla → cargar
+            if (!viewer.getAttribute("src")) {
+              const dataSrc = viewer.getAttribute("data-src");
+              if (dataSrc) {
+                viewer.setAttribute("src", dataSrc);
+                console.log(`✅ Cargando modelo: ${viewer.id}`);
+              }
+            }
+          } else {
+            // El modelo sale de pantalla → liberar memoria
+            if (viewer.getAttribute("src")) {
+              viewer.removeAttribute("src");
+              console.log(`🔄 Liberando modelo: ${viewer.id}`);
+            }
+          }
+        });
+      }, {
+        rootMargin: "150px",
+        threshold: 0.2
       });
 
-      // Eventos de carga y error
-      if (viewer1) {
-        viewer1.addEventListener("load", () => {
-          console.log("✅ Medusa_cuadro.glb cargado correctamente");
-        });
-        viewer1.addEventListener("error", (e) => {
-          console.error("❌ Error en Medusa_cuadro.glb:", e);
-          const container = viewer1.parentElement;
-          if (container) {
-            container.innerHTML = `
-              <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#E8A0FF;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
-                ⚠️ Error al cargar el cuadro<br>
-                <small style="opacity:0.4;">Verifica que el archivo existe</small>
-              </div>
-            `;
-          }
-        });
-      }
+      viewers.forEach(viewer => observer.observe(viewer));
 
-      if (viewer2) {
-        viewer2.addEventListener("load", () => {
-          console.log("✅ La_muerte_cuadro.glb cargado correctamente");
-        });
-        viewer2.addEventListener("error", (e) => {
-          console.error("❌ Error en La_muerte_cuadro.glb:", e);
-          const container = viewer2.parentElement;
+      // Manejar errores de carga
+      viewers.forEach(viewer => {
+        viewer.addEventListener("error", (e) => {
+          console.error(`❌ Error en ${viewer.id}:`, e);
+          const container = viewer.parentElement;
           if (container) {
             container.innerHTML = `
               <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#E8A0FF;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
@@ -484,25 +472,7 @@
             `;
           }
         });
-      }
-
-      if (viewer3) {
-        viewer3.addEventListener("load", () => {
-          console.log("✅ Chica_hongos_gato_cuadro.glb cargado correctamente");
-        });
-        viewer3.addEventListener("error", (e) => {
-          console.error("❌ Error en Chica_hongos_gato_cuadro.glb:", e);
-          const container = viewer3.parentElement;
-          if (container) {
-            container.innerHTML = `
-              <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#E8A0FF;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
-                ⚠️ Error al cargar el cuadro<br>
-                <small style="opacity:0.4;">Verifica que el archivo existe</small>
-              </div>
-            `;
-          }
-        });
-      }
+      });
     });
   </script>
 
