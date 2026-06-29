@@ -25,7 +25,7 @@
       min-height: 100vh;
     }
 
-    /* ===== NAV MEJORADO ===== */
+    /* ===== NAV ===== */
     nav {
       position: fixed;
       top: 30px;
@@ -234,6 +234,41 @@
       display: none !important;
     }
 
+    /* ===== ESTILOS PARA IMAGEN FALLBACK Y BOTÓN 3D EN MÓVIL ===== */
+    .fallback-image {
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    .btn-cargar-3d {
+      display: none;
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 8px 20px;
+      background: rgba(0, 0, 24, 0.7);
+      backdrop-filter: blur(4px);
+      color: #E8A0FF;
+      border: 1px solid rgba(232, 160, 255, 0.4);
+      border-radius: 0px;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
+
+    .btn-cargar-3d:hover {
+      background: rgba(0, 0, 24, 0.9);
+      border-color: rgba(232, 160, 255, 0.8);
+    }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
       /* === NAV IGUAL QUE EN TIENDA.HTML === */
@@ -251,20 +286,21 @@
       /* === RECTÁNGULOS MÁS GRANDES === */
       .grid {
         grid-template-columns: 1fr;
-        gap: 40px; /* Más separación entre tarjetas */
+        gap: 40px;
       }
 
       .obra {
-        padding: 25px; /* Más padding interno */
-        margin: 0 5px; /* Pequeño margen lateral */
+        padding: 25px;
+        margin: 0 5px;
       }
 
       .modelo-3d {
-        height: 250px; /* Más alto en móvil */
+        height: 250px;
+        position: relative;
       }
 
       .btn-consultar {
-        padding: 12px 32px; /* Botón más grande */
+        padding: 12px 32px;
         font-size: 12px;
       }
 
@@ -280,12 +316,38 @@
         display: inline-block;
       }
 
+      /* === MÓVIL: mostrar imagen estática y botón "Cargar 3D" === */
+      .modelo-3d model-viewer {
+        display: none !important;
+      }
+
+      .fallback-image {
+        display: block !important;
+      }
+
+      .btn-cargar-3d {
+        display: block !important;
+      }
+
       /* REDUCIR CALIDAD DE SOMBRAS Y RENDER EN MÓVIL */
       model-viewer {
         shadow-intensity: 1 !important;
         shadow-softness: 0.3 !important;
         render-scale: 0.5 !important;
       }
+    }
+
+    /* === ESTADO: cuando el modelo 3D está cargado en móvil === */
+    .modelo-3d.cargado model-viewer {
+      display: block !important;
+    }
+
+    .modelo-3d.cargado .fallback-image {
+      display: none !important;
+    }
+
+    .modelo-3d.cargado .btn-cargar-3d {
+      display: none !important;
     }
   </style>
 
@@ -306,7 +368,7 @@
 
       <!-- CUADRO I - MEDUSA -->
       <div class="obra">
-        <div class="modelo-3d">
+        <div class="modelo-3d" id="contenedor1">
           <model-viewer
             id="cuadro1-viewer"
             src="./Medusa_cuadro.glb"
@@ -328,6 +390,14 @@
             <div slot="poster" style="display:none !important;"></div>
             
           </model-viewer>
+          
+          <!-- Imagen estática para móvil -->
+          <img class="fallback-image" src="./medusa_poster.jpg" alt="Medusa">
+          
+          <!-- Botón para cargar 3D en móvil -->
+          <button class="btn-cargar-3d" data-contenedor="contenedor1" data-viewer="cuadro1-viewer">
+            🖱️ Ver en 3D
+          </button>
         </div>
         <h2>Medusa</h2>
         <p>Lápices de color sobre papel · 16X20cm</p>
@@ -347,7 +417,7 @@
 
       <!-- CUADRO II - LA MUERTE -->
       <div class="obra">
-        <div class="modelo-3d">
+        <div class="modelo-3d" id="contenedor2">
           <model-viewer
             id="cuadro2-viewer"
             src="./La_muerte_cuadro.glb"
@@ -369,6 +439,12 @@
             <div slot="poster" style="display:none !important;"></div>
             
           </model-viewer>
+          
+          <img class="fallback-image" src="./la_muerte_poster.jpg" alt="La Muerte">
+          
+          <button class="btn-cargar-3d" data-contenedor="contenedor2" data-viewer="cuadro2-viewer">
+            🖱️ Ver en 3D
+          </button>
         </div>
         <h2>La Muerte</h2>
         <p>Lápices de color sobre papel · 27.5X20cm</p>
@@ -388,7 +464,7 @@
 
       <!-- CUADRO III - CHICA HONGOS GATO -->
       <div class="obra">
-        <div class="modelo-3d">
+        <div class="modelo-3d" id="contenedor3">
           <model-viewer
             id="cuadro3-viewer"
             src="./Chica_hongos_gato_cuadro.glb"
@@ -410,6 +486,12 @@
             <div slot="poster" style="display:none !important;"></div>
             
           </model-viewer>
+          
+          <img class="fallback-image" src="./chica_hongos_gato_poster.jpg" alt="Chica Hongos Gato">
+          
+          <button class="btn-cargar-3d" data-contenedor="contenedor3" data-viewer="cuadro3-viewer">
+            🖱️ Ver en 3D
+          </button>
         </div>
         <h2>Chica hongos y chica gato</h2>
         <p> Grafito sobre papel · 29X21cm cada pieza</p>
@@ -431,7 +513,7 @@
 
   </main>
 
-  <!-- DIAGNÓSTICO -->
+  <!-- DIAGNÓSTICO Y CARGA BAJO DEMANDA -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const viewer1 = document.getElementById("cuadro1-viewer");
@@ -447,8 +529,10 @@
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              // Cuando el modelo entra en vista, se carga
-              viewer.src = viewer.src; // Forzar recarga si ya estaba definido
+              // Solo cargar si no está ya cargado
+              if (!viewer.src || viewer.src === '') {
+                viewer.src = viewer.getAttribute('data-src') || viewer.src;
+              }
               observer.unobserve(viewer);
               console.log(`✅ Cargando modelo: ${viewer.id}`);
             }
@@ -469,21 +553,47 @@
         }
       });
 
-      // Eventos de carga y error
+      // === BOTÓN "VER EN 3D" PARA MÓVIL ===
+      document.querySelectorAll('.btn-cargar-3d').forEach(button => {
+        button.addEventListener('click', function() {
+          const contenedorId = this.dataset.contenedor;
+          const viewerId = this.dataset.viewer;
+          const contenedor = document.getElementById(contenedorId);
+          const viewer = document.getElementById(viewerId);
+
+          if (contenedor && viewer) {
+            // Marcar como cargado
+            contenedor.classList.add('cargado');
+            
+            // Si el viewer no tiene src, cargarlo
+            if (!viewer.src || viewer.src === '') {
+              viewer.src = viewer.getAttribute('data-src') || viewer.src;
+            }
+            
+            console.log(`🔄 Cargando modelo 3D en ${contenedorId}`);
+          }
+        });
+      });
+
+      // === EVENTOS DE CARGA Y ERROR ===
       if (viewer1) {
         viewer1.addEventListener("load", () => {
           console.log("✅ Medusa_cuadro.glb cargado correctamente");
+          // Si está en móvil, marcar como cargado
+          const contenedor = document.getElementById('contenedor1');
+          if (contenedor && window.innerWidth <= 768) {
+            contenedor.classList.add('cargado');
+          }
         });
         viewer1.addEventListener("error", (e) => {
           console.error("❌ Error en Medusa_cuadro.glb:", e);
           const container = viewer1.parentElement;
           if (container) {
-            container.innerHTML = `
-              <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#E8A0FF;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
-                ⚠️ Error al cargar el cuadro<br>
-                <small style="opacity:0.4;">Verifica que el archivo existe</small>
-              </div>
-            `;
+            // En móvil, mostrar mensaje en la imagen
+            const fallback = container.querySelector('.fallback-image');
+            if (fallback) {
+              fallback.alt = "⚠️ Error al cargar el modelo 3D";
+            }
           }
         });
       }
@@ -491,36 +601,26 @@
       if (viewer2) {
         viewer2.addEventListener("load", () => {
           console.log("✅ La_muerte_cuadro.glb cargado correctamente");
+          const contenedor = document.getElementById('contenedor2');
+          if (contenedor && window.innerWidth <= 768) {
+            contenedor.classList.add('cargado');
+          }
         });
         viewer2.addEventListener("error", (e) => {
           console.error("❌ Error en La_muerte_cuadro.glb:", e);
-          const container = viewer2.parentElement;
-          if (container) {
-            container.innerHTML = `
-              <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#E8A0FF;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
-                ⚠️ Error al cargar el cuadro<br>
-                <small style="opacity:0.4;">Verifica que el archivo existe</small>
-              </div>
-            `;
-          }
         });
       }
 
       if (viewer3) {
         viewer3.addEventListener("load", () => {
           console.log("✅ Chica_hongos_gato_cuadro.glb cargado correctamente");
+          const contenedor = document.getElementById('contenedor3');
+          if (contenedor && window.innerWidth <= 768) {
+            contenedor.classList.add('cargado');
+          }
         });
         viewer3.addEventListener("error", (e) => {
           console.error("❌ Error en Chica_hongos_gato_cuadro.glb:", e);
-          const container = viewer3.parentElement;
-          if (container) {
-            container.innerHTML = `
-              <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#E8A0FF;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
-                ⚠️ Error al cargar el cuadro<br>
-                <small style="opacity:0.4;">Verifica que el archivo existe</small>
-              </div>
-            `;
-          }
         });
       }
     });
