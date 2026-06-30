@@ -61,52 +61,41 @@
       background: rgba(232, 160, 255, 0.05);
     }
 
-    /* ===== CONTENEDOR PRINCIPAL ===== */
+    /* ===== MODIFICACIÓN 2: MAIN ===== */
     main {
+      width: 100%;
       max-width: 1100px;
-      margin: 0 auto;
-      padding: 100px 20px 15px;
-      position: relative;
       height: 100dvh;
+      margin: auto;
+      padding: 95px 15px 20px;
       display: flex;
+      justify-content: center;
       align-items: center;
     }
 
-    /* ===== GRID (CON SCROLL HORIZONTAL) ===== */
+    /* ===== MODIFICACIÓN 3: GRID ===== */
     .grid {
-      display: flex;
-      gap: 40px;
-      overflow-x: auto;
-      overflow-y: hidden;
-      padding: 20px 10px 30px;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
       width: 100%;
-      align-items: stretch;
-      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: center;
     }
 
-    /* Oculta scrollbar en Chrome/Safari/Opera */
-    .grid::-webkit-scrollbar {
-      display: none;
-    }
-
-    /* ===== TARJETA DE OBRA (MODIFICADA) ===== */
+    /* ===== MODIFICACIÓN 4: TARJETA DE OBRA ===== */
     .obra {
-      flex: 0 0 320px;
+      height: calc(100dvh - 120px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-sizing: border-box;
+      overflow: hidden;
       border: 1px solid rgba(232, 160, 255, 0.3);
       padding: 25px 20px;
       transition: all 0.4s ease;
       background: transparent;
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      overflow: hidden;
       text-align: center;
-      height: calc(100dvh - 95px);
-      min-height: auto;
     }
 
     .obra:hover {
@@ -119,17 +108,17 @@
       z-index: 1;
     }
 
-    /* ===== CONTENEDOR 3D ===== */
+    /* ===== MODIFICACIÓN 5: CONTENEDOR 3D ===== */
     .modelo-3d {
-      width: 100%;
-      height: 38vh;
-      max-height: 320px;
+      height: 40dvh;
       min-height: 220px;
+      max-height: 330px;
       background: transparent;
       margin-bottom: 15px;
       overflow: hidden;
       position: relative;
       flex-shrink: 0;
+      width: 100%;
     }
 
     model-viewer {
@@ -162,13 +151,14 @@
       text-align: center;
     }
 
+    /* ===== MODIFICACIÓN 6: INSTRUCCIÓN ===== */
     .instruccion {
       font-family: 'Inter', sans-serif;
       font-weight: 300;
       font-size: 10px;
       opacity: 0.6;
       text-align: center;
-      margin-top: 8px;
+      margin-top: 6px;
       color: #E8A0FF;
     }
 
@@ -176,7 +166,7 @@
     .btn-consultar {
       display: inline-block;
       padding: 8px 24px;
-      margin-top: 15px;
+      margin-top: 10px;
       background: transparent;
       color: #E8A0FF;
       border: 1px solid rgba(232, 160, 255, 0.3);
@@ -269,7 +259,7 @@
       }
     }
 
-    /* ===== OPTIMIZACIONES PARA MÓVIL ===== */
+    /* ===== MODIFICACIÓN 7: RESPONSIVE MÓVIL ===== */
     @media (max-width: 768px) {
       nav {
         gap: 15px;
@@ -283,30 +273,28 @@
       }
 
       main {
-        padding: 80px 10px 10px;
+        padding: 80px 15px 10px;
       }
 
       .grid {
-        gap: 20px;
-        padding: 15px 5px 20px;
+        gap: 15px;
       }
 
       .obra {
-        flex: 0 0 85vw;
-        height: calc(100dvh - 80px);
-        min-height: auto;
+        height: calc(100dvh - 100px);
         padding: 20px 15px;
       }
 
       .modelo-3d {
-        height: 32vh;
-        max-height: 280px;
+        height: 38dvh;
         min-height: 180px;
+        max-height: 280px;
       }
 
       .btn-consultar {
         padding: 8px 16px;
         font-size: 10px;
+        margin-top: 8px;
       }
 
       .btn-pc {
@@ -324,21 +312,24 @@
         content-visibility: auto;
         contain: strict;
       }
+
+      .instruccion {
+        font-size: 9px;
+        margin-top: 4px;
+      }
     }
 
     /* ===== PANTALLAS MUY PEQUEÑAS ===== */
     @media (max-width: 480px) {
       .obra {
-        flex: 0 0 90vw;
-        height: calc(100dvh - 70px);
-        min-height: auto;
+        height: calc(100dvh - 80px);
         padding: 15px 12px;
       }
 
       .modelo-3d {
-        height: 28vh;
-        max-height: 220px;
+        height: 32dvh;
         min-height: 150px;
+        max-height: 220px;
       }
 
       .obra h2 {
@@ -356,6 +347,7 @@
       .btn-consultar {
         padding: 6px 14px;
         font-size: 9px;
+        margin-top: 6px;
       }
     }
   </style>
@@ -547,19 +539,20 @@
 
   </main>
 
-  <!-- OPTIMIZACIÓN PARA MÓVIL: LIBERAR MODELOS AL SALIR DE PANTALLA -->
+  <!-- OPTIMIZACIÓN Y CONVERSIÓN DE SCROLL -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const isMobile = window.innerWidth <= 768;
       
       if (!isMobile) {
-        console.log("💻 Modo PC: carga normal sin liberación");
+        console.log("💻 Modo PC: scroll horizontal con rueda del mouse");
       } else {
-        console.log("📱 Modo móvil: activando liberación de memoria");
+        console.log("📱 Modo móvil: scroll horizontal con deslizamiento");
       }
 
       const viewers = document.querySelectorAll("model-viewer");
 
+      // Guardar data-src para carga diferida en móvil
       viewers.forEach(viewer => {
         if (!viewer.getAttribute("data-src") && viewer.getAttribute("src")) {
           viewer.setAttribute("data-src", viewer.getAttribute("src"));
@@ -599,17 +592,12 @@
           console.error(`❌ Error en ${viewer.id}:`, e);
           const container = viewer.parentElement;
           if (container) {
-            const fallback = container.querySelector('.fallback-image');
-            if (fallback) {
-              fallback.style.display = 'block';
-            } else {
-              container.innerHTML = `
-                <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#E8A0FF;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
-                  ⚠️ Error al cargar el cuadro<br>
-                  <small style="opacity:0.4;">Verifica que el archivo existe</small>
-                </div>
-              `;
-            }
+            container.innerHTML = `
+              <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#E8A0FF;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
+                ⚠️ Error al cargar el cuadro<br>
+                <small style="opacity:0.4;">Verifica que el archivo existe</small>
+              </div>
+            `;
           }
         });
       });
