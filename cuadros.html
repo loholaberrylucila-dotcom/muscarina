@@ -17,20 +17,13 @@
       box-sizing: border-box;
     }
 
-    /* ===== MODIFICACIÓN 1: HTML y BODY ===== */
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      overflow: hidden;
-    }
-
     body {
       background-color: #000018;
       color: #E8A0FF;
       font-family: 'Inter', sans-serif;
       font-weight: 400;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
     /* ===== NAV FIJO ===== */
@@ -61,41 +54,50 @@
       background: rgba(232, 160, 255, 0.05);
     }
 
-    /* ===== MODIFICACIÓN 2: MAIN ===== */
+    /* ===== CONTENEDOR PRINCIPAL ===== */
     main {
-      width: 100%;
       max-width: 1100px;
-      height: 100dvh;
-      margin: auto;
-      padding: 95px 15px 20px;
+      margin: 0 auto;
+      padding: 100px 20px 40px;
+      position: relative;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
     }
 
-    /* ===== MODIFICACIÓN 3: GRID ===== */
+    /* ===== GRID (CON SCROLL HORIZONTAL) ===== */
     .grid {
+      display: flex;
+      gap: 40px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 20px 10px 30px;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
       width: 100%;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-      align-items: center;
+      align-items: stretch;
     }
 
-    /* ===== MODIFICACIÓN 4: TARJETA DE OBRA ===== */
+    /* Oculta scrollbar en Chrome/Safari/Opera */
+    .grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* ===== TARJETA DE OBRA ===== */
     .obra {
-      height: calc(100dvh - 120px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      box-sizing: border-box;
-      overflow: hidden;
+      flex: 0 0 320px;
       border: 1px solid rgba(232, 160, 255, 0.3);
       padding: 25px 20px;
       transition: all 0.4s ease;
       background: transparent;
+      display: flex;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
+      overflow: hidden;
       text-align: center;
+      min-height: calc(100vh - 140px);
     }
 
     .obra:hover {
@@ -108,17 +110,17 @@
       z-index: 1;
     }
 
-    /* ===== MODIFICACIÓN 5: CONTENEDOR 3D ===== */
+    /* ===== CONTENEDOR 3D ===== */
     .modelo-3d {
-      height: 40dvh;
+      width: 100%;
+      height: 38vh;
+      max-height: 320px;
       min-height: 220px;
-      max-height: 330px;
       background: transparent;
       margin-bottom: 15px;
       overflow: hidden;
       position: relative;
       flex-shrink: 0;
-      width: 100%;
     }
 
     model-viewer {
@@ -151,14 +153,13 @@
       text-align: center;
     }
 
-    /* ===== MODIFICACIÓN 6: INSTRUCCIÓN ===== */
     .instruccion {
       font-family: 'Inter', sans-serif;
       font-weight: 300;
       font-size: 10px;
       opacity: 0.6;
       text-align: center;
-      margin-top: 6px;
+      margin-top: 8px;
       color: #E8A0FF;
     }
 
@@ -166,7 +167,7 @@
     .btn-consultar {
       display: inline-block;
       padding: 8px 24px;
-      margin-top: 10px;
+      margin-top: 15px;
       background: transparent;
       color: #E8A0FF;
       border: 1px solid rgba(232, 160, 255, 0.3);
@@ -259,7 +260,7 @@
       }
     }
 
-    /* ===== MODIFICACIÓN 7: RESPONSIVE MÓVIL ===== */
+    /* ===== OPTIMIZACIONES PARA MÓVIL ===== */
     @media (max-width: 768px) {
       nav {
         gap: 15px;
@@ -273,28 +274,29 @@
       }
 
       main {
-        padding: 80px 15px 10px;
+        padding: 80px 10px 20px;
       }
 
       .grid {
-        gap: 15px;
+        gap: 20px;
+        padding: 15px 5px 20px;
       }
 
       .obra {
-        height: calc(100dvh - 100px);
+        flex: 0 0 85vw;
+        min-height: calc(100vh - 100px);
         padding: 20px 15px;
       }
 
       .modelo-3d {
-        height: 38dvh;
-        min-height: 180px;
+        height: 32vh;
         max-height: 280px;
+        min-height: 180px;
       }
 
       .btn-consultar {
         padding: 8px 16px;
         font-size: 10px;
-        margin-top: 8px;
       }
 
       .btn-pc {
@@ -312,24 +314,20 @@
         content-visibility: auto;
         contain: strict;
       }
-
-      .instruccion {
-        font-size: 9px;
-        margin-top: 4px;
-      }
     }
 
     /* ===== PANTALLAS MUY PEQUEÑAS ===== */
     @media (max-width: 480px) {
       .obra {
-        height: calc(100dvh - 80px);
+        flex: 0 0 90vw;
+        min-height: calc(100vh - 80px);
         padding: 15px 12px;
       }
 
       .modelo-3d {
-        height: 32dvh;
-        min-height: 150px;
+        height: 28vh;
         max-height: 220px;
+        min-height: 150px;
       }
 
       .obra h2 {
@@ -347,7 +345,6 @@
       .btn-consultar {
         padding: 6px 14px;
         font-size: 9px;
-        margin-top: 6px;
       }
     }
   </style>
@@ -539,20 +536,19 @@
 
   </main>
 
-  <!-- OPTIMIZACIÓN Y CONVERSIÓN DE SCROLL -->
+  <!-- OPTIMIZACIÓN PARA MÓVIL: LIBERAR MODELOS AL SALIR DE PANTALLA -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const isMobile = window.innerWidth <= 768;
       
       if (!isMobile) {
-        console.log("💻 Modo PC: scroll horizontal con rueda del mouse");
+        console.log("💻 Modo PC: carga normal sin liberación");
       } else {
-        console.log("📱 Modo móvil: scroll horizontal con deslizamiento");
+        console.log("📱 Modo móvil: activando liberación de memoria");
       }
 
       const viewers = document.querySelectorAll("model-viewer");
 
-      // Guardar data-src para carga diferida en móvil
       viewers.forEach(viewer => {
         if (!viewer.getAttribute("data-src") && viewer.getAttribute("src")) {
           viewer.setAttribute("data-src", viewer.getAttribute("src"));
@@ -592,12 +588,17 @@
           console.error(`❌ Error en ${viewer.id}:`, e);
           const container = viewer.parentElement;
           if (container) {
-            container.innerHTML = `
-              <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#E8A0FF;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
-                ⚠️ Error al cargar el cuadro<br>
-                <small style="opacity:0.4;">Verifica que el archivo existe</small>
-              </div>
-            `;
+            const fallback = container.querySelector('.fallback-image');
+            if (fallback) {
+              fallback.style.display = 'block';
+            } else {
+              container.innerHTML = `
+                <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#E8A0FF;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
+                  ⚠️ Error al cargar el cuadro<br>
+                  <small style="opacity:0.4;">Verifica que el archivo existe</small>
+                </div>
+              `;
+            }
           }
         });
       });
