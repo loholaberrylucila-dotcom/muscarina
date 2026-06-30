@@ -23,7 +23,7 @@
       font-family: 'Inter', sans-serif;
       font-weight: 400;
       min-height: 100vh;
-      overflow: hidden; /* Oculta scroll en body */
+      overflow-x: hidden;
     }
 
     /* ===== NAV FIJO ===== */
@@ -36,7 +36,6 @@
       justify-content: center;
       gap: 28px;
       z-index: 100;
-      pointer-events: none;
     }
 
     nav a {
@@ -47,37 +46,31 @@
       border: 1px solid rgba(232, 160, 255, 0.4);
       color: #E8A0FF;
       text-decoration: none;
-      background: rgba(0, 0, 24, 0.6);
-      backdrop-filter: blur(4px);
+      background: transparent;
       transition: all 0.3s ease;
-      pointer-events: auto;
     }
 
     nav a:hover { 
-      background: rgba(232, 160, 255, 0.15);
+      background: rgba(232, 160, 255, 0.05);
     }
 
     /* ===== CONTENEDOR PRINCIPAL ===== */
     main {
-      width: 100%;
-      height: 100vh;
-      overflow-y: hidden; /* Bloquea scroll vertical */
-      overflow-x: hidden;
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 140px 20px 80px;
+      position: relative;
     }
 
     /* ===== WRAPPER PARA SCROLL HORIZONTAL ===== */
     .scroll-wrapper {
       overflow-x: auto;
-      overflow-y: hidden;
+      overflow-y: visible;
       -webkit-overflow-scrolling: touch;
-      padding: 40px 10px 30px;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
+      padding-bottom: 20px;
+      margin: 0 -10px;
+      padding-left: 10px;
+      padding-right: 10px;
     }
 
     /* ===== GRID (3 COLUMNAS) ===== */
@@ -87,7 +80,6 @@
       gap: 40px;
       width: max-content;
       min-width: 100%;
-      padding: 20px 10px;
     }
 
     /* ===== TARJETA DE OBRA ===== */
@@ -99,11 +91,11 @@
       background: transparent;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: center; /* Centra el contenido horizontalmente */
       overflow: hidden;
       min-width: 280px;
       max-width: 350px;
-      text-align: center;
+      text-align: center; /* Centra el texto */
     }
 
     .obra:hover {
@@ -133,7 +125,7 @@
       background: transparent;
     }
 
-    /* ===== TEXTO DE LA OBRA ===== */
+    /* ===== TEXTO DE LA OBRA (CENTRADO) ===== */
     .obra h2 {
       font-family: 'Inter', sans-serif;
       font-weight: 700;
@@ -218,11 +210,15 @@
       display: block !important;
     }
 
-    .ar-button, #ar-prompt {
+    .ar-button {
       display: none !important;
     }
 
-    /* ===== MÁSCARA: SOLO EN PC ===== */
+    #ar-prompt {
+      display: none !important;
+    }
+
+    /* ===== MÁSCARA: SOLO EN PC (NAV Y BOTÓN CONSULTAR) ===== */
     @media (min-width: 769px) {
       nav a {
         -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -270,21 +266,15 @@
         font-size: 11px;
         letter-spacing: 1px;
         padding: 6px 12px;
-        background: rgba(0, 0, 24, 0.8);
       }
 
       main {
-        padding: 0 10px;
-      }
-
-      .scroll-wrapper {
-        padding: 30px 5px 20px;
+        padding: 100px 10px 40px;
       }
 
       .grid {
         grid-template-columns: repeat(3, minmax(200px, 1fr));
         gap: 20px;
-        padding: 10px 5px;
       }
 
       .obra {
@@ -497,14 +487,16 @@
           </a>
         </div>
 
-        <!-- CUADRO IV - NUEVA FICHA -->
+        <!-- Puedes agregar más cuadros aquí y se añadirán a la derecha -->
+        <!-- EJEMPLO DE CUADRO IV (descomentar para usar) -->
+        <!--
         <div class="obra">
           <div class="modelo-3d">
             <model-viewer
               id="cuadro4-viewer"
               src="./cuadro4.glb"
               data-src="./cuadro4.glb"
-              alt="CUADRO IV - Técnica mixta"
+              alt="CUADRO IV - Técnica"
               camera-controls
               camera-orbit="0deg 90deg 0.8m"
               loading="eager"
@@ -515,29 +507,16 @@
               tone-mapping="neutral"
               interaction-prompt="none"
               style="width:100%;height:100%;background:transparent;">
-              
-              <div slot="progress-bar" style="display:none !important;"></div>
-              <div slot="ar-button" style="display:none !important;"></div>
-              <div slot="ar-prompt" style="display:none !important;"></div>
-              <div slot="poster" style="display:none !important;"></div>
-              
             </model-viewer>
           </div>
           <h2>Cuadro IV</h2>
-          <p>Técnica mixta · 20X25cm</p>
-          <p>Año 2025 · Pieza única</p>
+          <p>Técnica · Medidas</p>
+          <p>Año · Pieza única</p>
           <div class="instruccion">🖱️ Haz clic y arrastra para rotar</div>
-          
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20el%20Cuadro%20IV&body=Hola%20Lucila,%20me%20interesa%20el%20Cuadro%20IV." 
-             class="btn-consultar btn-pc" target="_blank">
-             Consultar
-          </a>
-
-          <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20el%20Cuadro%20IV&body=Hola%20Lucila,%20me%20interesa%20el%20Cuadro%20IV." 
-             class="btn-consultar btn-movil">
-             Consultar
-          </a>
+          <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20el%20Cuadro%20IV" class="btn-consultar btn-pc" target="_blank">Consultar</a>
+          <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20el%20Cuadro%20IV" class="btn-consultar btn-movil">Consultar</a>
         </div>
+        -->
 
       </section>
 
