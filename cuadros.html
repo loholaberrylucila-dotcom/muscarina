@@ -23,7 +23,7 @@
       font-family: 'Inter', sans-serif;
       font-weight: 400;
       min-height: 100vh;
-      overflow-x: hidden;
+      overflow: hidden; /* Oculta scroll en body */
     }
 
     /* ===== NAV FIJO ===== */
@@ -36,6 +36,7 @@
       justify-content: center;
       gap: 28px;
       z-index: 100;
+      pointer-events: none;
     }
 
     nav a {
@@ -46,31 +47,37 @@
       border: 1px solid rgba(232, 160, 255, 0.4);
       color: #E8A0FF;
       text-decoration: none;
-      background: transparent;
+      background: rgba(0, 0, 24, 0.6);
+      backdrop-filter: blur(4px);
       transition: all 0.3s ease;
+      pointer-events: auto;
     }
 
     nav a:hover { 
-      background: rgba(232, 160, 255, 0.05);
+      background: rgba(232, 160, 255, 0.15);
     }
 
     /* ===== CONTENEDOR PRINCIPAL ===== */
     main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 140px 20px 80px;
-      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow-y: hidden; /* Bloquea scroll vertical */
+      overflow-x: hidden;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
     }
 
     /* ===== WRAPPER PARA SCROLL HORIZONTAL ===== */
     .scroll-wrapper {
       overflow-x: auto;
-      overflow-y: visible;
+      overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: 20px;
-      margin: 0 -10px;
-      padding-left: 10px;
-      padding-right: 10px;
+      padding: 40px 10px 30px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
     }
 
     /* ===== GRID (3 COLUMNAS) ===== */
@@ -80,6 +87,7 @@
       gap: 40px;
       width: max-content;
       min-width: 100%;
+      padding: 20px 10px;
     }
 
     /* ===== TARJETA DE OBRA ===== */
@@ -125,7 +133,7 @@
       background: transparent;
     }
 
-    /* ===== TEXTO DE LA OBRA (CENTRADO) ===== */
+    /* ===== TEXTO DE LA OBRA ===== */
     .obra h2 {
       font-family: 'Inter', sans-serif;
       font-weight: 700;
@@ -210,15 +218,11 @@
       display: block !important;
     }
 
-    .ar-button {
+    .ar-button, #ar-prompt {
       display: none !important;
     }
 
-    #ar-prompt {
-      display: none !important;
-    }
-
-    /* ===== MÁSCARA: SOLO EN PC (NAV Y BOTÓN CONSULTAR) ===== */
+    /* ===== MÁSCARA: SOLO EN PC ===== */
     @media (min-width: 769px) {
       nav a {
         -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -266,15 +270,21 @@
         font-size: 11px;
         letter-spacing: 1px;
         padding: 6px 12px;
+        background: rgba(0, 0, 24, 0.8);
       }
 
       main {
-        padding: 100px 10px 40px;
+        padding: 0 10px;
+      }
+
+      .scroll-wrapper {
+        padding: 30px 5px 20px;
       }
 
       .grid {
         grid-template-columns: repeat(3, minmax(200px, 1fr));
         gap: 20px;
+        padding: 10px 5px;
       }
 
       .obra {
@@ -487,9 +497,7 @@
           </a>
         </div>
 
-        <!-- ============================================================ -->
-        <!-- CUADRO IV - NUEVA FICHA (EJEMPLO PARA SCROLL HORIZONTAL)      -->
-        <!-- ============================================================ -->
+        <!-- CUADRO IV - NUEVA FICHA -->
         <div class="obra">
           <div class="modelo-3d">
             <model-viewer
@@ -597,14 +605,6 @@
                 </div>
               `;
             }
-          }
-        });
-      });
-    });
-  </script>
-
-</body>
-</html>
           }
         });
       });
