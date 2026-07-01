@@ -129,13 +129,43 @@
       overflow: hidden;
       position: relative;
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    model-viewer {
+    /* ===== IMAGEN PREVIEW ===== */
+    .preview-obra {
       width: 100%;
       height: 100%;
+      object-fit: contain;
       display: block;
-      background: transparent;
+    }
+
+    /* ===== BOTÓN VER EN 3D (sobre la imagen) ===== */
+    .btn-ver3d {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 8px 20px;
+      background: rgba(0, 0, 24, 0.7);
+      backdrop-filter: blur(4px);
+      color: #E8A0FF;
+      border: 1px solid rgba(232, 160, 255, 0.4);
+      border-radius: 0px;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
+
+    .btn-ver3d:hover {
+      background: rgba(0, 0, 24, 0.9);
+      border-color: rgba(232, 160, 255, 0.8);
     }
 
     /* ===== TEXTO DE LA OBRA ===== */
@@ -231,6 +261,61 @@
       display: none !important;
     }
 
+    /* ===== VISOR 3D FLOTANTE ===== */
+    #visor3d {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0, 0, 24, 0.95);
+      backdrop-filter: blur(8px);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    #visor3d.active {
+      display: flex;
+    }
+
+    #visor-modelo {
+      width: 100%;
+      height: 80%;
+      max-width: 800px;
+      max-height: 600px;
+      background: transparent;
+    }
+
+    #cerrar3d {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      color: #E8A0FF;
+      border: 1px solid rgba(232, 160, 255, 0.4);
+      border-radius: 0px;
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    #cerrar3d:hover {
+      background: rgba(232, 160, 255, 0.1);
+    }
+
+    .label-3d {
+      color: #E8A0FF;
+      font-size: 12px;
+      letter-spacing: 2px;
+      opacity: 0.6;
+      margin-top: 15px;
+      font-family: 'Inter', sans-serif;
+    }
+
     /* ===== MÁSCARA: SOLO EN PC (NAV Y BOTÓN CONSULTAR) ===== */
     @media (min-width: 769px) {
       nav a {
@@ -266,6 +351,11 @@
         from { mask-position: 100% 0; }
         to { mask-position: 0 0; }
       }
+
+      /* En PC, el botón VER EN 3D solo se muestra en móvil */
+      .btn-ver3d {
+        display: none !important;
+      }
     }
 
     /* ===== OPTIMIZACIONES PARA MÓVIL ===== */
@@ -281,13 +371,11 @@
         padding: 6px 12px;
       }
 
-      /* ===== CORRECCIÓN 1: MAIN ===== */
       main {
         padding: 80px 10px 10px;
         height: calc(100dvh - 80px);
       }
 
-      /* ===== CORRECCIÓN 2: GRID ===== */
       .grid {
         gap: 20px;
         padding: 0 5px;
@@ -295,7 +383,6 @@
         align-items: center;
       }
 
-      /* ===== CORRECCIÓN 3: OBRA ===== */
       .obra {
         flex: 0 0 85vw;
         height: 100%;
@@ -308,6 +395,7 @@
         height: 32vh;
         max-height: 280px;
         min-height: 180px;
+        position: relative;
       }
 
       .btn-consultar {
@@ -323,12 +411,29 @@
         display: inline-block;
       }
 
-      model-viewer {
-        shadow-intensity: 1 !important;
-        shadow-softness: 0.3 !important;
-        render-scale: 0.5 !important;
-        content-visibility: auto;
-        contain: strict;
+      .btn-ver3d {
+        display: block !important;
+        font-size: 9px;
+        padding: 6px 16px;
+      }
+
+      #visor3d {
+        padding: 20px;
+      }
+
+      #visor-modelo {
+        height: 70%;
+      }
+
+      #cerrar3d {
+        top: 10px;
+        right: 10px;
+        padding: 6px 12px;
+        font-size: 14px;
+      }
+
+      .label-3d {
+        font-size: 10px;
       }
     }
 
@@ -363,6 +468,11 @@
         padding: 6px 14px;
         font-size: 9px;
       }
+
+      .btn-ver3d {
+        font-size: 8px;
+        padding: 4px 12px;
+      }
     }
   </style>
 
@@ -384,28 +494,13 @@
       <!-- CUADRO I - MEDUSA -->
       <div class="obra">
         <div class="modelo-3d">
-          <model-viewer
-            id="cuadro1-viewer"
-            src="./Medusa_cuadro.glb"
-            data-src="./Medusa_cuadro.glb"
-            alt="MEDUSA - Lápices de color sobre papel"
-            camera-controls
-            camera-orbit="0deg 90deg 0.8m"
-            loading="eager"
-            reveal="auto"
-            shadow-intensity="1.52"
-            shadow-softness="1"
-            exposure="0.86"
-            tone-mapping="neutral"
-            interaction-prompt="none"
-            style="width:100%;height:100%;background:transparent;">
-            
-            <div slot="progress-bar" style="display:none !important;"></div>
-            <div slot="ar-button" style="display:none !important;"></div>
-            <div slot="ar-prompt" style="display:none !important;"></div>
-            <div slot="poster" style="display:none !important;"></div>
-            
-          </model-viewer>
+          <img
+            src="./Medusa_preview.png"
+            class="preview-obra"
+            alt="Medusa">
+          <button class="btn-ver3d" data-model="./Medusa_cuadro.glb">
+            🖱️ VER EN 3D
+          </button>
         </div>
         <h2>Medusa</h2>
         <p>Lápices de color sobre papel · 16X20cm</p>
@@ -426,28 +521,13 @@
       <!-- CUADRO II - LA MUERTE -->
       <div class="obra">
         <div class="modelo-3d">
-          <model-viewer
-            id="cuadro2-viewer"
-            src="./La_muerte_cuadro.glb"
-            data-src="./La_muerte_cuadro.glb"
-            alt="LA MUERTE - Lápices de color sobre papel"
-            camera-controls
-            camera-orbit="0deg 90deg 0.8m"
-            loading="eager"
-            reveal="auto"
-            shadow-intensity="1.52"
-            shadow-softness="1"
-            exposure="0.86"
-            tone-mapping="neutral"
-            interaction-prompt="none"
-            style="width:100%;height:100%;background:transparent;">
-            
-            <div slot="progress-bar" style="display:none !important;"></div>
-            <div slot="ar-button" style="display:none !important;"></div>
-            <div slot="ar-prompt" style="display:none !important;"></div>
-            <div slot="poster" style="display:none !important;"></div>
-            
-          </model-viewer>
+          <img
+            src="./La_muerte_preview.png"
+            class="preview-obra"
+            alt="La Muerte">
+          <button class="btn-ver3d" data-model="./La_muerte_cuadro.glb">
+            🖱️ VER EN 3D
+          </button>
         </div>
         <h2>La Muerte</h2>
         <p>Lápices de color sobre papel · 27.5X20cm</p>
@@ -468,28 +548,13 @@
       <!-- CUADRO III - CHICA HONGOS GATO -->
       <div class="obra">
         <div class="modelo-3d">
-          <model-viewer
-            id="cuadro3-viewer"
-            src="./Chica_hongos_gato_cuadro.glb"
-            data-src="./Chica_hongos_gato_cuadro.glb"
-            alt="CHICA HONGOS Y CHICA GATO - Grafito sobre papel"
-            camera-controls
-            camera-orbit="0deg 90deg 0.9m"
-            loading="eager"
-            reveal="auto"
-            shadow-intensity="2"
-            shadow-softness="0.5"
-            exposure="0.77"
-            tone-mapping="aces"
-            interaction-prompt="none"
-            style="width:100%;height:100%;background:transparent;">
-            
-            <div slot="progress-bar" style="display:none !important;"></div>
-            <div slot="ar-button" style="display:none !important;"></div>
-            <div slot="ar-prompt" style="display:none !important;"></div>
-            <div slot="poster" style="display:none !important;"></div>
-            
-          </model-viewer>
+          <img
+            src="./Chica_hongos_gato_preview.png"
+            class="preview-obra"
+            alt="Chica hongos y chica gato">
+          <button class="btn-ver3d" data-model="./Chica_hongos_gato_cuadro.glb">
+            🖱️ VER EN 3D
+          </button>
         </div>
         <h2>Chica hongos y chica gato</h2>
         <p> Grafito sobre papel · 29X21cm cada pieza</p>
@@ -510,28 +575,13 @@
       <!-- CUADRO IV - NUEVA FICHA PARA SCROLL -->
       <div class="obra">
         <div class="modelo-3d">
-          <model-viewer
-            id="cuadro4-viewer"
-            src="./cuadro4.glb"
-            data-src="./cuadro4.glb"
-            alt="CUADRO IV - Técnica mixta"
-            camera-controls
-            camera-orbit="0deg 90deg 0.8m"
-            loading="eager"
-            reveal="auto"
-            shadow-intensity="1.52"
-            shadow-softness="1"
-            exposure="0.86"
-            tone-mapping="neutral"
-            interaction-prompt="none"
-            style="width:100%;height:100%;background:transparent;">
-            
-            <div slot="progress-bar" style="display:none !important;"></div>
-            <div slot="ar-button" style="display:none !important;"></div>
-            <div slot="ar-prompt" style="display:none !important;"></div>
-            <div slot="poster" style="display:none !important;"></div>
-            
-          </model-viewer>
+          <img
+            src="./Cuadro4_preview.png"
+            class="preview-obra"
+            alt="Cuadro IV">
+          <button class="btn-ver3d" data-model="./cuadro4.glb">
+            🖱️ VER EN 3D
+          </button>
         </div>
         <h2>Cuadro IV</h2>
         <p>Técnica mixta · 20X25cm</p>
@@ -553,84 +603,75 @@
 
   </main>
 
-  <!-- OPTIMIZACIÓN PARA MÓVIL: LIBERAR MODELOS AL SALIR DE PANTALLA -->
+  <!-- ===== VISOR 3D FLOTANTE ===== -->
+  <div id="visor3d">
+    <button id="cerrar3d">✕</button>
+    <model-viewer
+      id="visor-modelo"
+      camera-controls
+      auto-rotate
+      auto-rotate-delay="0"
+      rotation-per-second="8deg"
+      shadow-intensity="1.5"
+      exposure="0.86"
+      tone-mapping="neutral"
+      interaction-prompt="none"
+      style="width:100%;height:100%;background:transparent;">
+    </model-viewer>
+    <div class="label-3d">🖱️ Haz clic y arrastra para rotar</div>
+  </div>
+
+  <!-- ===== SCRIPT PARA CONTROLAR EL VISOR 3D ===== -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const isMobile = window.innerWidth <= 768;
-      
-      if (!isMobile) {
-        console.log("💻 Modo PC: carga normal sin liberación");
-      } else {
-        console.log("📱 Modo móvil: activando liberación de memoria");
-      }
+      const visor = document.getElementById("visor3d");
+      const viewer = document.getElementById("visor-modelo");
+      const cerrar = document.getElementById("cerrar3d");
+      const botonesVer3d = document.querySelectorAll(".btn-ver3d");
 
-      const viewers = document.querySelectorAll("model-viewer");
-
-      viewers.forEach(viewer => {
-        if (!viewer.getAttribute("data-src") && viewer.getAttribute("src")) {
-          viewer.setAttribute("data-src", viewer.getAttribute("src"));
-        }
-      });
-
-      // Solo aplicar IntersectionObserver en móvil
-      if (isMobile) {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            const viewer = entry.target;
-
-            if (entry.isIntersecting) {
-              const dataSrc = viewer.getAttribute("data-src");
-              if (dataSrc && !viewer.getAttribute("src")) {
-                viewer.setAttribute("src", dataSrc);
-                console.log(`✅ Cargando modelo: ${viewer.id}`);
-              }
-            } else {
-              if (viewer.getAttribute("src")) {
-                viewer.removeAttribute("src");
-                console.log(`🔄 Liberando modelo: ${viewer.id}`);
-              }
-            }
-          });
-        }, {
-          rootMargin: "150px",
-          threshold: 0.2
-        });
-
-        viewers.forEach(viewer => observer.observe(viewer));
-      }
-
-      // Manejar errores de carga
-      viewers.forEach(viewer => {
-        viewer.addEventListener("error", (e) => {
-          console.error(`❌ Error en ${viewer.id}:`, e);
-          const container = viewer.parentElement;
-          if (container) {
-            const fallback = container.querySelector('.fallback-image');
-            if (fallback) {
-              fallback.style.display = 'block';
-            } else {
-              container.innerHTML = `
-                <div style="display:flex;justify-content:center;align-items:center;height:100%;color:#E8A0FF;opacity:0.5;font-size:12px;text-align:center;padding:20px;font-family:'Inter',sans-serif;">
-                  ⚠️ Error al cargar el cuadro<br>
-                  <small style="opacity:0.4;">Verifica que el archivo existe</small>
-                </div>
-              `;
-            }
+      // Abrir visor con el modelo correspondiente
+      botonesVer3d.forEach(boton => {
+        boton.addEventListener("click", () => {
+          const modeloPath = boton.dataset.model;
+          if (modeloPath) {
+            viewer.src = modeloPath;
+            visor.classList.add("active");
+            document.body.style.overflow = "hidden";
+            console.log(`✅ Cargando modelo 3D: ${modeloPath}`);
           }
         });
       });
 
-      // === CONVERTIR SCROLL VERTICAL EN HORIZONTAL (CON RUEDA DEL MOUSE) ===
-      const grid = document.querySelector(".grid");
-      
-      if (grid) {
-        grid.addEventListener("wheel", (e) => {
-          // Prevenir el scroll vertical
-          e.preventDefault();
-          // Aplicar el scroll horizontal
-          grid.scrollLeft += e.deltaY;
-        }, { passive: false });
+      // Cerrar visor y liberar memoria
+      function cerrarVisor() {
+        viewer.removeAttribute("src");
+        visor.classList.remove("active");
+        document.body.style.overflow = "";
+        console.log("🔄 Visor 3D cerrado, memoria liberada");
       }
+
+      cerrar.addEventListener("click", cerrarVisor);
+
+      // Cerrar al hacer clic fuera del modelo (en el fondo)
+      visor.addEventListener("click", (e) => {
+        if (e.target === visor) {
+          cerrarVisor();
+        }
+      });
+
+      // Cerrar con tecla ESC
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && visor.classList.contains("active")) {
+          cerrarVisor();
+        }
+      });
+
+      // Manejar errores de carga
+      viewer.addEventListener("error", (e) => {
+        console.error("❌ Error cargando modelo 3D:", e);
+        alert("Error al cargar el modelo 3D. Verifica que el archivo existe.");
+        cerrarVisor();
+      });
     });
   </script>
 
