@@ -142,30 +142,31 @@
       display: block;
     }
 
-    /* ===== BOTÓN VER EN 3D (sobre la imagen) ===== */
-    .btn-ver3d {
-      position: absolute;
-      bottom: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 8px 20px;
-      background: rgba(0, 0, 24, 0.7);
-      backdrop-filter: blur(4px);
+    /* ===== BOTÓN VER EN 3D ===== */
+    .btn-3d {
+      display: inline-block;
+      padding: 8px 24px;
+      margin-top: 10px;
+      background: transparent;
       color: #E8A0FF;
-      border: 1px solid rgba(232, 160, 255, 0.4);
+      border: 1px solid rgba(232, 160, 255, 0.3);
       border-radius: 0px;
       font-family: 'Inter', sans-serif;
-      font-size: 10px;
-      letter-spacing: 1px;
+      font-weight: 400;
+      font-size: 12px;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      cursor: pointer;
-      z-index: 10;
       transition: all 0.3s ease;
+      cursor: pointer;
+      align-self: center;
+      position: relative;
+      z-index: 2;
     }
 
-    .btn-ver3d:hover {
-      background: rgba(0, 0, 24, 0.9);
-      border-color: rgba(232, 160, 255, 0.8);
+    .btn-3d:hover {
+      background: rgba(232, 160, 255, 0.05);
+      border-color: rgba(232, 160, 255, 0.6);
+      transform: translateY(-2px);
     }
 
     /* ===== TEXTO DE LA OBRA ===== */
@@ -205,7 +206,7 @@
     .btn-consultar {
       display: inline-block;
       padding: 8px 24px;
-      margin-top: 15px;
+      margin-top: 8px;
       background: transparent;
       color: #E8A0FF;
       border: 1px solid rgba(232, 160, 255, 0.3);
@@ -316,7 +317,7 @@
       font-family: 'Inter', sans-serif;
     }
 
-    /* ===== MÁSCARA: SOLO EN PC (NAV Y BOTÓN CONSULTAR) ===== */
+    /* ===== MÁSCARA: SOLO EN PC (NAV, BOTÓN 3D Y CONSULTAR) ===== */
     @media (min-width: 769px) {
       nav a {
         -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -330,6 +331,7 @@
         animation: ani 0.7s steps(70) forwards;
       }
 
+      .btn-3d,
       .btn-consultar {
         -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
         mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -338,6 +340,7 @@
         animation: ani2 0.7s steps(70) forwards;
       }
 
+      .btn-3d:hover,
       .btn-consultar:hover {
         animation: ani 0.7s steps(70) forwards;
       }
@@ -350,11 +353,6 @@
       @keyframes ani2 {
         from { mask-position: 100% 0; }
         to { mask-position: 0 0; }
-      }
-
-      /* En PC, el botón VER EN 3D solo se muestra en móvil */
-      .btn-ver3d {
-        display: none !important;
       }
     }
 
@@ -398,9 +396,11 @@
         position: relative;
       }
 
+      .btn-3d,
       .btn-consultar {
         padding: 8px 16px;
         font-size: 10px;
+        margin-top: 6px;
       }
 
       .btn-pc {
@@ -409,12 +409,6 @@
 
       .btn-movil {
         display: inline-block;
-      }
-
-      .btn-ver3d {
-        display: block !important;
-        font-size: 9px;
-        padding: 6px 16px;
       }
 
       #visor3d {
@@ -462,16 +456,14 @@
 
       .instruccion {
         font-size: 8px;
+        margin-top: 4px;
       }
 
+      .btn-3d,
       .btn-consultar {
         padding: 6px 14px;
         font-size: 9px;
-      }
-
-      .btn-ver3d {
-        font-size: 8px;
-        padding: 4px 12px;
+        margin-top: 4px;
       }
     }
   </style>
@@ -498,8 +490,8 @@
             src="./Medusa_preview.png"
             class="preview-obra"
             alt="Medusa">
-          <button class="btn-ver3d" data-model="./Medusa_cuadro.glb">
-            🖱️ VER EN 3D
+          <button class="btn-3d" data-model="./Medusa_cuadro.glb">
+            Ver en 3D
           </button>
         </div>
         <h2>Medusa</h2>
@@ -525,8 +517,8 @@
             src="./La_muerte_preview.png"
             class="preview-obra"
             alt="La Muerte">
-          <button class="btn-ver3d" data-model="./La_muerte_cuadro.glb">
-            🖱️ VER EN 3D
+          <button class="btn-3d" data-model="./La_muerte_cuadro.glb">
+            Ver en 3D
           </button>
         </div>
         <h2>La Muerte</h2>
@@ -552,8 +544,8 @@
             src="./Chica_hongos_gato_preview.png"
             class="preview-obra"
             alt="Chica hongos y chica gato">
-          <button class="btn-ver3d" data-model="./Chica_hongos_gato_cuadro.glb">
-            🖱️ VER EN 3D
+          <button class="btn-3d" data-model="./Chica_hongos_gato_cuadro.glb">
+            Ver en 3D
           </button>
         </div>
         <h2>Chica hongos y chica gato</h2>
@@ -579,8 +571,8 @@
             src="./Cuadro4_preview.png"
             class="preview-obra"
             alt="Cuadro IV">
-          <button class="btn-ver3d" data-model="./cuadro4.glb">
-            🖱️ VER EN 3D
+          <button class="btn-3d" data-model="./cuadro4.glb">
+            Ver en 3D
           </button>
         </div>
         <h2>Cuadro IV</h2>
@@ -627,7 +619,7 @@
       const visor = document.getElementById("visor3d");
       const viewer = document.getElementById("visor-modelo");
       const cerrar = document.getElementById("cerrar3d");
-      const botonesVer3d = document.querySelectorAll(".btn-ver3d");
+      const botonesVer3d = document.querySelectorAll(".btn-3d");
 
       // Abrir visor con el modelo correspondiente
       botonesVer3d.forEach(boton => {
@@ -672,6 +664,22 @@
         alert("Error al cargar el modelo 3D. Verifica que el archivo existe.");
         cerrarVisor();
       });
+
+      // ===== SCROLL HORIZONTAL CON RUEDA DEL MOUSE (MEJORADO) =====
+      const grid = document.querySelector(".grid");
+      
+      if (grid) {
+        grid.addEventListener("wheel", (e) => {
+          // Solo si el scroll vertical es mayor que el horizontal
+          if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+            e.preventDefault();
+            grid.scrollBy({
+              left: e.deltaY,
+              behavior: "smooth"
+            });
+          }
+        }, { passive: false });
+      }
     });
   </script>
 
