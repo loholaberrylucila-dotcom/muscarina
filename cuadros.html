@@ -32,6 +32,56 @@
       font-weight: 400;
     }
 
+    /* ===== LOADER ===== */
+    .loader-square-33 {
+      display: inline-block;
+      outline: 1px solid #E8A0FF;
+      width: 50px;
+      height: 50px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .loader-square-33::before {
+      content: "";
+      background: #E8A0FF;
+      width: 5px;
+      height: 53px;
+      transform-origin: top center;
+      animation: anm-SL-33-move 2.5s infinite linear;
+      display: inline-block;
+    }
+
+    @keyframes anm-SL-33-move {
+      0% {
+        transform: rotate(0deg);
+      }
+      25% {
+        transform: rotate(-90deg);
+        margin-left: -5px;
+        margin-top: 0;
+        transform-origin: top center;
+      }
+      50% {
+        margin-left: -5px;
+        margin-top: 45px;
+        transform-origin: top center;
+        transform: rotate(-90deg);
+      }
+      75% {
+        margin-left: 45px;
+        margin-top: 0;
+        transform-origin: bottom center;
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(0deg);
+        transform-origin: bottom center;
+        margin-left: 0;
+        margin-top: 0;
+      }
+    }
+
     /* ===== NAV FIJO ===== */
     nav {
       position: fixed;
@@ -276,12 +326,39 @@
       display: flex;
     }
 
-    #visor-modelo {
+    /* Contenedor del modelo con loader */
+    .visor-wrapper {
       width: 100%;
       height: 80%;
       max-width: 800px;
       max-height: 600px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #visor-modelo {
+      width: 100%;
+      height: 100%;
       background: transparent;
+      display: block;
+    }
+
+    /* Loader centrado dentro del visor */
+    .loader-container {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 5;
+      transition: opacity 0.5s ease;
+    }
+
+    .loader-container.oculto {
+      opacity: 0;
     }
 
     #cerrar3d {
@@ -420,7 +497,7 @@
         padding: 20px;
       }
 
-      #visor-modelo {
+      .visor-wrapper {
         height: 70%;
       }
 
@@ -715,18 +792,23 @@
   <!-- ===== VISOR 3D FLOTANTE ===== -->
   <div id="visor3d">
     <button id="cerrar3d">✕</button>
-    <model-viewer
-      id="visor-modelo"
-      camera-controls
-      auto-rotate
-      auto-rotate-delay="0"
-      rotation-per-second="8deg"
-      shadow-intensity="1.5"
-      exposure="0.86"
-      tone-mapping="neutral"
-      interaction-prompt="none"
-      style="width:100%;height:100%;background:transparent;">
-    </model-viewer>
+    <div class="visor-wrapper">
+      <div class="loader-container" id="loaderContainer">
+        <div class="loader-square-33"></div>
+      </div>
+      <model-viewer
+        id="visor-modelo"
+        camera-controls
+        auto-rotate
+        auto-rotate-delay="0"
+        rotation-per-second="8deg"
+        shadow-intensity="1.5"
+        exposure="0.86"
+        tone-mapping="neutral"
+        interaction-prompt="none"
+        style="width:100%;height:100%;background:transparent;">
+      </model-viewer>
+    </div>
     <div class="label-3d">🖱️ Haz clic y arrastra para rotar</div>
   </div>
 
@@ -736,6 +818,7 @@
       const visor = document.getElementById("visor3d");
       const viewer = document.getElementById("visor-modelo");
       const cerrar = document.getElementById("cerrar3d");
+      const loaderContainer = document.getElementById("loaderContainer");
       const botonesVer3d = document.querySelectorAll(".btn-3d");
 
       // Abrir visor con el modelo correspondiente
@@ -743,12 +826,22 @@
         boton.addEventListener("click", () => {
           const modeloPath = boton.dataset.model;
           if (modeloPath) {
-            viewer.src = modeloPath;
+            // Mostrar loader y visor
+            loaderContainer.classList.remove("oculto");
             visor.classList.add("active");
             document.body.style.overflow = "hidden";
+            
+            // Cargar el modelo
+            viewer.src = modeloPath;
             console.log(`✅ Cargando modelo 3D: ${modeloPath}`);
           }
         });
+      });
+
+      // Cuando el modelo termina de cargar, ocultar loader
+      viewer.addEventListener("load", () => {
+        loaderContainer.classList.add("oculto");
+        console.log("✅ Modelo 3D cargado correctamente");
       });
 
       // Cerrar visor y liberar memoria
@@ -756,6 +849,7 @@
         viewer.removeAttribute("src");
         visor.classList.remove("active");
         document.body.style.overflow = "";
+        loaderContainer.classList.remove("oculto");
         console.log("🔄 Visor 3D cerrado, memoria liberada");
       }
 
