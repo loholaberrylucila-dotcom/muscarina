@@ -360,7 +360,7 @@
     }
 
     /* ========================================================= */
-    /* ===== INDICADOR DE SCROLL==== */
+    /* ===== INDICADOR DE SCROLL (como en yoshikiokamura.art) ==== */
     /* ========================================================= */
     .scroll-indicator {
       position: fixed;
@@ -553,7 +553,6 @@
         font-size: 10px;
       }
 
-      /* Ajustar indicador de scroll en móvil */
       .scroll-indicator {
         bottom: 15px;
         height: 55px;
@@ -883,3 +882,14 @@
         // ===== OCULTAR INDICADOR AL HACER SCROLL =====
         grid.addEventListener("scroll", () => {
           if (grid.scrollLeft > 20) {
+            indicador.style.opacity = "0";
+          } else {
+            indicador.style.opacity = "1";
+          }
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
