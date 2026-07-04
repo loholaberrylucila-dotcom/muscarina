@@ -216,7 +216,7 @@
       text-align: center;
     }
 
-    /* ===== INSTRUCCIÓN (solo visible en el visor 3D) ===== */
+    /* ===== INSTRUCCIÓN ===== */
     .instruccion {
       display: none;
     }
@@ -326,7 +326,6 @@
       display: flex;
     }
 
-    /* Contenedor del modelo con loader */
     .visor-wrapper {
       width: 100%;
       height: 80%;
@@ -338,14 +337,6 @@
       justify-content: center;
     }
 
-    #visor-modelo {
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      display: block;
-    }
-
-    /* Loader centrado dentro del visor */
     .loader-container {
       position: absolute;
       inset: 0;
@@ -390,7 +381,7 @@
       font-family: 'Inter', sans-serif;
     }
 
-    /* ===== MÁSCARA: SOLO EN PC (NAV, BOTÓN 3D Y CONSULTAR) ===== */
+    /* ===== MÁSCARA: SOLO EN PC ===== */
     @media (min-width: 769px) {
       nav a {
         -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
@@ -572,242 +563,119 @@
       <!-- CUADRO I - MEDUSA -->
       <div class="obra">
         <div class="modelo-3d">
-          <img
-            src="./preview/Medusa_preview.png"
-            class="preview-obra"
-            alt="Medusa">
+          <img src="./preview/Medusa_preview.png" class="preview-obra" alt="Medusa">
         </div>
         <h2>Medusa</h2>
         <p>Lápices de color sobre papel · 16X20cm</p>
         <p>Año 2025 · Pieza única</p>
-        
-        <button class="btn-3d" data-model="./Medusa_cuadro.glb">
-          Ver en 3D
-        </button>
-
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Medusa&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Medusa." 
-           class="btn-consultar btn-pc" target="_blank">
-           Consultar
-        </a>
-
-        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Medusa&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Medusa." 
-           class="btn-consultar btn-movil">
-           Consultar
-        </a>
+        <button class="btn-3d" data-model="./Medusa_cuadro.glb">Ver en 3D</button>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Medusa&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Medusa." class="btn-consultar btn-pc" target="_blank">Consultar</a>
+        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Medusa&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Medusa." class="btn-consultar btn-movil">Consultar</a>
       </div>
 
       <!-- CUADRO II - LA MUERTE -->
       <div class="obra">
         <div class="modelo-3d">
-          <img
-            src="./preview/La_muerte_preview.png"
-            class="preview-obra"
-            alt="La Muerte">
+          <img src="./preview/La_muerte_preview.png" class="preview-obra" alt="La Muerte">
         </div>
         <h2>La Muerte</h2>
         <p>Lápices de color sobre papel · 27.5X20cm</p>
         <p>Año 2025 · Pieza única</p>
-        
-        <button class="btn-3d" data-model="./La_muerte_cuadro.glb">
-          Ver en 3D
-        </button>
-
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20La%20Muerte&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20La%20Muerte." 
-           class="btn-consultar btn-pc" target="_blank">
-           Consultar
-        </a>
-
-        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20La%20Muerte&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20La%20Muerte." 
-           class="btn-consultar btn-movil">
-           Consultar
-        </a>
+        <button class="btn-3d" data-model="./La_muerte_cuadro.glb">Ver en 3D</button>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20La%20Muerte&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20La%20Muerte." class="btn-consultar btn-pc" target="_blank">Consultar</a>
+        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20La%20Muerte&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20La%20Muerte." class="btn-consultar btn-movil">Consultar</a>
       </div>
 
       <!-- CUADRO III - CHICA HONGOS GATO -->
       <div class="obra">
         <div class="modelo-3d">
-          <img
-            src="./preview/Chica_hongos_chica_gato_preview.png"
-            class="preview-obra"
-            alt="Chica hongos y chica gato">
+          <img src="./preview/Chica_hongos_chica_gato_preview.png" class="preview-obra" alt="Chica hongos y chica gato">
         </div>
         <h2>Chica hongos y chica gato</h2>
         <p>Grafito sobre papel · 29X21cm cada pieza</p>
         <p>Año 2022 · Díptico</p>
-        
-        <button class="btn-3d" data-model="./Chica_hongos_gato_cuadro.glb">
-          Ver en 3D
-        </button>
-
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Chica%20Hongos%20Gato&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Chica%20Hongos%20Gato." 
-           class="btn-consultar btn-pc" target="_blank">
-           Consultar
-        </a>
-
-        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Chica%20Hongos%20Gato&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Chica%20Hongos%20Gato." 
-           class="btn-consultar btn-movil">
-           Consultar
-        </a>
+        <button class="btn-3d" data-model="./Chica_hongos_gato_cuadro.glb">Ver en 3D</button>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Chica%20Hongos%20Gato&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Chica%20Hongos%20Gato." class="btn-consultar btn-pc" target="_blank">Consultar</a>
+        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Chica%20Hongos%20Gato&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Chica%20Hongos%20Gato." class="btn-consultar btn-movil">Consultar</a>
       </div>
 
       <!-- CUADRO IV - DENTRO - PIEZA 1 -->
       <div class="obra">
         <div class="modelo-3d">
-          <img
-            src="./preview/Dentro_p1_preview.png"
-            class="preview-obra"
-            alt="Dentro - pieza 1">
+          <img src="./preview/Dentro_p1_preview.png" class="preview-obra" alt="Dentro - pieza 1">
         </div>
         <h2>Dentro - pieza 1</h2>
         <p>Grafito sobre papel · 29.7X42cm</p>
         <p>Año 2017 · Pieza única</p>
-        
-        <button class="btn-3d" data-model="./cuadro4.glb">
-          Ver en 3D
-        </button>
-
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Dentro%20-%20pieza%201&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Dentro%20-%20pieza%201." 
-           class="btn-consultar btn-pc" target="_blank">
-           Consultar
-        </a>
-
-        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Dentro%20-%20pieza%201&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Dentro%20-%20pieza%201." 
-           class="btn-consultar btn-movil">
-           Consultar
-        </a>
+        <button class="btn-3d" data-model="./cuadro4.glb">Ver en 3D</button>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Dentro%20-%20pieza%201&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Dentro%20-%20pieza%201." class="btn-consultar btn-pc" target="_blank">Consultar</a>
+        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Dentro%20-%20pieza%201&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Dentro%20-%20pieza%201." class="btn-consultar btn-movil">Consultar</a>
       </div>
 
       <!-- CUADRO V - DENTRO - PIEZA 2 -->
       <div class="obra">
         <div class="modelo-3d">
-          <img
-            src="./preview/Dentro_p2_preview.png"
-            class="preview-obra"
-            alt="Sin título I">
+          <img src="./preview/Dentro_p2_preview.png" class="preview-obra" alt="Dentro - pieza 2">
         </div>
         <h2>Dentro - pieza 2</h2>
         <p>Grafito sobre papel · 29.7X42cm</p>
         <p>Año 2017 · Pieza única</p>
-        
-        <button class="btn-3d" data-model="./cuadro5.glb">
-          Ver en 3D
-        </button>
-
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20Sin%20t%C3%ADtulo%20I&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Sin%20t%C3%ADtulo%20I." 
-           class="btn-consultar btn-pc" target="_blank">
-           Consultar
-        </a>
-
-        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20Sin%20t%C3%ADtulo%20I&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Sin%20t%C3%ADtulo%20I." 
-           class="btn-consultar btn-movil">
-           Consultar
-        </a>
+        <button class="btn-3d" data-model="./cuadro5.glb">Ver en 3D</button>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20Dentro%20-%20pieza%202&body=Hola%20Lucila,%20me%20interesa%20Dentro%20-%20pieza%202." class="btn-consultar btn-pc" target="_blank">Consultar</a>
+        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20Dentro%20-%20pieza%202&body=Hola%20Lucila,%20me%20interesa%20Dentro%20-%20pieza%202." class="btn-consultar btn-movil">Consultar</a>
       </div>
 
       <!-- CUADRO VI - DENTRO - PIEZA 3 -->
       <div class="obra">
         <div class="modelo-3d">
-          <img
-            src="./preview/Dentro_p3_preview.png"
-            class="preview-obra"
-            alt="Sin título II">
+          <img src="./preview/Dentro_p3_preview.png" class="preview-obra" alt="Dentro - pieza 3">
         </div>
         <h2>Dentro - pieza 3</h2>
         <p>Grafito sobre papel · 29.7X42cm</p>
         <p>Año 2017 · Pieza única</p>
-        
-        <button class="btn-3d" data-model="./cuadro6.glb">
-          Ver en 3D
-        </button>
-
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20Sin%20t%C3%ADtulo%20II&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Sin%20t%C3%ADtulo%20II." 
-           class="btn-consultar btn-pc" target="_blank">
-           Consultar
-        </a>
-
-        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20Sin%20t%C3%ADtulo%20II&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Sin%20t%C3%ADtulo%20II." 
-           class="btn-consultar btn-movil">
-           Consultar
-        </a>
+        <button class="btn-3d" data-model="./cuadro6.glb">Ver en 3D</button>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20Dentro%20-%20pieza%203&body=Hola%20Lucila,%20me%20interesa%20Dentro%20-%20pieza%203." class="btn-consultar btn-pc" target="_blank">Consultar</a>
+        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20Dentro%20-%20pieza%203&body=Hola%20Lucila,%20me%20interesa%20Dentro%20-%20pieza%203." class="btn-consultar btn-movil">Consultar</a>
       </div>
 
-      <!-- CUADRO VII - ABUNDANCIA -->
+      <!-- CUADRO VII - VENTANA -->
       <div class="obra">
         <div class="modelo-3d">
-          <img
-            src="./Cuadro7_preview.png"
-            class="preview-obra"
-            alt="Ventana">
+          <img src="./Cuadro7_preview.png" class="preview-obra" alt="Ventana">
         </div>
         <h2>Ventana</h2>
         <p>Óleo sobre lienzo · 40X50cm</p>
         <p>Año 2024 · Pieza única</p>
-        
-        <button class="btn-3d" data-model="./cuadro7.glb">
-          Ver en 3D
-        </button>
-
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Ventana&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Ventana." 
-           class="btn-consultar btn-pc" target="_blank">
-           Consultar
-        </a>
-
-        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Ventana&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Ventana." 
-           class="btn-consultar btn-movil">
-           Consultar
-        </a>
+        <button class="btn-3d" data-model="./cuadro7.glb">Ver en 3D</button>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Ventana&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Ventana." class="btn-consultar btn-pc" target="_blank">Consultar</a>
+        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Ventana&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Ventana." class="btn-consultar btn-movil">Consultar</a>
       </div>
 
-      <!-- CUADRO VIII - BOSQUE ENCANTADO -->
+      <!-- CUADRO VIII - MEMORIA -->
       <div class="obra">
         <div class="modelo-3d">
-          <img
-            src="./Cuadro8_preview.png"
-            class="preview-obra"
-            alt="Memoria">
+          <img src="./Cuadro8_preview.png" class="preview-obra" alt="Memoria">
         </div>
         <h2>Memoria</h2>
         <p>Técnica mixta sobre papel · 25X35cm</p>
         <p>Año 2024 · Pieza única</p>
-        
-        <button class="btn-3d" data-model="./cuadro8.glb">
-          Ver en 3D
-        </button>
-
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Memoria&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Memoria." 
-           class="btn-consultar btn-pc" target="_blank">
-           Consultar
-        </a>
-
-        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Memoria&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Memoria." 
-           class="btn-consultar btn-movil">
-           Consultar
-        </a>
+        <button class="btn-3d" data-model="./cuadro8.glb">Ver en 3D</button>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Memoria&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Memoria." class="btn-consultar btn-pc" target="_blank">Consultar</a>
+        <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Memoria&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Memoria." class="btn-consultar btn-movil">Consultar</a>
       </div>
 
     </section>
 
   </main>
 
-  <!-- ===== VISOR 3D FLOTANTE ===== -->
+  <!-- ===== VISOR 3D FLOTANTE (VACÍO INICIALMENTE) ===== -->
   <div id="visor3d">
     <button id="cerrar3d">✕</button>
-    <div class="visor-wrapper">
+    <div class="visor-wrapper" id="visorWrapper">
       <div class="loader-container" id="loaderContainer">
         <div class="loader-square-33"></div>
       </div>
-      <model-viewer
-        id="visor-modelo"
-        camera-controls
-        auto-rotate
-        auto-rotate-delay="0"
-        rotation-per-second="8deg"
-        shadow-intensity="1.5"
-        exposure="0.86"
-        tone-mapping="neutral"
-        interaction-prompt="none"
-        style="width:100%;height:100%;background:transparent;">
-      </model-viewer>
+      <!-- El model-viewer se creará dinámicamente con JavaScript -->
     </div>
     <div class="label-3d">🖱️ Haz clic y arrastra para rotar</div>
   </div>
@@ -816,10 +684,41 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const visor = document.getElementById("visor3d");
-      const viewer = document.getElementById("visor-modelo");
       const cerrar = document.getElementById("cerrar3d");
+      const wrapper = document.getElementById("visorWrapper");
       const loaderContainer = document.getElementById("loaderContainer");
       const botonesVer3d = document.querySelectorAll(".btn-3d");
+      
+      // Variable para mantener referencia al viewer actual
+      let viewerActual = null;
+
+      // Función para crear un nuevo model-viewer
+      function crearVisorModelo(rutaGLB) {
+        // Eliminar viewer anterior si existe
+        if (viewerActual) {
+          viewerActual.remove();
+          viewerActual = null;
+        }
+
+        // Crear nuevo elemento model-viewer
+        const mv = document.createElement("model-viewer");
+        mv.id = "visor-modelo";
+        mv.setAttribute("camera-controls", "");
+        mv.setAttribute("auto-rotate", "");
+        mv.setAttribute("auto-rotate-delay", "0");
+        mv.setAttribute("rotation-per-second", "8deg");
+        mv.setAttribute("shadow-intensity", "1.5");
+        mv.setAttribute("exposure", "0.86");
+        mv.setAttribute("tone-mapping", "neutral");
+        mv.setAttribute("interaction-prompt", "none");
+        mv.setAttribute("src", rutaGLB);
+        mv.style.cssText = "width:100%;height:100%;background:transparent;display:block;";
+        
+        // Ocultar partes no deseadas
+        mv.style.setProperty('--progress-bar', 'none');
+        
+        return mv;
+      }
 
       // Abrir visor con el modelo correspondiente
       botonesVer3d.forEach(boton => {
@@ -831,33 +730,62 @@
             visor.classList.add("active");
             document.body.style.overflow = "hidden";
             
-            // Cargar el modelo
-            viewer.src = modeloPath;
+            // Crear y agregar el viewer
+            viewerActual = crearVisorModelo(modeloPath);
+            wrapper.appendChild(viewerActual);
+            
             console.log(`✅ Cargando modelo 3D: ${modeloPath}`);
           }
         });
       });
 
       // Cuando el modelo termina de cargar, ocultar loader
-      viewer.addEventListener("load", () => {
-        loaderContainer.classList.add("oculto");
-        console.log("✅ Modelo 3D cargado correctamente");
-      });
+      document.addEventListener("load", (e) => {
+        if (e.target && e.target.id === "visor-modelo") {
+          loaderContainer.classList.add("oculto");
+          console.log("✅ Modelo 3D cargado correctamente");
+        }
+      }, true);
 
-      // Cerrar visor y liberar memoria
+      // También podemos usar el evento load directamente en el viewer
+      // pero como se crea dinámicamente, usamos MutationObserver o delegación
+      const observer = new MutationObserver(() => {
+        const mv = document.getElementById("visor-modelo");
+        if (mv) {
+          mv.addEventListener("load", () => {
+            loaderContainer.classList.add("oculto");
+            console.log("✅ Modelo 3D cargado correctamente");
+          });
+          observer.disconnect();
+        }
+      });
+      observer.observe(wrapper, { childList: true });
+
+      // Cerrar visor y liberar memoria COMPLETAMENTE
       function cerrarVisor() {
-        viewer.removeAttribute("src");
+        // Eliminar el viewer actual
+        if (viewerActual) {
+          viewerActual.remove();
+          viewerActual = null;
+        }
+        
         visor.classList.remove("active");
         document.body.style.overflow = "";
         loaderContainer.classList.remove("oculto");
-        console.log("🔄 Visor 3D cerrado, memoria liberada");
+        
+        // Forzar garbage collection (sugerencia)
+        if (window.gc) {
+          window.gc();
+        }
+        
+        console.log("🔄 Visor 3D cerrado, memoria liberada completamente");
       }
 
       cerrar.addEventListener("click", cerrarVisor);
 
       // Cerrar al hacer clic fuera del modelo (en el fondo)
       visor.addEventListener("click", (e) => {
-        if (e.target === visor) {
+        if (e.target === visor || e.target === wrapper) {
           cerrarVisor();
         }
       });
@@ -870,11 +798,13 @@
       });
 
       // Manejar errores de carga
-      viewer.addEventListener("error", (e) => {
-        console.error("❌ Error cargando modelo 3D:", e);
-        alert("Error al cargar el modelo 3D. Verifica que el archivo existe.");
-        cerrarVisor();
-      });
+      document.addEventListener("error", (e) => {
+        if (e.target && e.target.id === "visor-modelo") {
+          console.error("❌ Error cargando modelo 3D:", e);
+          alert("Error al cargar el modelo 3D. Verifica que el archivo existe.");
+          cerrarVisor();
+        }
+      }, true);
 
       // ===== SCROLL HORIZONTAL CON RUEDA DEL MOUSE =====
       const grid = document.querySelector(".grid");
