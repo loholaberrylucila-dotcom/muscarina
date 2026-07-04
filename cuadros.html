@@ -360,74 +360,70 @@
     }
 
     /* ========================================================= */
-    /* ===== INDICADOR DE SCROLL (como en yoshikiokamura.art) ==== */
+    /* ===== INDICADOR DE SCROLL HORIZONTAL ==================== */
     /* ========================================================= */
     .scroll-indicator {
       position: fixed;
-      left: 50%;
-      bottom: 22px;
-      transform: translateX(-50%);
-      width: 20px;
-      height: 70px;
+      right: 6vw;
+      bottom: 35px;
+      width: 90px;
+      height: 18px;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: flex-end;
       pointer-events: none;
       z-index: 300;
       transition: opacity 0.4s ease;
     }
 
     .scroll-line {
-      width: 1px;
-      height: 50px;
+      width: 70px;
+      height: 1px;
       background: #E8A0FF;
-      transform-origin: top;
-      animation: scrollLine 2.2s infinite ease-in-out;
-      opacity: 0.9;
+      transform-origin: left;
+      animation: scrollLineHorizontal 2.2s infinite ease-in-out;
     }
 
     .scroll-arrow {
       width: 8px;
       height: 8px;
+      border-top: 1px solid #E8A0FF;
       border-right: 1px solid #E8A0FF;
-      border-bottom: 1px solid #E8A0FF;
       transform: rotate(45deg);
-      margin-top: -2px;
-      animation: scrollArrow 2.2s infinite ease-in-out;
+      margin-left: -2px;
+      animation: scrollArrowHorizontal 2.2s infinite ease-in-out;
     }
 
-    @keyframes scrollLine {
+    @keyframes scrollLineHorizontal {
       0% {
-        transform: scaleY(0);
-        transform-origin: top;
+        transform: scaleX(0);
+        transform-origin: left;
       }
       45% {
-        transform: scaleY(1);
-        transform-origin: top;
+        transform: scaleX(1);
+        transform-origin: left;
       }
       55% {
-        transform: scaleY(1);
-        transform-origin: bottom;
+        transform: scaleX(1);
+        transform-origin: right;
       }
       100% {
-        transform: scaleY(0);
-        transform-origin: bottom;
+        transform: scaleX(0);
+        transform-origin: right;
       }
     }
 
-    @keyframes scrollArrow {
+    @keyframes scrollArrowHorizontal {
       0%, 45% {
         opacity: 1;
-        transform: translateY(0) rotate(45deg);
+        transform: translateX(0) rotate(45deg);
       }
       55% {
         opacity: 1;
-        transform: translateY(6px) rotate(45deg);
+        transform: translateX(8px) rotate(45deg);
       }
       100% {
         opacity: 0;
-        transform: translateY(10px) rotate(45deg);
+        transform: translateX(14px) rotate(45deg);
       }
     }
 
@@ -554,13 +550,14 @@
       }
 
       .scroll-indicator {
-        bottom: 15px;
-        height: 55px;
-        width: 16px;
+        right: 5vw;
+        bottom: 18px;
+        width: 70px;
+        height: 14px;
       }
 
       .scroll-line {
-        height: 35px;
+        width: 52px;
       }
 
       .scroll-arrow {
@@ -609,13 +606,14 @@
       }
 
       .scroll-indicator {
-        bottom: 12px;
-        height: 45px;
-        width: 14px;
+        right: 4vw;
+        bottom: 14px;
+        width: 55px;
+        height: 12px;
       }
 
       .scroll-line {
-        height: 28px;
+        width: 40px;
       }
 
       .scroll-arrow {
@@ -748,7 +746,7 @@
 
   </main>
 
-  <!-- ===== INDICADOR DE SCROLL ===== -->
+  <!-- ===== INDICADOR DE SCROLL HORIZONTAL ===== -->
   <div class="scroll-indicator" id="scrollIndicator">
     <div class="scroll-line"></div>
     <div class="scroll-arrow"></div>
