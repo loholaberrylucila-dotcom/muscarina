@@ -359,6 +359,78 @@
       font-family: 'Inter', sans-serif;
     }
 
+    /* ========================================================= */
+    /* ===== INDICADOR DE SCROLL (como en yoshikiokamura.art) ==== */
+    /* ========================================================= */
+    .scroll-indicator {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 70px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      pointer-events: none;
+      z-index: 300;
+      transition: opacity 0.4s ease;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: #E8A0FF;
+      transform-origin: top;
+      animation: scrollLine 2.2s infinite ease-in-out;
+      opacity: 0.9;
+    }
+
+    .scroll-arrow {
+      width: 8px;
+      height: 8px;
+      border-right: 1px solid #E8A0FF;
+      border-bottom: 1px solid #E8A0FF;
+      transform: rotate(45deg);
+      margin-top: -2px;
+      animation: scrollArrow 2.2s infinite ease-in-out;
+    }
+
+    @keyframes scrollLine {
+      0% {
+        transform: scaleY(0);
+        transform-origin: top;
+      }
+      45% {
+        transform: scaleY(1);
+        transform-origin: top;
+      }
+      55% {
+        transform: scaleY(1);
+        transform-origin: bottom;
+      }
+      100% {
+        transform: scaleY(0);
+        transform-origin: bottom;
+      }
+    }
+
+    @keyframes scrollArrow {
+      0%, 45% {
+        opacity: 1;
+        transform: translateY(0) rotate(45deg);
+      }
+      55% {
+        opacity: 1;
+        transform: translateY(6px) rotate(45deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(10px) rotate(45deg);
+      }
+    }
+
     /* ===== MÁSCARA: SOLO EN PC ===== */
     @media (min-width: 769px) {
       nav a {
@@ -480,6 +552,22 @@
       .label-3d {
         font-size: 10px;
       }
+
+      /* Ajustar indicador de scroll en móvil */
+      .scroll-indicator {
+        bottom: 15px;
+        height: 55px;
+        width: 16px;
+      }
+
+      .scroll-line {
+        height: 35px;
+      }
+
+      .scroll-arrow {
+        width: 6px;
+        height: 6px;
+      }
     }
 
     /* ===== PANTALLAS MUY PEQUEÑAS ===== */
@@ -519,6 +607,21 @@
 
       .btn-consultar {
         margin: 4px auto 0;
+      }
+
+      .scroll-indicator {
+        bottom: 12px;
+        height: 45px;
+        width: 14px;
+      }
+
+      .scroll-line {
+        height: 28px;
+      }
+
+      .scroll-arrow {
+        width: 5px;
+        height: 5px;
       }
     }
   </style>
@@ -577,9 +680,7 @@
         <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Chica%20Hongos%20Gato&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Chica%20Hongos%20Gato." class="btn-consultar btn-movil">Consultar</a>
       </div>
 
-      <!-- ============================================================ -->
-      <!-- CUADRO IV - DENTRO - PIEZA 1 (ruta corregida)                  -->
-      <!-- ============================================================ -->
+      <!-- CUADRO IV - DENTRO - PIEZA 1 -->
       <div class="obra">
         <div class="modelo-3d">
           <img src="./preview/Dentro_p1_preview.png" class="preview-obra" alt="Dentro - pieza 1">
@@ -592,9 +693,7 @@
         <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Dentro%20-%20pieza%201&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Dentro%20-%20pieza%201." class="btn-consultar btn-movil">Consultar</a>
       </div>
 
-      <!-- ============================================================ -->
-      <!-- CUADRO V - DENTRO - PIEZA 2 (ruta corregida)                  -->
-      <!-- ============================================================ -->
+      <!-- CUADRO V - DENTRO - PIEZA 2 -->
       <div class="obra">
         <div class="modelo-3d">
           <img src="./preview/Dentro_p2_preview.png" class="preview-obra" alt="Dentro - pieza 2">
@@ -607,9 +706,7 @@
         <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20Dentro%20-%20pieza%202&body=Hola%20Lucila,%20me%20interesa%20Dentro%20-%20pieza%202." class="btn-consultar btn-movil">Consultar</a>
       </div>
 
-      <!-- ============================================================ -->
-      <!-- CUADRO VI - DENTRO - PIEZA 3 (ruta corregida)                 -->
-      <!-- ============================================================ -->
+      <!-- CUADRO VI - DENTRO - PIEZA 3 -->
       <div class="obra">
         <div class="modelo-3d">
           <img src="./preview/Dentro_p3_preview.png" class="preview-obra" alt="Dentro - pieza 3">
@@ -652,6 +749,12 @@
 
   </main>
 
+  <!-- ===== INDICADOR DE SCROLL ===== -->
+  <div class="scroll-indicator" id="scrollIndicator">
+    <div class="scroll-line"></div>
+    <div class="scroll-arrow"></div>
+  </div>
+
   <!-- ===== VISOR 3D FLOTANTE (VACÍO INICIALMENTE) ===== -->
   <div id="visor3d">
     <button id="cerrar3d">✕</button>
@@ -664,27 +767,24 @@
     <div class="label-3d">🖱️ Haz clic y arrastra para rotar</div>
   </div>
 
-  <!-- ===== SCRIPT PARA CONTROLAR EL VISOR 3D ===== -->
+  <!-- ===== SCRIPT PARA CONTROLAR EL VISOR 3D Y EL INDICADOR ===== -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
+      // ===== VISOR 3D =====
       const visor = document.getElementById("visor3d");
       const cerrar = document.getElementById("cerrar3d");
       const wrapper = document.getElementById("visorWrapper");
       const loaderContainer = document.getElementById("loaderContainer");
       const botonesVer3d = document.querySelectorAll(".btn-3d");
       
-      // Variable para mantener referencia al viewer actual
       let viewerActual = null;
 
-      // Función para crear un nuevo model-viewer
       function crearVisorModelo(rutaGLB) {
-        // Eliminar viewer anterior si existe
         if (viewerActual) {
           viewerActual.remove();
           viewerActual = null;
         }
 
-        // Crear nuevo elemento model-viewer
         const mv = document.createElement("model-viewer");
         mv.id = "visor-modelo";
         mv.setAttribute("camera-controls", "");
@@ -697,33 +797,24 @@
         mv.setAttribute("interaction-prompt", "none");
         mv.setAttribute("src", rutaGLB);
         mv.style.cssText = "width:100%;height:100%;background:transparent;display:block;";
-        
-        // Ocultar partes no deseadas
         mv.style.setProperty('--progress-bar', 'none');
-        
         return mv;
       }
 
-      // Abrir visor con el modelo correspondiente
       botonesVer3d.forEach(boton => {
         boton.addEventListener("click", () => {
           const modeloPath = boton.dataset.model;
           if (modeloPath) {
-            // Mostrar loader y visor
             loaderContainer.classList.remove("oculto");
             visor.classList.add("active");
             document.body.style.overflow = "hidden";
-            
-            // Crear y agregar el viewer
             viewerActual = crearVisorModelo(modeloPath);
             wrapper.appendChild(viewerActual);
-            
             console.log(`✅ Cargando modelo 3D: ${modeloPath}`);
           }
         });
       });
 
-      // Cuando el modelo termina de cargar, ocultar loader
       document.addEventListener("load", (e) => {
         if (e.target && e.target.id === "visor-modelo") {
           loaderContainer.classList.add("oculto");
@@ -731,8 +822,6 @@
         }
       }, true);
 
-      // También podemos usar el evento load directamente en el viewer
-      // pero como se crea dinámicamente, usamos MutationObserver o delegación
       const observer = new MutationObserver(() => {
         const mv = document.getElementById("visor-modelo");
         if (mv) {
@@ -745,43 +834,34 @@
       });
       observer.observe(wrapper, { childList: true });
 
-      // Cerrar visor y liberar memoria COMPLETAMENTE
       function cerrarVisor() {
-        // Eliminar el viewer actual
         if (viewerActual) {
           viewerActual.remove();
           viewerActual = null;
         }
-        
         visor.classList.remove("active");
         document.body.style.overflow = "";
         loaderContainer.classList.remove("oculto");
-        
-        // Forzar garbage collection (sugerencia)
         if (window.gc) {
           window.gc();
         }
-        
         console.log("🔄 Visor 3D cerrado, memoria liberada completamente");
       }
 
       cerrar.addEventListener("click", cerrarVisor);
 
-      // Cerrar al hacer clic fuera del modelo (en el fondo)
       visor.addEventListener("click", (e) => {
         if (e.target === visor || e.target === wrapper) {
           cerrarVisor();
         }
       });
 
-      // Cerrar con tecla ESC
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && visor.classList.contains("active")) {
           cerrarVisor();
         }
       });
 
-      // Manejar errores de carga
       document.addEventListener("error", (e) => {
         if (e.target && e.target.id === "visor-modelo") {
           console.error("❌ Error cargando modelo 3D:", e);
@@ -792,15 +872,14 @@
 
       // ===== SCROLL HORIZONTAL CON RUEDA DEL MOUSE =====
       const grid = document.querySelector(".grid");
+      const indicador = document.getElementById("scrollIndicator");
       
       if (grid) {
         grid.addEventListener("wheel", (e) => {
           e.preventDefault();
           grid.scrollLeft += e.deltaY;
         }, { passive: false });
-      }
-    });
-  </script>
 
-</body>
-</html>
+        // ===== OCULTAR INDICADOR AL HACER SCROLL =====
+        grid.addEventListener("scroll", () => {
+          if (grid.scrollLeft > 20) {
