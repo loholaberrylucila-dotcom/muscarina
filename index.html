@@ -84,8 +84,9 @@
 
     /* ===== CURSOR PERSONALIZADO (SOLO PC) ===== */
     @media (min-width: 769px) {
-      body {
-        cursor: none;
+      /* Ocultar el cursor en TODOS los elementos */
+      * {
+        cursor: none !important;
       }
 
       .cursor-loader {
@@ -93,7 +94,7 @@
         width: 50px;
         height: 50px;
         pointer-events: none;
-        transform: translate(-50%, -50%) scale(0.7);
+        transform: translate(-50%, -50%) scale(0.5);
         z-index: 999999;
         transition: transform 0.25s ease;
       }
@@ -103,7 +104,7 @@
       }
 
       .cursor-loader.activo {
-        transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%) scale(0.7);
       }
 
       .cursor-loader.activo .loader-square-33::before {
