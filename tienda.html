@@ -23,6 +23,64 @@
       min-height: 100vh;
     }
 
+    /* ===== LOADER ===== */
+    .loader-square-33 {
+      display: inline-block;
+      outline: 1px solid #000018;
+      width: 50px;
+      height: 50px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .loader-square-33::before {
+      content: "";
+      background: #000018;
+      width: 5px;
+      height: 53px;
+      transform-origin: top center;
+      animation: anm-SL-33-move 2.5s infinite linear;
+      display: inline-block;
+    }
+
+    @keyframes anm-SL-33-move {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(-90deg); margin-left: -5px; margin-top: 0; transform-origin: top center; }
+      50% { margin-left: -5px; margin-top: 45px; transform-origin: top center; transform: rotate(-90deg); }
+      75% { margin-left: 45px; margin-top: 0; transform-origin: bottom center; transform: rotate(0deg); }
+      100% { transform: rotate(0deg); transform-origin: bottom center; margin-left: 0; margin-top: 0; }
+    }
+
+    /* ===== CURSOR PERSONALIZADO (SOLO PC) ===== */
+    @media (min-width: 769px) {
+      /* Ocultar el cursor en TODOS los elementos */
+      * {
+        cursor: none !important;
+      }
+
+      .cursor-loader {
+        position: fixed;
+        width: 50px;
+        height: 50px;
+        pointer-events: none;
+        transform: translate(-50%, -50%) scale(0.5);
+        z-index: 999999;
+        transition: transform 0.25s ease;
+      }
+
+      .cursor-loader .loader-square-33::before {
+        animation-play-state: paused;
+      }
+
+      .cursor-loader.activo {
+        transform: translate(-50%, -50%) scale(0.7);
+      }
+
+      .cursor-loader.activo .loader-square-33::before {
+        animation-play-state: running;
+      }
+    }
+
     /* ===== NAV ===== */
     nav {
       position: fixed;
@@ -70,6 +128,11 @@
       border: 1px solid rgba(0,0,24,0.4);
       display: inline-block;
       width: auto;
+      transition: all 0.3s ease;
+    }
+
+    .intro:hover {
+      background: rgba(0,0,24,0.02);
     }
 
     /* ===== CATEGORÍAS ===== */
@@ -108,55 +171,6 @@
       font-size: 12px;
       opacity: 0.7;
       letter-spacing: 1px;
-    }
-
-    /* ===== MÁSCARA: SOLO EN PC ===== */
-    @media (min-width: 769px) {
-      nav a {
-        -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-        mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-        -webkit-mask-size: 7100% 100%;
-        mask-size: 7100% 100%;
-        animation: ani2 0.7s steps(70) forwards;
-      }
-
-      nav a:hover {
-        animation: ani 0.7s steps(70) forwards;
-      }
-
-      .intro {
-        -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-        mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-        -webkit-mask-size: 7100% 100%;
-        mask-size: 7100% 100%;
-        animation: ani2 0.7s steps(70) forwards;
-      }
-
-      .intro:hover {
-        animation: ani 0.7s steps(70) forwards;
-      }
-
-      .categoria {
-        -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-        mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-        -webkit-mask-size: 7100% 100%;
-        mask-size: 7100% 100%;
-        animation: ani2 0.7s steps(70) forwards;
-      }
-
-      .categoria:hover {
-        animation: ani 0.7s steps(70) forwards;
-      }
-
-      @keyframes ani {
-        from { mask-position: 0 0; }
-        to { mask-position: 100% 0; }
-      }
-
-      @keyframes ani2 {
-        from { mask-position: 100% 0; }
-        to { mask-position: 0 0; }
-      }
     }
 
     /* ===== RESPONSIVE MÓVIL ===== */
@@ -239,6 +253,11 @@
     </section>
   </main>
 
+  <!-- CURSOR PERSONALIZADO (SOLO PC) -->
+  <div class="cursor-loader" id="cursor">
+    <div class="loader-square-33"></div>
+  </div>
+
   <!-- VANTA FOG -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="https://unpkg.com/vanta@latest/dist/vanta.fog.min.js"></script>
@@ -259,6 +278,32 @@
       touchControls: true,
       gyroControls: false
     });
+  </script>
+
+  <!-- SCRIPT PARA EL CURSOR PERSONALIZADO -->
+  <script>
+    // === CURSOR PERSONALIZADO (SOLO EN PC) ===
+    if (window.innerWidth > 768) {
+      const cursor = document.getElementById("cursor");
+
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.left = e.clientX + "px";
+        cursor.style.top = e.clientY + "px";
+      });
+
+      // Elementos que activan la animación del cursor
+      const elementosInteractivos = document.querySelectorAll("a, .intro, .categoria, nav a");
+      
+      elementosInteractivos.forEach(el => {
+        el.addEventListener("mouseenter", () => {
+          cursor.classList.add("activo");
+        });
+
+        el.addEventListener("mouseleave", () => {
+          cursor.classList.remove("activo");
+        });
+      });
+    }
   </script>
 
 </body>
