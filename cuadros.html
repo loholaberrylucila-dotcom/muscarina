@@ -60,6 +60,36 @@
       100% { transform: rotate(0deg); transform-origin: bottom center; margin-left: 0; margin-top: 0; }
     }
 
+    /* ===== CURSOR PERSONALIZADO (SOLO PC) ===== */
+    @media (min-width: 769px) {
+      /* Ocultar el cursor en TODOS los elementos */
+      * {
+        cursor: none !important;
+      }
+
+      .cursor-loader {
+        position: fixed;
+        width: 50px;
+        height: 50px;
+        pointer-events: none;
+        transform: translate(-50%, -50%) scale(0.5);
+        z-index: 999999;
+        transition: transform 0.25s ease;
+      }
+
+      .cursor-loader .loader-square-33::before {
+        animation-play-state: paused;
+      }
+
+      .cursor-loader.activo {
+        transform: translate(-50%, -50%) scale(0.7);
+      }
+
+      .cursor-loader.activo .loader-square-33::before {
+        animation-play-state: running;
+      }
+    }
+
     /* ===== NAV FIJO ===== */
     nav {
       position: fixed;
@@ -427,44 +457,8 @@
       }
     }
 
-    /* ===== MÁSCARA: SOLO EN PC ===== */
-    @media (min-width: 769px) {
-      nav a {
-        -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-        mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-        -webkit-mask-size: 7100% 100%;
-        mask-size: 7100% 100%;
-        animation: ani2 0.7s steps(70) forwards;
-      }
-
-      nav a:hover {
-        animation: ani 0.7s steps(70) forwards;
-      }
-
-      .btn-3d,
-      .btn-consultar {
-        -webkit-mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-        mask: url("https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png");
-        -webkit-mask-size: 7100% 100%;
-        mask-size: 7100% 100%;
-        animation: ani2 0.7s steps(70) forwards;
-      }
-
-      .btn-3d:hover,
-      .btn-consultar:hover {
-        animation: ani 0.7s steps(70) forwards;
-      }
-
-      @keyframes ani {
-        from { mask-position: 0 0; }
-        to { mask-position: 100% 0; }
-      }
-
-      @keyframes ani2 {
-        from { mask-position: 100% 0; }
-        to { mask-position: 0 0; }
-      }
-    }
+    /* ===== MÁSCARA: ELIMINADA ===== */
+    /* Ya no hay máscara en esta página */
 
     /* ===== OPTIMIZACIONES PARA MÓVIL ===== */
     @media (max-width: 768px) {
@@ -719,7 +713,7 @@
       <!-- CUADRO VII - ABUNDANCIA -->
       <div class="obra">
         <div class="modelo-3d">
-          <img src="./preview/Abundancia_preview.png" class="preview-obra" alt="Abundancia_preview">
+          <img src="./preview/Abundancia_preview.png" class="preview-obra" alt="Abundancia">
         </div>
         <h2>Abundancia</h2>
         <p>Grafito sobre papel · 14.8X21cm</p>
@@ -732,7 +726,7 @@
       <!-- CUADRO VIII - BOSQUE ENCANTADO -->
       <div class="obra">
         <div class="modelo-3d">
-          <img src="./preview/Bosque_encantado_preview.png" class="preview-obra" alt="Bosque_encantado_preview">
+          <img src="./preview/Bosque_encantado_preview.png" class="preview-obra" alt="Bosque encantado">
         </div>
         <h2>Bosque encantado</h2>
         <p>Grafito sobre papel · 25X35cm</p>
@@ -764,9 +758,37 @@
     <div class="label-3d">🖱️ Haz clic y arrastra para rotar</div>
   </div>
 
-  <!-- ===== SCRIPT PARA CONTROLAR EL VISOR 3D Y EL INDICADOR ===== -->
+  <!-- ===== CURSOR PERSONALIZADO (SOLO PC) ===== -->
+  <div class="cursor-loader" id="cursor">
+    <div class="loader-square-33"></div>
+  </div>
+
+  <!-- ===== SCRIPT PARA CONTROLAR EL VISOR 3D, EL INDICADOR Y EL CURSOR ===== -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
+      // ===== CURSOR PERSONALIZADO (SOLO EN PC) =====
+      if (window.innerWidth > 768) {
+        const cursor = document.getElementById("cursor");
+
+        document.addEventListener("mousemove", (e) => {
+          cursor.style.left = e.clientX + "px";
+          cursor.style.top = e.clientY + "px";
+        });
+
+        // Elementos que activan la animación del cursor
+        const elementosInteractivos = document.querySelectorAll("a, .btn-3d, .btn-consultar, .obra, nav a, #cerrar3d");
+        
+        elementosInteractivos.forEach(el => {
+          el.addEventListener("mouseenter", () => {
+            cursor.classList.add("activo");
+          });
+
+          el.addEventListener("mouseleave", () => {
+            cursor.classList.remove("activo");
+          });
+        });
+      }
+
       // ===== VISOR 3D =====
       const visor = document.getElementById("visor3d");
       const cerrar = document.getElementById("cerrar3d");
