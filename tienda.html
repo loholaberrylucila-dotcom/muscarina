@@ -253,10 +253,7 @@
     </section>
   </main>
 
-  <!-- CURSOR PERSONALIZADO (SOLO PC) -->
-  <div class="cursor-loader" id="cursor">
-    <div class="loader-square-33"></div>
-  </div>
+  <!-- NOTA: El cursor personalizado se crea con JavaScript en PC -->
 
   <!-- VANTA FOG -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
@@ -280,18 +277,25 @@
     });
   </script>
 
-  <!-- SCRIPT PARA EL CURSOR PERSONALIZADO -->
+  <!-- SCRIPT PARA EL CURSOR PERSONALIZADO (CREACIÓN DINÁMICA) -->
   <script>
-    // === CURSOR PERSONALIZADO (SOLO EN PC) ===
+    // === CURSOR PERSONALIZADO (SOLO EN PC) - CREACIÓN DINÁMICA ===
     if (window.innerWidth > 768) {
-      const cursor = document.getElementById("cursor");
+      
+      // 1. Crear el elemento del cursor
+      const cursor = document.createElement("div");
+      cursor.className = "cursor-loader";
+      cursor.id = "cursor";
+      cursor.innerHTML = '<div class="loader-square-33"></div>';
+      document.body.appendChild(cursor);
 
+      // 2. Mover el cursor con el mouse
       document.addEventListener("mousemove", (e) => {
         cursor.style.left = e.clientX + "px";
         cursor.style.top = e.clientY + "px";
       });
 
-      // Elementos que activan la animación del cursor
+      // 3. Elementos que activan la animación del cursor
       const elementosInteractivos = document.querySelectorAll("a, .intro, .categoria, nav a");
       
       elementosInteractivos.forEach(el => {
