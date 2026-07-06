@@ -175,7 +175,7 @@
       z-index: 1;
     }
 
-    /* ===== CONTENEDOR 3D (SOLO LA IMAGEN) ===== */
+    /* ===== CONTENEDOR 3D ===== */
     .modelo-3d {
       width: 100%;
       height: 38vh;
@@ -458,7 +458,6 @@
     }
 
     /* ===== MÁSCARA: ELIMINADA ===== */
-    /* Ya no hay máscara en esta página */
 
     /* ===== OPTIMIZACIONES PARA MÓVIL ===== */
     @media (max-width: 768px) {
@@ -711,7 +710,7 @@
       </div>
 
       <!-- ============================================================ -->
-      <!-- CUADRO VII - ABUNDANCIA (con Abundancia_cuadro.glb)           -->
+      <!-- CUADRO VII - ABUNDANCIA                                       -->
       <!-- ============================================================ -->
       <div class="obra">
         <div class="modelo-3d">
@@ -725,7 +724,9 @@
         <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Abundancia&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Abundancia." class="btn-consultar btn-movil">Consultar</a>
       </div>
 
-      <!-- CUADRO VIII - BOSQUE ENCANTADO -->
+      <!-- ============================================================ -->
+      <!-- CUADRO VIII - BOSQUE ENCANTADO                                -->
+      <!-- ============================================================ -->
       <div class="obra">
         <div class="modelo-3d">
           <img src="./preview/Bosque_encantado_preview.png" class="preview-obra" alt="Bosque encantado">
@@ -748,7 +749,7 @@
     <div class="scroll-arrow"></div>
   </div>
 
-  <!-- ===== VISOR 3D FLOTANTE (VACÍO INICIALMENTE) ===== -->
+  <!-- ===== VISOR 3D FLOTANTE ===== -->
   <div id="visor3d">
     <button id="cerrar3d">✕</button>
     <div class="visor-wrapper" id="visorWrapper">
@@ -760,24 +761,28 @@
     <div class="label-3d">🖱️ Haz clic y arrastra para rotar</div>
   </div>
 
-  <!-- ===== CURSOR PERSONALIZADO (SOLO PC) ===== -->
-  <div class="cursor-loader" id="cursor">
-    <div class="loader-square-33"></div>
-  </div>
+  <!-- NOTA: El cursor personalizado se crea con JavaScript en PC -->
 
   <!-- ===== SCRIPT PARA CONTROLAR EL VISOR 3D, EL INDICADOR Y EL CURSOR ===== -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // ===== CURSOR PERSONALIZADO (SOLO EN PC) =====
+      // ===== CURSOR PERSONALIZADO (SOLO EN PC) - CREACIÓN DINÁMICA =====
       if (window.innerWidth > 768) {
-        const cursor = document.getElementById("cursor");
+        
+        // 1. Crear el elemento del cursor
+        const cursor = document.createElement("div");
+        cursor.className = "cursor-loader";
+        cursor.id = "cursor";
+        cursor.innerHTML = '<div class="loader-square-33"></div>';
+        document.body.appendChild(cursor);
 
+        // 2. Mover el cursor con el mouse
         document.addEventListener("mousemove", (e) => {
           cursor.style.left = e.clientX + "px";
           cursor.style.top = e.clientY + "px";
         });
 
-        // Elementos que activan la animación del cursor
+        // 3. Elementos que activan la animación del cursor
         const elementosInteractivos = document.querySelectorAll("a, .btn-3d, .btn-consultar, .obra, nav a, #cerrar3d");
         
         elementosInteractivos.forEach(el => {
