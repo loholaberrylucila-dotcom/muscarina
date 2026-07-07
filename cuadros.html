@@ -67,6 +67,14 @@
         cursor: none !important;
       }
 
+      /* Forzar cursor none en model-viewer y sus hijos (se crean dinámicamente) */
+      model-viewer,
+      model-viewer *,
+      #visor-modelo,
+      #visor-modelo * {
+        cursor: none !important;
+      }
+
       .cursor-loader {
         position: fixed;
         width: 50px;
@@ -710,7 +718,7 @@
       </div>
 
       <!-- ============================================================ -->
-      <!-- CUADRO VII - ABUNDANCIA                                       -->
+      <!-- CUADRO VII - ABUNDANCIA (con Abundancia_cuadro.glb)           -->
       <!-- ============================================================ -->
       <div class="obra">
         <div class="modelo-3d">
@@ -725,7 +733,7 @@
       </div>
 
       <!-- ============================================================ -->
-      <!-- CUADRO VIII - BOSQUE ENCANTADO                                -->
+      <!-- CUADRO VIII - BOSQUE ENCANTADO (con Bosque_encantado_cuadro.glb) -->
       <!-- ============================================================ -->
       <div class="obra">
         <div class="modelo-3d">
@@ -734,7 +742,7 @@
         <h2>Bosque encantado</h2>
         <p>Grafito sobre papel · 25X35cm</p>
         <p>Año 2020 · Díptico</p>
-        <button class="btn-3d" data-model="./cuadro8.glb">Ver en 3D</button>
+        <button class="btn-3d" data-model="./Bosque_encantado_cuadro.glb">Ver en 3D</button>
         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucila.loholaberry.id@gmail.com&su=Consulta%20sobre%20la%20obra%20Bosque%20encantado&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Bosque%20encantado." class="btn-consultar btn-pc" target="_blank">Consultar</a>
         <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Bosque%20encantado&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Bosque%20encantado." class="btn-consultar btn-movil">Consultar</a>
       </div>
