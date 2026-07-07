@@ -62,12 +62,10 @@
 
     /* ===== CURSOR PERSONALIZADO (SOLO PC) ===== */
     @media (min-width: 769px) {
-      /* Ocultar el cursor en TODOS los elementos */
       * {
         cursor: none !important;
       }
 
-      /* Forzar cursor none en model-viewer y sus hijos (se crean dinámicamente) */
       model-viewer,
       model-viewer *,
       #visor-modelo,
@@ -98,7 +96,7 @@
       }
     }
 
-    /* ===== NAV FIJO ===== */
+    /* ===== NAV FIJO (UNIFICADO) ===== */
     nav {
       position: fixed;
       top: 30px;
@@ -118,11 +116,10 @@
       border: 1px solid rgba(232, 160, 255, 0.4);
       color: #E8A0FF;
       text-decoration: none;
-      background: transparent;
       transition: all 0.3s ease;
     }
 
-    nav a:hover { 
+    nav a:hover {
       background: rgba(232, 160, 255, 0.05);
     }
 
@@ -237,7 +234,7 @@
       display: none;
     }
 
-    /* ===== BOTÓN VER EN 3D ===== */
+    /* ===== BOTÓN VER EN 3D (UNIFICADO) ===== */
     .btn-3d {
       display: block;
       width: 180px;
@@ -258,11 +255,9 @@
 
     .btn-3d:hover {
       background: rgba(232, 160, 255, 0.05);
-      border-color: rgba(232, 160, 255, 0.6);
-      transform: translateY(-2px);
     }
 
-    /* ===== BOTÓN CONSULTAR ===== */
+    /* ===== BOTÓN CONSULTAR (UNIFICADO) ===== */
     .btn-consultar {
       display: block;
       width: 180px;
@@ -281,15 +276,11 @@
       transition: all 0.3s ease;
       cursor: pointer;
       align-self: center;
-      position: relative;
-      z-index: 2;
       text-align: center;
     }
 
     .btn-consultar:hover {
       background: rgba(232, 160, 255, 0.05);
-      border-color: rgba(232, 160, 255, 0.6);
-      transform: translateY(-2px);
     }
 
     /* ===== BOTONES POR DISPOSITIVO ===== */
@@ -432,37 +423,16 @@
     }
 
     @keyframes scrollLineHorizontal {
-      0% {
-        transform: scaleX(0);
-        transform-origin: left;
-      }
-      45% {
-        transform: scaleX(1);
-        transform-origin: left;
-      }
-      55% {
-        transform: scaleX(1);
-        transform-origin: right;
-      }
-      100% {
-        transform: scaleX(0);
-        transform-origin: right;
-      }
+      0% { transform: scaleX(0); transform-origin: left; }
+      45% { transform: scaleX(1); transform-origin: left; }
+      55% { transform: scaleX(1); transform-origin: right; }
+      100% { transform: scaleX(0); transform-origin: right; }
     }
 
     @keyframes scrollArrowHorizontal {
-      0%, 45% {
-        opacity: 1;
-        transform: translateX(0) rotate(45deg);
-      }
-      55% {
-        opacity: 1;
-        transform: translateX(8px) rotate(45deg);
-      }
-      100% {
-        opacity: 0;
-        transform: translateX(14px) rotate(45deg);
-      }
+      0%, 45% { opacity: 1; transform: translateX(0) rotate(45deg); }
+      55% { opacity: 1; transform: translateX(8px) rotate(45deg); }
+      100% { opacity: 0; transform: translateX(14px) rotate(45deg); }
     }
 
     /* ===== MÁSCARA: ELIMINADA ===== */
@@ -718,7 +688,7 @@
       </div>
 
       <!-- ============================================================ -->
-      <!-- CUADRO VII - ABUNDANCIA (con Abundancia_cuadro.glb)           -->
+      <!-- CUADRO VII - ABUNDANCIA                                       -->
       <!-- ============================================================ -->
       <div class="obra">
         <div class="modelo-3d">
@@ -733,7 +703,7 @@
       </div>
 
       <!-- ============================================================ -->
-      <!-- CUADRO VIII - BOSQUE ENCANTADO (con Bosque_encantado_cuadro.glb) -->
+      <!-- CUADRO VIII - BOSQUE ENCANTADO                                -->
       <!-- ============================================================ -->
       <div class="obra">
         <div class="modelo-3d">
@@ -764,7 +734,6 @@
       <div class="loader-container" id="loaderContainer">
         <div class="loader-square-33"></div>
       </div>
-      <!-- El model-viewer se creará dinámicamente con JavaScript -->
     </div>
     <div class="label-3d">🖱️ Haz clic y arrastra para rotar</div>
   </div>
@@ -777,20 +746,17 @@
       // ===== CURSOR PERSONALIZADO (SOLO EN PC) - CREACIÓN DINÁMICA =====
       if (window.innerWidth > 768) {
         
-        // 1. Crear el elemento del cursor
         const cursor = document.createElement("div");
         cursor.className = "cursor-loader";
         cursor.id = "cursor";
         cursor.innerHTML = '<div class="loader-square-33"></div>';
         document.body.appendChild(cursor);
 
-        // 2. Mover el cursor con el mouse
         document.addEventListener("mousemove", (e) => {
           cursor.style.left = e.clientX + "px";
           cursor.style.top = e.clientY + "px";
         });
 
-        // 3. Elementos que activan la animación del cursor
         const elementosInteractivos = document.querySelectorAll("a, .btn-3d, .btn-consultar, .obra, nav a, #cerrar3d");
         
         elementosInteractivos.forEach(el => {
@@ -914,7 +880,6 @@
           grid.scrollLeft += e.deltaY;
         }, { passive: false });
 
-        // ===== OCULTAR INDICADOR AL HACER SCROLL =====
         grid.addEventListener("scroll", () => {
           if (grid.scrollLeft > 20) {
             indicador.style.opacity = "0";
