@@ -96,7 +96,7 @@
       }
     }
 
-    /* ===== NAV FIJO (UNIFICADO) ===== */
+    /* ===== NAV FIJO ===== */
     nav {
       position: fixed;
       top: 30px;
@@ -234,7 +234,7 @@
       display: none;
     }
 
-    /* ===== BOTÓN VER EN 3D (UNIFICADO) ===== */
+    /* ===== BOTÓN VER EN 3D ===== */
     .btn-3d {
       display: block;
       width: 180px;
@@ -257,7 +257,7 @@
       background: rgba(232, 160, 255, 0.05);
     }
 
-    /* ===== BOTÓN CONSULTAR (UNIFICADO) ===== */
+    /* ===== BOTÓN CONSULTAR ===== */
     .btn-consultar {
       display: block;
       width: 180px;
@@ -389,19 +389,36 @@
     }
 
     /* ========================================================= */
-    /* ===== INDICADOR DE SCROLL HORIZONTAL ==================== */
+    /* ===== INDICADOR DE SCROLL HORIZONTAL (MEJORADO) ========= */
     /* ========================================================= */
     .scroll-indicator {
       position: fixed;
       right: 6vw;
       bottom: 35px;
-      width: 90px;
-      height: 18px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       pointer-events: none;
       z-index: 300;
       transition: opacity 0.4s ease;
+    }
+
+    .scroll-indicator .arrow-text {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #E8A0FF;
+      opacity: 0.6;
+      margin-bottom: 6px;
+    }
+
+    .scroll-indicator .arrow-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      animation: hint 2s infinite ease-in-out;
     }
 
     .scroll-line {
@@ -433,6 +450,11 @@
       0%, 45% { opacity: 1; transform: translateX(0) rotate(45deg); }
       55% { opacity: 1; transform: translateX(8px) rotate(45deg); }
       100% { opacity: 0; transform: translateX(14px) rotate(45deg); }
+    }
+
+    @keyframes hint {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(8px); }
     }
 
     /* ===== MÁSCARA: ELIMINADA ===== */
@@ -520,20 +542,43 @@
         font-size: 10px;
       }
 
+      /* ===== INDICADOR DE SCROLL MÁS GRANDE EN MÓVIL ===== */
       .scroll-indicator {
         right: 5vw;
-        bottom: 18px;
-        width: 70px;
-        height: 14px;
+        bottom: 20px;
+      }
+
+      .scroll-indicator .arrow-text {
+        font-size: 11px;
+        letter-spacing: 4px;
+        margin-bottom: 8px;
+      }
+
+      .scroll-indicator .arrow-wrapper {
+        gap: 6px;
       }
 
       .scroll-line {
-        width: 52px;
+        width: 90px;
+        height: 2px;
       }
 
       .scroll-arrow {
-        width: 6px;
-        height: 6px;
+        width: 12px;
+        height: 12px;
+        border-width: 2px;
+        margin-left: -3px;
+      }
+
+      @keyframes hint {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(12px); }
+      }
+
+      @keyframes scrollArrowHorizontal {
+        0%, 45% { opacity: 1; transform: translateX(0) rotate(45deg); }
+        55% { opacity: 1; transform: translateX(12px) rotate(45deg); }
+        100% { opacity: 0; transform: translateX(20px) rotate(45deg); }
       }
     }
 
@@ -578,18 +623,23 @@
 
       .scroll-indicator {
         right: 4vw;
-        bottom: 14px;
-        width: 55px;
-        height: 12px;
+        bottom: 16px;
       }
 
       .scroll-line {
-        width: 40px;
+        width: 70px;
+        height: 2px;
       }
 
       .scroll-arrow {
-        width: 5px;
-        height: 5px;
+        width: 10px;
+        height: 10px;
+        border-width: 2px;
+      }
+
+      .scroll-indicator .arrow-text {
+        font-size: 10px;
+        letter-spacing: 3px;
       }
     }
   </style>
@@ -687,9 +737,7 @@
         <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20Dentro%20-%20pieza%203&body=Hola%20Lucila,%20me%20interesa%20Dentro%20-%20pieza%203." class="btn-consultar btn-movil">Consultar</a>
       </div>
 
-      <!-- ============================================================ -->
-      <!-- CUADRO VII - ABUNDANCIA                                       -->
-      <!-- ============================================================ -->
+      <!-- CUADRO VII - ABUNDANCIA -->
       <div class="obra">
         <div class="modelo-3d">
           <img src="./preview/Abundancia_preview.png" class="preview-obra" alt="Abundancia">
@@ -702,9 +750,7 @@
         <a href="mailto:lucila.loholaberry.id@gmail.com?subject=Consulta%20sobre%20la%20obra%20Abundancia&body=Hola%20Lucila,%20me%20interesa%20la%20obra%20Abundancia." class="btn-consultar btn-movil">Consultar</a>
       </div>
 
-      <!-- ============================================================ -->
-      <!-- CUADRO VIII - BOSQUE ENCANTADO                                -->
-      <!-- ============================================================ -->
+      <!-- CUADRO VIII - BOSQUE ENCANTADO -->
       <div class="obra">
         <div class="modelo-3d">
           <img src="./preview/Bosque_encantado_preview.png" class="preview-obra" alt="Bosque encantado">
@@ -721,10 +767,13 @@
 
   </main>
 
-  <!-- ===== INDICADOR DE SCROLL HORIZONTAL ===== -->
+  <!-- ===== INDICADOR DE SCROLL HORIZONTAL (MEJORADO) ===== -->
   <div class="scroll-indicator" id="scrollIndicator">
-    <div class="scroll-line"></div>
-    <div class="scroll-arrow"></div>
+    <span class="arrow-text">Deslizar</span>
+    <div class="arrow-wrapper">
+      <div class="scroll-line"></div>
+      <div class="scroll-arrow"></div>
+    </div>
   </div>
 
   <!-- ===== VISOR 3D FLOTANTE ===== -->
@@ -738,14 +787,11 @@
     <div class="label-3d">🖱️ Haz clic y arrastra para rotar</div>
   </div>
 
-  <!-- NOTA: El cursor personalizado se crea con JavaScript en PC -->
-
-  <!-- ===== SCRIPT PARA CONTROLAR EL VISOR 3D, EL INDICADOR Y EL CURSOR ===== -->
+  <!-- ===== SCRIPT ===== -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // ===== CURSOR PERSONALIZADO (SOLO EN PC) - CREACIÓN DINÁMICA =====
+      // ===== CURSOR PERSONALIZADO (SOLO EN PC) =====
       if (window.innerWidth > 768) {
-        
         const cursor = document.createElement("div");
         cursor.className = "cursor-loader";
         cursor.id = "cursor";
