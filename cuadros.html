@@ -405,10 +405,10 @@
 
     .scroll-indicator .arrow-text {
       font-family: 'Inter', sans-serif;
-      font-weight: 300;
+      font-weight: 400; /* Regular, no Light */
       font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-transform: none; /* Sin mayúsculas */
       color: #E8A0FF;
       opacity: 0.6;
       margin-bottom: 6px;
@@ -549,8 +549,8 @@
       }
 
       .scroll-indicator .arrow-text {
-        font-size: 11px;
-        letter-spacing: 4px;
+        font-size: 12px;
+        letter-spacing: 2px;
         margin-bottom: 8px;
       }
 
@@ -559,7 +559,7 @@
       }
 
       .scroll-line {
-        width: 90px;
+        width: 130px; /* Línea más larga en móvil */
         height: 2px;
       }
 
@@ -627,7 +627,7 @@
       }
 
       .scroll-line {
-        width: 70px;
+        width: 100px;
         height: 2px;
       }
 
@@ -638,8 +638,7 @@
       }
 
       .scroll-indicator .arrow-text {
-        font-size: 10px;
-        letter-spacing: 3px;
+        font-size: 11px;
       }
     }
   </style>
