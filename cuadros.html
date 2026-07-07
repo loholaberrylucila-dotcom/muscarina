@@ -389,76 +389,81 @@
     }
 
     /* ========================================================= */
-    /* ===== INDICADOR DE SCROLL (ESTILO FONTENLA) ============= */
+    /* ===== INDICADOR DE SCROLL (CLICKEABLE) ================== */
     /* ========================================================= */
     .scroll-indicator {
       position: fixed;
-      bottom: 45px;
-      left: 50%;
-      transform: translateX(-50%);
+      right: 6vw;
+      bottom: 35px;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 14px;
       cursor: pointer;
+      pointer-events: auto;
       z-index: 300;
-      transition: opacity 0.6s ease;
-    }
-
-    .scroll-indicator.hide {
       opacity: 0;
-      pointer-events: none;
+      transition: opacity 0.4s ease;
+      animation: aparecer 0.8s ease forwards 2s;
     }
 
-    .scroll-indicator span {
+    @keyframes aparecer {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .scroll-indicator .arrow-text {
       font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.35em;
-      font-weight: 300;
-      text-transform: uppercase;
+      font-weight: 400;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: none;
       color: #E8A0FF;
       opacity: 0.6;
+      margin-bottom: 6px;
     }
 
-    .scroll-line-wrapper {
+    .scroll-indicator .arrow-wrapper {
       display: flex;
       align-items: center;
       gap: 4px;
-      transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    .scroll-indicator:hover .scroll-line-wrapper {
-      transform: translateX(12px);
+      animation: hint 2s infinite ease-in-out;
     }
 
     .scroll-line {
-      width: 140px;
+      width: 200px;
       height: 1px;
       background: #E8A0FF;
-      position: relative;
-      opacity: 0.6;
-      transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform-origin: left;
+      animation: scrollLineHorizontal 2.2s infinite ease-in-out;
     }
 
-    .scroll-indicator:hover .scroll-line {
-      opacity: 1;
-    }
-
-    .scroll-line::after {
-      content: "";
-      position: absolute;
-      right: -1px;
-      top: -3px;
+    .scroll-arrow {
       width: 8px;
       height: 8px;
       border-top: 1px solid #E8A0FF;
       border-right: 1px solid #E8A0FF;
       transform: rotate(45deg);
-      opacity: 0.6;
-      transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      margin-left: -2px;
+      animation: scrollArrowHorizontal 2.2s infinite ease-in-out;
     }
 
-    .scroll-indicator:hover .scroll-line::after {
-      opacity: 1;
+    @keyframes scrollLineHorizontal {
+      0% { transform: scaleX(0); transform-origin: left; }
+      45% { transform: scaleX(1); transform-origin: left; }
+      55% { transform: scaleX(1); transform-origin: right; }
+      100% { transform: scaleX(0); transform-origin: right; }
+    }
+
+    @keyframes scrollArrowHorizontal {
+      0%, 45% { opacity: 1; transform: translateX(0) rotate(45deg); }
+      55% { opacity: 1; transform: translateX(8px) rotate(45deg); }
+      100% { opacity: 0; transform: translateX(14px) rotate(45deg); }
+    }
+
+    @keyframes hint {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(8px); }
     }
 
     /* ===== OPTIMIZACIONES PARA MÓVIL ===== */
@@ -544,31 +549,43 @@
         font-size: 10px;
       }
 
-      /* ===== INDICADOR EN MÓVIL ===== */
+      /* ===== INDICADOR DE SCROLL MÁS GRANDE EN MÓVIL ===== */
       .scroll-indicator {
-        bottom: 25px;
-        gap: 12px;
+        right: 5vw;
+        bottom: 20px;
       }
 
-      .scroll-indicator span {
-        font-size: 10px;
-        letter-spacing: 0.3em;
+      .scroll-indicator .arrow-text {
+        font-size: 12px;
+        letter-spacing: 2px;
+        margin-bottom: 8px;
+      }
+
+      .scroll-indicator .arrow-wrapper {
+        gap: 6px;
       }
 
       .scroll-line {
-        width: 100px;
-        height: 1px;
+        width: 130px;
+        height: 2px;
       }
 
-      .scroll-line::after {
-        width: 6px;
-        height: 6px;
-        top: -2px;
-        right: -1px;
+      .scroll-arrow {
+        width: 12px;
+        height: 12px;
+        border-width: 2px;
+        margin-left: -3px;
       }
 
-      .scroll-indicator:hover .scroll-line-wrapper {
-        transform: translateX(8px);
+      @keyframes hint {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(12px); }
+      }
+
+      @keyframes scrollArrowHorizontal {
+        0%, 45% { opacity: 1; transform: translateX(0) rotate(45deg); }
+        55% { opacity: 1; transform: translateX(12px) rotate(45deg); }
+        100% { opacity: 0; transform: translateX(20px) rotate(45deg); }
       }
     }
 
@@ -612,29 +629,23 @@
       }
 
       .scroll-indicator {
-        bottom: 18px;
-        gap: 10px;
-      }
-
-      .scroll-indicator span {
-        font-size: 9px;
-        letter-spacing: 0.25em;
+        right: 4vw;
+        bottom: 16px;
       }
 
       .scroll-line {
-        width: 70px;
-        height: 1px;
+        width: 100px;
+        height: 2px;
       }
 
-      .scroll-line::after {
-        width: 5px;
-        height: 5px;
-        top: -2px;
-        right: -1px;
+      .scroll-arrow {
+        width: 10px;
+        height: 10px;
+        border-width: 2px;
       }
 
-      .scroll-indicator:hover .scroll-line-wrapper {
-        transform: translateX(6px);
+      .scroll-indicator .arrow-text {
+        font-size: 11px;
       }
     }
   </style>
@@ -762,11 +773,12 @@
 
   </main>
 
-  <!-- ===== INDICADOR DE SCROLL (ESTILO FONTENLA) ===== -->
+  <!-- ===== INDICADOR DE SCROLL ===== -->
   <div class="scroll-indicator" id="scrollIndicator">
-    <span>Deslizar</span>
-    <div class="scroll-line-wrapper">
+    <span class="arrow-text">Deslizar</span>
+    <div class="arrow-wrapper">
       <div class="scroll-line"></div>
+      <div class="scroll-arrow"></div>
     </div>
   </div>
 
@@ -910,38 +922,35 @@
         }
       }, true);
 
-      // ===== SCROLL INDICATOR - CLICK PARA AVANZAR =====
+      // ===== SCROLL HORIZONTAL CON RUEDA DEL MOUSE =====
       const grid = document.querySelector(".grid");
       const indicador = document.getElementById("scrollIndicator");
       
       if (grid && indicador) {
-        // Hacer click en el indicador para avanzar
+        // Rueda del mouse
+        grid.addEventListener("wheel", (e) => {
+          e.preventDefault();
+          grid.scrollLeft += e.deltaY;
+        }, { passive: false });
+
+        // Ocultar al hacer scroll manual
+        grid.addEventListener("scroll", () => {
+          if (grid.scrollLeft > 20) {
+            indicador.style.opacity = "0";
+          } else {
+            indicador.style.opacity = "1";
+          }
+        });
+
+        // ===== CLICK EN EL INDICADOR PARA AVANZAR =====
         indicador.addEventListener("click", () => {
-          // Avanzar aproximadamente el ancho de una obra (85vw en móvil, 320px en PC)
-          const scrollAmount = window.innerWidth * 0.85;
           grid.scrollBy({
-            left: scrollAmount,
+            left: 350,
             behavior: "smooth"
           });
           
           // Ocultar el indicador después del click
-          indicador.classList.add("hide");
-          
-          // Después de 8 segundos, mostrar de nuevo (por si el usuario quiere volver)
-          setTimeout(() => {
-            if (grid.scrollLeft === 0) {
-              indicador.classList.remove("hide");
-            }
-          }, 8000);
-        });
-
-        // Ocultar el indicador al hacer scroll manual
-        grid.addEventListener("scroll", () => {
-          if (grid.scrollLeft > 20) {
-            indicador.classList.add("hide");
-          } else {
-            indicador.classList.remove("hide");
-          }
+          indicador.style.opacity = "0";
         });
       }
     });
