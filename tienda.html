@@ -81,7 +81,7 @@
       }
     }
 
-    /* ===== NAV ===== */
+    /* ===== NAV (UNIFICADO CON INDEX) ===== */
     nav {
       position: fixed;
       top: 30px;
@@ -101,12 +101,11 @@
       border: 1px solid rgba(0,0,24,0.4);
       color: #000018;
       text-decoration: none;
-      background: rgba(255,255,255,0.03);
       transition: all 0.3s ease;
     }
 
-    nav a:hover { 
-      background: rgba(255,255,255,0.1);
+    nav a:hover {
+      background: rgba(0,0,24,0.05);
     }
 
     /* ===== MAIN ===== */
@@ -117,25 +116,26 @@
       text-align: center;
     }
 
-    /* ===== TEXTO INTRO ===== */
+    /* ===== TEXTO INTRO (UNIFICADO CON INDEX) ===== */
     .intro {
+      border: 1px solid rgba(0,0,24,0.4);
+      padding: 32px 38px;
+      margin: 0 auto 80px;
+      text-align: center;
       font-family: 'Inter', sans-serif;
       font-weight: 300;
       font-size: 14px;
       line-height: 1.6;
-      margin-bottom: 80px;
-      padding: 32px 38px;
-      border: 1px solid rgba(0,0,24,0.4);
       display: inline-block;
       width: auto;
-      transition: all 0.3s ease;
+      transition: 0.3s;
     }
 
     .intro:hover {
       background: rgba(0,0,24,0.02);
     }
 
-    /* ===== CATEGORÍAS ===== */
+    /* ===== CATEGORÍAS (UNIFICADO CON INDEX) ===== */
     .categorias {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -143,18 +143,15 @@
     }
 
     .categoria {
-      border: 1px solid rgba(0,0,24,0.3);
+      border: 1px solid rgba(0,0,24,0.4);
       padding: 80px 20px;
       text-decoration: none;
       color: #000018;
-      transition: all 0.4s ease;
-      background: rgba(255,255,255,0.02);
+      transition: 0.3s;
     }
 
     .categoria:hover {
-      border: 1px solid rgba(0,0,24,0.6);
-      background: rgba(255,255,255,0.06);
-      transform: translateY(-5px);
+      background: rgba(0,0,24,0.05);
     }
 
     .categoria h2 {
