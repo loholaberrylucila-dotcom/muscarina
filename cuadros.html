@@ -389,7 +389,7 @@
     }
 
     /* ========================================================= */
-    /* ===== INDICADOR DE SCROLL (UNIFICADO) =================== */
+    /* ===== INDICADOR DE SCROLL CON SVG ======================= */
     /* ========================================================= */
     .scroll-indicator {
       position: fixed;
@@ -405,7 +405,7 @@
 
     .scroll-indicator .arrow-text {
       font-family: 'Inter', sans-serif;
-      font-weight: 400; /* Regular, no Light */
+      font-weight: 400;
       font-size: 11px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -413,40 +413,18 @@
       opacity: 0.6;
     }
 
-    /* Línea + flecha unificadas en un solo elemento */
-    .scroll-line {
-      width: 140px;
-      height: 1px;
-      background: #E8A0FF;
-      position: relative;
+    .scroll-svg {
+      display: block;
+      width: 160px;
+      height: auto;
       opacity: 0.6;
-      animation: linePulse 2.2s infinite ease-in-out;
+      animation: svgPulse 2.2s infinite ease-in-out;
     }
 
-    .scroll-line::after {
-      content: "";
-      position: absolute;
-      right: -1px;
-      top: 50%;
-      width: 10px;
-      height: 10px;
-      border-top: 1px solid #E8A0FF;
-      border-right: 1px solid #E8A0FF;
-      transform: translateY(-50%) rotate(45deg);
-      opacity: 0.8;
-      animation: arrowMove 2.2s infinite ease-in-out;
-    }
-
-    @keyframes linePulse {
-      0% { transform: scaleX(0.3); opacity: 0.3; }
-      50% { transform: scaleX(1); opacity: 0.8; }
-      100% { transform: scaleX(0.3); opacity: 0.3; }
-    }
-
-    @keyframes arrowMove {
-      0% { opacity: 0.4; transform: translateY(-50%) rotate(45deg) translateX(0); }
-      50% { opacity: 1; transform: translateY(-50%) rotate(45deg) translateX(6px); }
-      100% { opacity: 0.4; transform: translateY(-50%) rotate(45deg) translateX(0); }
+    @keyframes svgPulse {
+      0% { transform: translateX(0); opacity: 0.4; }
+      50% { transform: translateX(8px); opacity: 0.9; }
+      100% { transform: translateX(0); opacity: 0.4; }
     }
 
     /* ===== OPTIMIZACIONES PARA MÓVIL ===== */
@@ -544,21 +522,14 @@
         letter-spacing: 0.15em;
       }
 
-      .scroll-line {
+      .scroll-svg {
         width: 120px;
-        height: 1.5px;
       }
 
-      .scroll-line::after {
-        width: 8px;
-        height: 8px;
-        border-width: 1.5px;
-      }
-
-      @keyframes arrowMove {
-        0% { opacity: 0.4; transform: translateY(-50%) rotate(45deg) translateX(0); }
-        50% { opacity: 1; transform: translateY(-50%) rotate(45deg) translateX(5px); }
-        100% { opacity: 0.4; transform: translateY(-50%) rotate(45deg) translateX(0); }
+      @keyframes svgPulse {
+        0% { transform: translateX(0); opacity: 0.4; }
+        50% { transform: translateX(6px); opacity: 0.9; }
+        100% { transform: translateX(0); opacity: 0.4; }
       }
     }
 
@@ -612,15 +583,8 @@
         letter-spacing: 0.1em;
       }
 
-      .scroll-line {
+      .scroll-svg {
         width: 90px;
-        height: 1.5px;
-      }
-
-      .scroll-line::after {
-        width: 7px;
-        height: 7px;
-        border-width: 1.5px;
       }
     }
   </style>
@@ -748,11 +712,10 @@
 
   </main>
 
-  <!-- ===== INDICADOR DE SCROLL (UNIFICADO) ===== -->
+  <!-- ===== INDICADOR DE SCROLL CON SVG ===== -->
   <div class="scroll-indicator" id="scrollIndicator">
     <span class="arrow-text">Deslizar</span>
-    <div class="scroll-line"></div>
-    <!-- El arrow ahora es un pseudo-elemento ::after de .scroll-line -->
+    <img src="./resources/flecha.svg" alt="" class="scroll-svg">
   </div>
 
   <!-- ===== VISOR 3D FLOTANTE ===== -->
@@ -900,13 +863,11 @@
       const indicador = document.getElementById("scrollIndicator");
       
       if (grid && indicador) {
-        // Rueda del mouse
         grid.addEventListener("wheel", (e) => {
           e.preventDefault();
           grid.scrollLeft += e.deltaY;
         }, { passive: false });
 
-        // Ocultar al hacer scroll
         grid.addEventListener("scroll", () => {
           if (grid.scrollLeft > 20) {
             indicador.style.opacity = "0";
@@ -915,14 +876,11 @@
           }
         });
 
-        // ===== CLICK EN EL INDICADOR PARA AVANZAR =====
         indicador.addEventListener("click", () => {
           grid.scrollBy({
             left: 350,
             behavior: "smooth"
           });
-          
-          // Ocultar el indicador después del click
           indicador.style.opacity = "0";
         });
       }
