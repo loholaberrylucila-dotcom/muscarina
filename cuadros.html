@@ -389,7 +389,7 @@
     }
 
     /* ========================================================= */
-    /* ===== INDICADOR DE SCROLL (MINIMALISTA) ================= */
+    /* ===== INDICADOR DE SCROLL (UNIFICADO) =================== */
     /* ========================================================= */
     .scroll-indicator {
       position: fixed;
@@ -405,6 +405,7 @@
 
     .scroll-indicator .arrow-text {
       font-family: 'Inter', sans-serif;
+      font-weight: 400; /* Regular, no Light */
       font-size: 11px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -412,29 +413,28 @@
       opacity: 0.6;
     }
 
-    .scroll-indicator .arrow-wrapper {
-      display: flex;
-      align-items: center;
-    }
-
+    /* Línea + flecha unificadas en un solo elemento */
     .scroll-line {
-      width: 120px;
+      width: 140px;
       height: 1px;
       background: #E8A0FF;
-      transform-origin: left center;
-      animation: linePulse 2.2s infinite ease-in-out;
+      position: relative;
       opacity: 0.6;
+      animation: linePulse 2.2s infinite ease-in-out;
     }
 
-    .scroll-arrow {
-      width: 8px;
-      height: 8px;
+    .scroll-line::after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: 50%;
+      width: 10px;
+      height: 10px;
       border-top: 1px solid #E8A0FF;
       border-right: 1px solid #E8A0FF;
-      transform: rotate(45deg);
-      margin-left: -4px;
+      transform: translateY(-50%) rotate(45deg);
+      opacity: 0.8;
       animation: arrowMove 2.2s infinite ease-in-out;
-      opacity: 0.6;
     }
 
     @keyframes linePulse {
@@ -444,9 +444,9 @@
     }
 
     @keyframes arrowMove {
-      0% { transform: rotate(45deg) translateX(0); opacity: 0.4; }
-      50% { transform: rotate(45deg) translateX(8px); opacity: 1; }
-      100% { transform: rotate(45deg) translateX(0); opacity: 0.4; }
+      0% { opacity: 0.4; transform: translateY(-50%) rotate(45deg) translateX(0); }
+      50% { opacity: 1; transform: translateY(-50%) rotate(45deg) translateX(6px); }
+      100% { opacity: 0.4; transform: translateY(-50%) rotate(45deg) translateX(0); }
     }
 
     /* ===== OPTIMIZACIONES PARA MÓVIL ===== */
@@ -545,21 +545,20 @@
       }
 
       .scroll-line {
-        width: 80px;
+        width: 120px;
         height: 1.5px;
       }
 
-      .scroll-arrow {
-        width: 7px;
-        height: 7px;
+      .scroll-line::after {
+        width: 8px;
+        height: 8px;
         border-width: 1.5px;
-        margin-left: -3px;
       }
 
       @keyframes arrowMove {
-        0% { transform: rotate(45deg) translateX(0); opacity: 0.4; }
-        50% { transform: rotate(45deg) translateX(6px); opacity: 1; }
-        100% { transform: rotate(45deg) translateX(0); opacity: 0.4; }
+        0% { opacity: 0.4; transform: translateY(-50%) rotate(45deg) translateX(0); }
+        50% { opacity: 1; transform: translateY(-50%) rotate(45deg) translateX(5px); }
+        100% { opacity: 0.4; transform: translateY(-50%) rotate(45deg) translateX(0); }
       }
     }
 
@@ -614,15 +613,14 @@
       }
 
       .scroll-line {
-        width: 60px;
+        width: 90px;
         height: 1.5px;
       }
 
-      .scroll-arrow {
-        width: 6px;
-        height: 6px;
+      .scroll-line::after {
+        width: 7px;
+        height: 7px;
         border-width: 1.5px;
-        margin-left: -3px;
       }
     }
   </style>
@@ -750,13 +748,11 @@
 
   </main>
 
-  <!-- ===== INDICADOR DE SCROLL (MINIMALISTA) ===== -->
+  <!-- ===== INDICADOR DE SCROLL (UNIFICADO) ===== -->
   <div class="scroll-indicator" id="scrollIndicator">
     <span class="arrow-text">Deslizar</span>
-    <div class="arrow-wrapper">
-      <div class="scroll-line"></div>
-      <div class="scroll-arrow"></div>
-    </div>
+    <div class="scroll-line"></div>
+    <!-- El arrow ahora es un pseudo-elemento ::after de .scroll-line -->
   </div>
 
   <!-- ===== VISOR 3D FLOTANTE ===== -->
