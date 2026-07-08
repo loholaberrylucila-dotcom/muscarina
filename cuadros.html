@@ -732,9 +732,12 @@
   <!-- ===== SCRIPT ===== -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
+      // ===== VARIABLE GLOBAL PARA EL CURSOR =====
+      let cursor = null;
+
       // ===== CURSOR PERSONALIZADO (SOLO EN PC) =====
       if (window.innerWidth > 768) {
-        const cursor = document.createElement("div");
+        cursor = document.createElement("div");
         cursor.className = "cursor-loader";
         cursor.id = "cursor";
         cursor.innerHTML = '<div class="loader-square-33"></div>';
@@ -793,6 +796,11 @@
         boton.addEventListener("click", () => {
           const modeloPath = boton.dataset.model;
           if (modeloPath) {
+            // ===== OCULTAR CURSOR PERSONALIZADO =====
+            if (cursor) {
+              cursor.style.display = "none";
+            }
+
             loaderContainer.classList.remove("oculto");
             visor.classList.add("active");
             document.body.style.overflow = "hidden";
@@ -830,6 +838,12 @@
         visor.classList.remove("active");
         document.body.style.overflow = "";
         loaderContainer.classList.remove("oculto");
+        
+        // ===== REACTIVAR CURSOR PERSONALIZADO =====
+        if (cursor) {
+          cursor.style.display = "";
+        }
+
         if (window.gc) {
           window.gc();
         }
