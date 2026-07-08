@@ -389,7 +389,7 @@
     }
 
     /* ========================================================= */
-    /* ===== INDICADOR DE SCROLL (CLICKEABLE) ================== */
+    /* ===== INDICADOR DE SCROLL HORIZONTAL (MEJORADO) ========= */
     /* ========================================================= */
     .scroll-indicator {
       position: fixed;
@@ -398,26 +398,17 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      cursor: pointer;
-      pointer-events: auto;
+      pointer-events: none;
       z-index: 300;
-      opacity: 0;
       transition: opacity 0.4s ease;
-      animation: aparecer 0.8s ease forwards 2s;
-    }
-
-    @keyframes aparecer {
-      to {
-        opacity: 1;
-      }
     }
 
     .scroll-indicator .arrow-text {
       font-family: 'Inter', sans-serif;
-      font-weight: 400;
+      font-weight: 400; /* Regular, no Light */
       font-size: 10px;
       letter-spacing: 2px;
-      text-transform: none;
+      text-transform: none; /* Sin mayúsculas */
       color: #E8A0FF;
       opacity: 0.6;
       margin-bottom: 6px;
@@ -465,6 +456,8 @@
       0%, 100% { transform: translateX(0); }
       50% { transform: translateX(8px); }
     }
+
+    /* ===== MÁSCARA: ELIMINADA ===== */
 
     /* ===== OPTIMIZACIONES PARA MÓVIL ===== */
     @media (max-width: 768px) {
@@ -566,7 +559,7 @@
       }
 
       .scroll-line {
-        width: 130px;
+        width: 130px; /* Línea más larga en móvil */
         height: 2px;
       }
 
@@ -773,7 +766,7 @@
 
   </main>
 
-  <!-- ===== INDICADOR DE SCROLL ===== -->
+  <!-- ===== INDICADOR DE SCROLL HORIZONTAL (MEJORADO) ===== -->
   <div class="scroll-indicator" id="scrollIndicator">
     <span class="arrow-text">Deslizar</span>
     <div class="arrow-wrapper">
@@ -926,31 +919,18 @@
       const grid = document.querySelector(".grid");
       const indicador = document.getElementById("scrollIndicator");
       
-      if (grid && indicador) {
-        // Rueda del mouse
+      if (grid) {
         grid.addEventListener("wheel", (e) => {
           e.preventDefault();
           grid.scrollLeft += e.deltaY;
         }, { passive: false });
 
-        // Ocultar al hacer scroll manual
         grid.addEventListener("scroll", () => {
           if (grid.scrollLeft > 20) {
             indicador.style.opacity = "0";
           } else {
             indicador.style.opacity = "1";
           }
-        });
-
-        // ===== CLICK EN EL INDICADOR PARA AVANZAR =====
-        indicador.addEventListener("click", () => {
-          grid.scrollBy({
-            left: 350,
-            behavior: "smooth"
-          });
-          
-          // Ocultar el indicador después del click
-          indicador.style.opacity = "0";
         });
       }
     });
