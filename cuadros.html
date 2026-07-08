@@ -389,44 +389,41 @@
     }
 
     /* ========================================================= */
-    /* ===== INDICADOR DE SCROLL HORIZONTAL (MEJORADO) ========= */
+    /* ===== INDICADOR DE SCROLL (MINIMALISTA) ================= */
     /* ========================================================= */
     .scroll-indicator {
       position: fixed;
       right: 6vw;
       bottom: 35px;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      pointer-events: none;
+      gap: 12px;
       z-index: 300;
+      cursor: pointer;
       transition: opacity 0.4s ease;
     }
 
     .scroll-indicator .arrow-text {
       font-family: 'Inter', sans-serif;
-      font-weight: 400; /* Regular, no Light */
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: none; /* Sin mayúsculas */
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
       color: #E8A0FF;
       opacity: 0.6;
-      margin-bottom: 6px;
     }
 
     .scroll-indicator .arrow-wrapper {
       display: flex;
       align-items: center;
-      gap: 4px;
-      animation: hint 2s infinite ease-in-out;
     }
 
     .scroll-line {
-      width: 200px;
+      width: 120px;
       height: 1px;
       background: #E8A0FF;
-      transform-origin: left;
-      animation: scrollLineHorizontal 2.2s infinite ease-in-out;
+      transform-origin: left center;
+      animation: linePulse 2.2s infinite ease-in-out;
+      opacity: 0.6;
     }
 
     .scroll-arrow {
@@ -435,29 +432,22 @@
       border-top: 1px solid #E8A0FF;
       border-right: 1px solid #E8A0FF;
       transform: rotate(45deg);
-      margin-left: -2px;
-      animation: scrollArrowHorizontal 2.2s infinite ease-in-out;
+      margin-left: -4px;
+      animation: arrowMove 2.2s infinite ease-in-out;
+      opacity: 0.6;
     }
 
-    @keyframes scrollLineHorizontal {
-      0% { transform: scaleX(0); transform-origin: left; }
-      45% { transform: scaleX(1); transform-origin: left; }
-      55% { transform: scaleX(1); transform-origin: right; }
-      100% { transform: scaleX(0); transform-origin: right; }
+    @keyframes linePulse {
+      0% { transform: scaleX(0.3); opacity: 0.3; }
+      50% { transform: scaleX(1); opacity: 0.8; }
+      100% { transform: scaleX(0.3); opacity: 0.3; }
     }
 
-    @keyframes scrollArrowHorizontal {
-      0%, 45% { opacity: 1; transform: translateX(0) rotate(45deg); }
-      55% { opacity: 1; transform: translateX(8px) rotate(45deg); }
-      100% { opacity: 0; transform: translateX(14px) rotate(45deg); }
+    @keyframes arrowMove {
+      0% { transform: rotate(45deg) translateX(0); opacity: 0.4; }
+      50% { transform: rotate(45deg) translateX(8px); opacity: 1; }
+      100% { transform: rotate(45deg) translateX(0); opacity: 0.4; }
     }
-
-    @keyframes hint {
-      0%, 100% { transform: translateX(0); }
-      50% { transform: translateX(8px); }
-    }
-
-    /* ===== MÁSCARA: ELIMINADA ===== */
 
     /* ===== OPTIMIZACIONES PARA MÓVIL ===== */
     @media (max-width: 768px) {
@@ -542,43 +532,34 @@
         font-size: 10px;
       }
 
-      /* ===== INDICADOR DE SCROLL MÁS GRANDE EN MÓVIL ===== */
+      /* ===== INDICADOR EN MÓVIL ===== */
       .scroll-indicator {
         right: 5vw;
         bottom: 20px;
+        gap: 10px;
       }
 
       .scroll-indicator .arrow-text {
-        font-size: 12px;
-        letter-spacing: 2px;
-        margin-bottom: 8px;
-      }
-
-      .scroll-indicator .arrow-wrapper {
-        gap: 6px;
+        font-size: 10px;
+        letter-spacing: 0.15em;
       }
 
       .scroll-line {
-        width: 130px; /* Línea más larga en móvil */
-        height: 2px;
+        width: 80px;
+        height: 1.5px;
       }
 
       .scroll-arrow {
-        width: 12px;
-        height: 12px;
-        border-width: 2px;
+        width: 7px;
+        height: 7px;
+        border-width: 1.5px;
         margin-left: -3px;
       }
 
-      @keyframes hint {
-        0%, 100% { transform: translateX(0); }
-        50% { transform: translateX(12px); }
-      }
-
-      @keyframes scrollArrowHorizontal {
-        0%, 45% { opacity: 1; transform: translateX(0) rotate(45deg); }
-        55% { opacity: 1; transform: translateX(12px) rotate(45deg); }
-        100% { opacity: 0; transform: translateX(20px) rotate(45deg); }
+      @keyframes arrowMove {
+        0% { transform: rotate(45deg) translateX(0); opacity: 0.4; }
+        50% { transform: rotate(45deg) translateX(6px); opacity: 1; }
+        100% { transform: rotate(45deg) translateX(0); opacity: 0.4; }
       }
     }
 
@@ -624,21 +605,24 @@
       .scroll-indicator {
         right: 4vw;
         bottom: 16px;
-      }
-
-      .scroll-line {
-        width: 100px;
-        height: 2px;
-      }
-
-      .scroll-arrow {
-        width: 10px;
-        height: 10px;
-        border-width: 2px;
+        gap: 8px;
       }
 
       .scroll-indicator .arrow-text {
-        font-size: 11px;
+        font-size: 9px;
+        letter-spacing: 0.1em;
+      }
+
+      .scroll-line {
+        width: 60px;
+        height: 1.5px;
+      }
+
+      .scroll-arrow {
+        width: 6px;
+        height: 6px;
+        border-width: 1.5px;
+        margin-left: -3px;
       }
     }
   </style>
@@ -766,7 +750,7 @@
 
   </main>
 
-  <!-- ===== INDICADOR DE SCROLL HORIZONTAL (MEJORADO) ===== -->
+  <!-- ===== INDICADOR DE SCROLL (MINIMALISTA) ===== -->
   <div class="scroll-indicator" id="scrollIndicator">
     <span class="arrow-text">Deslizar</span>
     <div class="arrow-wrapper">
@@ -919,18 +903,31 @@
       const grid = document.querySelector(".grid");
       const indicador = document.getElementById("scrollIndicator");
       
-      if (grid) {
+      if (grid && indicador) {
+        // Rueda del mouse
         grid.addEventListener("wheel", (e) => {
           e.preventDefault();
           grid.scrollLeft += e.deltaY;
         }, { passive: false });
 
+        // Ocultar al hacer scroll
         grid.addEventListener("scroll", () => {
           if (grid.scrollLeft > 20) {
             indicador.style.opacity = "0";
           } else {
             indicador.style.opacity = "1";
           }
+        });
+
+        // ===== CLICK EN EL INDICADOR PARA AVANZAR =====
+        indicador.addEventListener("click", () => {
+          grid.scrollBy({
+            left: 350,
+            behavior: "smooth"
+          });
+          
+          // Ocultar el indicador después del click
+          indicador.style.opacity = "0";
         });
       }
     });
